@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspección Pre-Operativa de Unidades</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen py-6 px-4 font-sans flex flex-col items-center justify-center">
+
+    <div class="w-full max-w-2xl bg-white p-6 sm:p-8 rounded-2xl border-[1px] border-slate-200/80 shadow-md shadow-slate-200/50">
+        
+        <!-- LOGO CORPORATIVO DE MAGSI -->
+        <div id="appLogo" class="w-full flex items-center justify-center mx-auto mb-5 max-w-[180px]">
+            <img src="./magsi_casco.png" alt="Logo Corporativo" class="w-180 h-auto object-contain drop-shadow-sm"> 
+        </div>
+
+        <h2 class="text-center text-2xl font-bold tracking-tight text-slate-900 mb-1">Checklist Pre-Operativo</h2>
+        <p class="text-slate-400 text-center text-sm mb-6 uppercase tracking-wider font-semibold text-xs text-amber-600">Auditoría con Evidencia Fotográfica</p>
+        
+        <form id="checklistForm" class="space-y-6" novalidate>
+            
+            <!-- FECHA Y HORA DEL SISTEMA BLOQUEADAS -->
+            <div class="grid grid-cols-2 gap-3 bg-amber-50/40 p-4 rounded-xl border border-amber-200/60 shadow-sm">
+                <div>
+                    <label class="block text-xs font-bold text-amber-900 uppercase tracking-tight mb-1"><i class="bi bi-calendar-event"></i> Fecha de Registro:</label>
+                    <input type="text" id="fecha_sistema" readonly class="w-full bg-slate-100/80 border border-slate-200 text-slate-500 rounded-lg px-3 py-2 text-sm font-medium cursor-not-allowed outline-none select-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-amber-900 uppercase tracking-tight mb-1"><i class="bi bi-clock"></i> Hora de Registro:</label>
+                    <input type="text" id="hora_sistema" readonly class="w-full bg-slate-100/80 border border-slate-200 text-slate-500 rounded-lg px-3 py-2 text-sm font-medium cursor-not-allowed outline-none select-none">
+                </div>
+            </div>
+
+            <!-- DATOS GENERALES -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1"><i class="bi bi-truck-flatbed"></i> Datos de la Unidad</span>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="col-span-2">
+                        <label class="block text-xs font-medium text-slate-600 mb-1">Nombre del Conductor:</label>
+                        <input type="text" id="conductor" required placeholder="Nombres y Apellidos" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">Placa Vehicular:</label>
+                        <input type="text" id="placa" maxlength="7" required placeholder="ABC-123" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 uppercase">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">Kilometraje:</label>
+                        <input type="number" id="kilometraje" required placeholder="Ej. 120500" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1. DOCUMENTACIÓN Y VENCIMIENTOS -->
+            <div class="space-y-3">
+                <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1"><i class="bi bi-card-checklist"></i> 1. Documentación</span>
+                
+                <!-- SOAT -->
+                <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-900">SOAT Vigente</span>
+                        <select id="doc_soat" required class="text-sm border rounded-lg p-1.5 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none"><option value="SI">SÍ</option><option value="NO">NO</option><option value="N/A">N/A</option></select>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="w-full sm:w-1/2">
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-tight mb-1">Fecha de vencimiento:</label>
+                            <input type="date" id="venc_soat" class="w-full text-sm border rounded-lg p-2 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                        <div class="w-full sm:w-auto pt-4 sm:pt-0">
+                            <label class="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-3 py-2 rounded-lg font-bold text-xs cursor-pointer transition-colors w-full">
+                                <i class="bi bi-camera-fill text-amber-400"></i> <span id="lbl_foto_soat">Foto SOAT</span>
+                                <input type="file" id="foto_soat" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_foto_soat')">
+                            </label>
+                        </div>
+                    </div>
+                    <textarea id="obs_soat" maxlength="1000" placeholder="Comentarios / Observaciones del SOAT (Máx. 1000 caracteres)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none" rows="2"></textarea>
+                </div>
+
+                <!-- RTV -->
+                <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-900">Revisión Técnica Vehicular</span>
+                        <select id="doc_rtv" required class="text-sm border rounded-lg p-1.5 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none"><option value="SI">SÍ</option><option value="NO">NO</option><option value="N/A">N/A</option></select>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="w-full sm:w-1/2">
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-tight mb-1">Fecha de vencimiento:</label>
+                            <input type="date" id="venc_rtv" class="w-full text-sm border rounded-lg p-2 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                        <div class="w-full sm:w-auto pt-4 sm:pt-0">
+                            <label class="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-3 py-2 rounded-lg font-bold text-xs cursor-pointer transition-colors w-full">
+                                <i class="bi bi-camera-fill text-amber-400"></i> <span id="lbl_foto_rtv">Foto RTV</span>
+                                <input type="file" id="foto_rtv" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_foto_rtv')">
+                            </label>
+                        </div>
+                    </div>
+                    <textarea id="obs_rtv" maxlength="1000" placeholder="Comentarios / Observaciones de la Revisión Técnica (Máx. 1000 caracteres)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none" rows="2"></textarea>
+                </div>
+
+                <!-- Brevete -->
+                <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-900">Licencia de Conducir (Brevete)</span>
+                        <select id="doc_brevete" required class="text-sm border rounded-lg p-1.5 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none"><option value="SI">SÍ</option><option value="NO">NO</option><option value="N/A">N/A</option></select>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="w-full sm:w-1/2">
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-tight mb-1">Fecha de vencimiento:</label>
+                            <input type="date" id="venc_brevete" class="w-full text-sm border rounded-lg p-2 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                        <div class="w-full sm:w-auto pt-4 sm:pt-0">
+                            <label class="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-3 py-2 rounded-lg font-bold text-xs cursor-pointer transition-colors w-full">
+                                <i class="bi bi-camera-fill text-amber-400"></i> <span id="lbl_foto_brevete">Foto Brevete</span>
+                                <input type="file" id="foto_brevete" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_foto_brevete')">
+                            </label>
+                        </div>
+                    </div>
+                    <textarea id="obs_brevete" maxlength="1000" placeholder="Comentarios / Observaciones de la Licencia (Máx. 1000 caracteres)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none" rows="2"></textarea>
+                </div>
+
+                <!-- TIV -->
+                <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-900">Tarjeta de Propiedad (TIV)</span>
+                        <select id="doc_tiv" class="text-sm border rounded-lg p-1.5 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                    </div>
+                    <textarea id="obs_tiv" maxlength="1000" placeholder="Comentarios / Observaciones de la TIV (Máx. 1000 caracteres)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none" rows="2"></textarea>
+                </div>
+
+                <!-- Guías -->
+                <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-900">Guías de Remisión / Carga</span>
+                        <select id="doc_guias" class="text-sm border rounded-lg p-1.5 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                    </div>
+                    <textarea id="obs_guias" maxlength="1000" placeholder="Comentarios / Observaciones de las Guías (Máx. 1000 caracteres)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none" rows="2"></textarea>
+                </div>
+            </div>
+
+            <!-- 2. CONTROL INDIVIDUAL DE LLANTAS -->
+            <div class="space-y-3">
+                <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="bi bi-disc"></i> 2. Estado de Llantas</span>
+                <div class="space-y-3 text-xs">
+                    <div class="p-4 border rounded-xl bg-slate-50/50 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-900">Delantera Izquierda</span>
+                            <div class="flex items-center gap-3">
+                                <select id="llanta_di" class="border rounded p-1.5 bg-white text-xs"><option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_di">Foto</span><input type="file" id="foto_llanta_di" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_di')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_llanta_di" maxlength="1000" placeholder="Comentarios llanta delantera izquierda (Máx. 1000)..." class="w-full p-2 bg-white border border-slate-200 rounded-lg text-[11px] focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl bg-slate-50/50 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-900">Delantera Derecha</span>
+                            <div class="flex items-center gap-3">
+                                <select id="llanta_dd" class="border rounded p-1.5 bg-white text-xs"><option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_dd">Foto</span><input type="file" id="foto_llanta_dd" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_dd')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_llanta_dd" maxlength="1000" placeholder="Comentarios llanta delantera derecha (Máx. 1000)..." class="w-full p-2 bg-white border border-slate-200 rounded-lg text-[11px] focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl bg-slate-50/50 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-900">Posterior Izquierda</span>
+                            <div class="flex items-center gap-3">
+                                <select id="llanta_pi" class="border rounded p-1.5 bg-white text-xs"><option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_pi">Foto</span><input type="file" id="foto_llanta_pi" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_pi')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_llanta_pi" maxlength="1000" placeholder="Comentarios llanta posterior izquierda (Máx. 1000)..." class="w-full p-2 bg-white border border-slate-200 rounded-lg text-[11px] focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl bg-slate-50/50 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-900">Posterior Derecha</span>
+                            <div class="flex items-center gap-3">
+                                <select id="llanta_pd" class="border rounded p-1.5 bg-white text-xs"><option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_pd">Foto</span><input type="file" id="foto_llanta_pd" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_pd')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_llanta_pd" maxlength="1000" placeholder="Comentarios llanta posterior derecha (Máx. 1000)..." class="w-full p-2 bg-white border border-slate-200 rounded-lg text-[11px] focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl bg-slate-50/50 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-900">Neumático de Repuesto</span>
+                            <div class="flex items-center gap-3">
+                                <select id="llanta_rep" class="border rounded p-1.5 bg-white text-xs"><option value="OK">OK</option><option value="CRITICA">CRÍTICA</option><option value="NA">N/A</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_rep">Foto</span><input type="file" id="foto_llanta_rep" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_rep')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_llanta_rep" maxlength="1000" placeholder="Comentarios llanta repuesto (Máx. 1000)..." class="w-full p-2 bg-white border border-slate-200 rounded-lg text-[11px] focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. NIVELES DE FLUIDOS -->
+            <div class="space-y-3">
+                <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="bi bi-droplet-half"></i> 3. Niveles de Fluidos</span>
+                <div class="space-y-3 text-xs">
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Nivel Aceite de Motor</span>
+                            <div class="flex items-center gap-3">
+                                <select id="fluid_aceite" class="text-xs border rounded p-1.5"><option value="SI">SÍ (OK)</option><option value="NO">NO (BAJO)</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_aceite">Foto</span><input type="file" id="foto_aceite" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_aceite')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_fluid_aceite" maxlength="1000" placeholder="Comentarios sobre nivel de aceite (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Nivel Líquido Refrigerante</span>
+                            <div class="flex items-center gap-3">
+                                <select id="fluid_refrigerante" class="text-xs border rounded p-1.5"><option value="SI">SÍ (OK)</option><option value="NO">NO (BAJO)</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_refr">Foto</span><input type="file" id="foto_refrigerante" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_refr')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_fluid_refr" maxlength="1000" placeholder="Comentarios sobre líquido refrigerante (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Nivel Líquido de Frenos</span>
+                            <div class="flex items-center gap-3">
+                                <select id="fluid_frenos" class="text-xs border rounded p-1.5"><option value="SI">SÍ (OK)</option><option value="NO">NO (BAJO)</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_frenos">Foto</span><input type="file" id="foto_frenos" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_frenos')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_fluid_frenos" maxlength="1000" placeholder="Comentarios sobre líquido de frenos (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. ILUMINACIÓN SEPARADA -->
+            <div class="space-y-3">
+                <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="bi bi-lightbulb"></i> 4. Sistema de Luces</span>
+                <div class="space-y-3">
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Luces Altas (Delanteras)</span>
+                            <div class="flex items-center gap-3">
+                                <select id="luz_altas" class="text-xs border rounded p-1.5"><option value="SI">SÍ (OK)</option><option value="NO">NO (FALLA)</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_altas">Foto</span><input type="file" id="foto_luz_altas" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_altas')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_luz_altas" maxlength="1000" placeholder="Comentarios sobre luces altas (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Luces Bajas (Delanteras)</span>
+                            <div class="flex items-center gap-3">
+                                <select id="luz_bajas" class="text-xs border rounded p-1.5"><option value="SI">SÍ (OK)</option><option value="NO">NO (FALLA)</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_bajas">Foto</span><input type="file" id="foto_luz_bajas" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_bajas')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_luz_bajas" maxlength="1000" placeholder="Comentarios sobre luces bajas (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Luces de Freno (Posteriores)</span>
+                            <div class="flex items-center gap-3">
+                                <select id="luz_freno" class="text-xs border rounded p-1.5"><option value="SI">SÍ (OK)</option><option value="NO">NO (FALLA)</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_freno">Foto</span><input type="file" id="foto_luz_freno" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_freno')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_luz_freno" maxlength="1000" placeholder="Comentarios sobre luces de freno (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Luces Intermitentes y Direccionales</span>
+                            <div class="flex items-center gap-3">
+                                <select id="luz_intermitentes" class="text-xs border rounded p-1.5"><option value="SI">SÍ (OK)</option><option value="NO">NO (FALLA)</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_inter">Foto</span><input type="file" id="foto_luz_intermitentes" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_inter')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_luz_intermitentes" maxlength="1000" placeholder="Comentarios sobre intermitentes (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. SEGURIDAD Y RESPUESTA AMBIENTAL -->
+            <div class="space-y-3">
+                <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="bi bi-shield"></i> 5. Kit de Emergencias</span>
+                <div class="space-y-3">
+                    <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-semibold text-slate-900">Extintor PQS Vigente</span>
+                            <div class="flex items-center gap-3">
+                                <select id="kit_extintor" class="text-xs border rounded p-1.5 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_ext">Foto</span><input type="file" id="foto_kit_extintor" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_ext')"></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-tight mb-1">Fecha de vencimiento:</label>
+                            <input type="date" id="venc_extintor" class="w-full text-sm border rounded-lg p-2 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                        <textarea id="obs_kit_extintor" maxlength="1000" placeholder="Comentarios sobre extintor (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="2"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Conos o Triángulos (Min. 2)</span>
+                            <div class="flex items-center gap-3">
+                                <select id="kit_conos" class="text-xs border rounded p-1.5"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_conos">Foto</span><input type="file" id="foto_kit_conos" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_conos')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_kit_conos" maxlength="1000" placeholder="Comentarios sobre cones (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Botiquín Primeros Auxilios Equipado</span>
+                            <div class="flex items-center gap-3">
+                                <select id="kit_botiquin" class="text-xs border rounded p-1.5"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_boti">Foto</span><input type="file" id="foto_kit_botiquin" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_boti')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_kit_botiquin" maxlength="1000" placeholder="Comentarios sobre botiquín (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl space-y-3 bg-amber-50/50 border-amber-200 shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span class="text-amber-950">Kit Antiderrame MATPEL Operativo</span>
+                            <div class="flex items-center gap-3">
+                                <select id="kit_antiderrame" class="text-xs border rounded p-1.5"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_anti">Foto</span><input type="file" id="foto_kit_antiderrame" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_anti')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_kit_antiderrame" maxlength="1000" placeholder="Comentarios sobre kit antiderrame (Máx. 1000)..." class="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. DISPOSITIVOS DE SEGURIDAD FURGÓN -->
+            <div class="space-y-3">
+                <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="bi bi-lock"></i> 6. Seguridad de Carga</span>
+                <div class="space-y-3">
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Candados de Seguridad Operativos</span>
+                            <div class="flex items-center gap-3">
+                                <select id="furgon_candados" class="text-xs border rounded p-1.5"><option value="SI">SÍ</option><option value="NO">NO</option><option value="N/A">N/A</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_cand">Foto</span><input type="file" id="foto_furgon_candados" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_cand')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_furgon_candados" maxlength="1000" placeholder="Comentarios sobre candados (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Barras de Seguridad Estables</span>
+                            <div class="flex items-center gap-3">
+                                <select id="furgon_barras" class="text-xs border rounded p-1.5"><option value="SI">SÍ</option><option value="NO">NO</option><option value="N/A">N/A</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_barras">Foto</span><input type="file" id="foto_furgon_barras" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_barras')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_furgon_barras" maxlength="1000" placeholder="Comentarios sobre barras de seguridad (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+
+                    <div class="p-4 border rounded-xl space-y-3 bg-white shadow-sm">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span>Pernos de Anclaje de Estructura</span>
+                            <div class="flex items-center gap-3">
+                                <select id="furgon_pernos" class="text-xs border rounded p-1.5"><option value="SI">SÍ</option><option value="NO">NO</option><option value="N/A">N/A</option></select>
+                                <label class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-[11px] cursor-pointer"><i class="bi bi-camera-fill"></i> <span id="lbl_f_pernos">Foto</span><input type="file" id="foto_furgon_pernos" accept="image/*" capture="environment" class="hidden selector-foto" onchange="actualizarEstadoFoto(this, 'lbl_f_pernos')"></label>
+                            </div>
+                        </div>
+                        <textarea id="obs_furgon_pernos" maxlength="1000" placeholder="Comentarios sobre pernos de anclaje (Máx. 1000)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none resize-none" rows="1.5"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. VALIDACIÓN Y FIRMAS DIGITALES -->
+            <div class="p-4 bg-slate-100 rounded-xl border border-slate-200 space-y-4">
+                <span class="block text-xs font-bold text-slate-700 uppercase tracking-wider"><i class="bi bi-person-badge"></i> 7. Validación de Identidad y Firmas</span>
+                
+                <div class="space-y-2 text-xs">
+                    <div>
+                        <label class="block font-medium text-slate-600 mb-0.5">DNI Supervisor:</label>
+                        <input type="text" id="dni_supervisor" maxlength="8" required placeholder="8 números" class="w-full border p-2 rounded bg-white focus:outline-none text-sm">
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-600 mb-0.5">Nombre Supervisor:</label>
+                        <input type="text" id="nom_supervisor" required placeholder="Nombres y Apellidos" class="w-full border p-2 rounded bg-white focus:outline-none text-sm">
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-600 mb-0.5">Código Corporativo:</label>
+                        <input type="text" id="cod_supervisor" required placeholder="Cód. Autorización / Fotocheck" class="w-full border p-2 rounded bg-white focus:outline-none text-sm">
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-2 border-t border-slate-200/60">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1 uppercase tracking-tight"><i class="bi bi-pencil-square"></i> Registro de Firma del Conductor:</label>
+                        <textarea id="firma_conductor" required placeholder="Espacio asignado para la firma..." class="w-full p-2 bg-white border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none h-16 resize-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1 uppercase tracking-tight"><i class="bi bi-pencil-square"></i> Registro de Firma del Supervisor:</label>
+                        <textarea id="firma_supervisor" required placeholder="Espacio asignado para la firma..." class="w-full p-2 bg-white border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none h-16 resize-none"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" id="latitud" value="0">
+            <input type="hidden" id="longitud" value="0">
+
+            <button type="submit" id="submitBtn" class="w-full bg-yellow-400 hover:bg-amber-500 text-slate-900 font-bold py-3.5 px-4 rounded-xl text-base transition-all shadow-md uppercase tracking-wider">
+                Registrar Inspección
+            </button>
+        </form>
+
+        <div id="responseMessage" class="mt-4 p-3 rounded-lg text-center text-sm font-medium hidden" role="alert"></div>
+    </div>
+
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxpPq-SlP3pjumFx9WSrqrR8gpL5TES3I2yPVyw7M6NOYZ8nWMHJBmklWGJrPlJdAwP/exec";
+
+        // Cambio visual del botón al tomar la foto
+        function actualizarEstadoFoto(input, labelId) {
+            if(input.files && input.files[0]) {
+                document.getElementById(labelId).innerText = "¡Foto Lista!";
+            }
+        }
+
+        // Convertir archivos binarios a cadenas Base64 de forma asíncrona
+        function obtenerBase64(file) {
+            return new Promise((resolve, reject) => {
+                if (!file) resolve("");
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // CONFIGURAR FECHA/HORA AUTOMÁTICAS E INMUTABLES
+        function establecerTiempoSistema() {
+            const ahora = new Date();
+            const dia = String(ahora.getDate()).padStart(2, '0');
+            const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+            const anio = ahora.getFullYear();
+            document.getElementById('fecha_sistema').value = `${dia}/${mes}/${anio}`;
+            
+            let horas = ahora.getHours();
+            const minutos = String(ahora.getMinutes()).padStart(2, '0');
+            const ampm = horas >= 12 ? 'PM' : 'AM';
+            horas = horas % 12;
+            horas = horas ? horas : 12; 
+            const horasStr = String(horas).padStart(2, '0');
+            document.getElementById('hora_sistema').value = `${horasStr}:${minutos} ${ampm}`;
+        }
+        window.addEventListener('DOMContentLoaded', establecerTiempoSistema);
+
+        // GEOLOCALIZACIÓN
+        function capturarCoordenadas() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        document.getElementById('latitud').value = position.coords.latitude;
+                        document.getElementById('longitud').value = position.coords.longitude;
+                    }, null, { enableHighAccuracy: true, timeout: 10000 }
+                );
+            }
+        }
+        window.addEventListener('load', capturarCoordenadas);
+
+        // FORMULARIO SUBMIT CON CONVERSIÓN A BASE64
+        document.getElementById('checklistForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const msgDiv = document.getElementById('responseMessage');
+            
+            btn.disabled = true;
+            btn.innerText = "PROCESANDO IMÁGENES Y ENVIANDO...";
+
+            try {
+                // Lectura y conversión concurrente de los inputs de la cámara a Base64
+                const fSoat = document.getElementById('foto_soat').files[0];
+                const fRtv = document.getElementById('foto_rtv').files[0];
+                const fBrev = document.getElementById('foto_brevete').files[0];
+                const fDi = document.getElementById('foto_llanta_di').files[0];
+                const fDd = document.getElementById('foto_llanta_dd').files[0];
+                const fPi = document.getElementById('foto_llanta_pi').files[0];
+                const fPd = document.getElementById('foto_llanta_pd').files[0];
+                const fRep = document.getElementById('foto_llanta_rep').files[0];
+                const fAcei = document.getElementById('foto_aceite').files[0];
+                const fRefr = document.getElementById('foto_refrigerante').files[0];
+                const fFren = document.getElementById('foto_frenos').files[0];
+                const fAltas = document.getElementById('foto_luz_altas').files[0];
+                const fBajas = document.getElementById('foto_luz_bajas').files[0];
+                const fFreno = document.getElementById('foto_luz_freno').files[0];
+                const fInter = document.getElementById('foto_luz_intermitentes').files[0];
+                const fExt = document.getElementById('foto_kit_extintor').files[0];
+                const fCono = document.getElementById('foto_kit_conos').files[0];
+                const fBoti = document.getElementById('foto_kit_botiquin').files[0];
+                const fAnti = document.getElementById('foto_kit_antiderrame').files[0];
+                const fCand = document.getElementById('foto_furgon_candados').files[0];
+                const fBarr = document.getElementById('foto_furgon_barras').files[0];
+                const fPern = document.getElementById('foto_furgon_pernos').files[0];
+
+                const formData = {
+                    fecha_inspeccion: document.getElementById('fecha_sistema').value,
+                    hora_inspeccion: document.getElementById('hora_sistema').value,
+                    conductor: document.getElementById('conductor').value,
+                    placa: document.getElementById('placa').value,
+                    kilometraje: document.getElementById('kilometraje').value,
+                    
+                    doc_soat: document.getElementById('doc_soat').value,
+                    venc_soat: document.getElementById('venc_soat').value,
+                    obs_soat: document.getElementById('obs_soat').value,
+                    foto_soat: await obtenerBase64(fSoat),
+                    
+                    doc_rtv: document.getElementById('doc_rtv').value,
+                    venc_rtv: document.getElementById('venc_rtv').value,
+                    obs_rtv: document.getElementById('obs_rtv').value,
+                    foto_rtv: await obtenerBase64(fRtv),
+                    
+                    doc_brevete: document.getElementById('doc_brevete').value,
+                    venc_brevete: document.getElementById('venc_brevete').value,
+                    obs_brevete: document.getElementById('obs_brevete').value,
+                    foto_brevete: await obtenerBase64(fBrev),
+                    
+                    doc_tiv: document.getElementById('doc_tiv').value,
+                    obs_tiv: document.getElementById('obs_tiv').value,
+                    doc_guias: document.getElementById('doc_guias').value,
+                    obs_guias: document.getElementById('obs_guias').value,
+                    
+                    llanta_di: document.getElementById('llanta_di').value,
+                    obs_llanta_di: document.getElementById('obs_llanta_di').value,
+                    foto_llanta_di: await obtenerBase64(fDi),
+                    
+                    llanta_dd: document.getElementById('llanta_dd').value,
+                    obs_llanta_dd: document.getElementById('obs_llanta_dd').value,
+                    foto_llanta_dd: await obtenerBase64(fDd),
+                    
+                    llanta_pi: document.getElementById('llanta_pi').value,
+                    obs_llanta_pi: document.getElementById('obs_llanta_pi').value,
+                    foto_llanta_pi: await obtenerBase64(fPi),
+                    
+                    llanta_pd: document.getElementById('llanta_pd').value,
+                    obs_llanta_pd: document.getElementById('obs_llanta_pd').value,
+                    foto_llanta_pd: await obtenerBase64(fPd),
+                    
+                    llanta_rep: document.getElementById('llanta_rep').value,
+                    obs_llanta_rep: document.getElementById('obs_llanta_rep').value,
+                    foto_llanta_rep: await obtenerBase64(fRep),
+                    
+                    fluid_aceite: document.getElementById('fluid_aceite').value,
+                    obs_fluid_aceite: document.getElementById('obs_fluid_aceite').value,
+                    foto_aceite: await obtenerBase64(fAcei),
+                    
+                    fluid_refrigerante: document.getElementById('fluid_refrigerante').value,
+                    obs_fluid_refr: document.getElementById('obs_fluid_refr').value,
+                    foto_refrigerante: await obtenerBase64(fRefr),
+                    
+                    fluid_frenos: document.getElementById('fluid_frenos').value,
+                    obs_fluid_frenos: document.getElementById('obs_fluid_frenos').value,
+                    foto_frenos: await obtenerBase64(fFren),
+                    
+                    luz_altas: document.getElementById('luz_altas').value,
+                    obs_luz_altas: document.getElementById('obs_luz_altas').value,
+                    foto_luz_altas: await obtenerBase64(fAltas),
+                    
+                    luz_bajas: document.getElementById('luz_bajas').value,
+                    obs_luz_bajas: document.getElementById('obs_luz_bajas').value,
+                    foto_luz_bajas: await obtenerBase64(fBajas),
+                    
+                    luz_freno: document.getElementById('luz_freno').value,
+                    obs_luz_freno: document.getElementById('obs_luz_freno').value,
+                    foto_luz_freno: await obtenerBase64(fFreno),
+                    
+                    luz_intermitentes: document.getElementById('luz_intermitentes').value,
+                    obs_luz_intermitentes: document.getElementById('obs_luz_intermitentes').value,
+                    foto_luz_intermitentes: await obtenerBase64(fInter),
+                    
+                    kit_extintor: document.getElementById('kit_extintor').value,
+                    venc_extintor: document.getElementById('venc_extintor').value,
+                    obs_kit_extintor: document.getElementById('obs_kit_extintor').value,
+                    foto_kit_extintor: await obtenerBase64(fExt),
+                    
+                    kit_conos: document.getElementById('kit_conos').value,
+                    obs_kit_conos: document.getElementById('obs_kit_conos').value,
+                    foto_kit_conos: await obtenerBase64(fCono),
+                    
+                    kit_botiquin: document.getElementById('kit_botiquin').value,
+                    obs_kit_botiquin: document.getElementById('obs_kit_botiquin').value,
+                    foto_kit_botiquin: await obtenerBase64(fBoti),
+                    
+                    kit_antiderrame: document.getElementById('kit_antiderrame').value,
+                    obs_kit_antiderrame: document.getElementById('obs_kit_antiderrame').value,
+                    foto_kit_antiderrame: await obtenerBase64(fAnti),
+                    
+                    furgon_candados: document.getElementById('furgon_candados').value,
+                    obs_furgon_candados: document.getElementById('obs_furgon_candados').value,
+                    foto_furgon_candados: await obtenerBase64(fCand),
+                    
+                    furgon_barras: document.getElementById('furgon_barras').value,
+                    obs_furgon_barras: document.getElementById('obs_furgon_barras').value,
+                    foto_furgon_barras: await obtenerBase64(fBarr),
+                    
+                    furgon_pernos: document.getElementById('furgon_pernos').value,
+                    obs_furgon_pernos: document.getElementById('obs_furgon_pernos').value,
+                    foto_furgon_pernos: await obtenerBase64(fPern),
+                    
+                    latitud: document.getElementById('latitud').value,
+                    longitud: document.getElementById('longitud').value,
+                    dni_supervisor: document.getElementById('dni_supervisor').value,
+                    nom_supervisor: document.getElementById('nom_supervisor').value,
+                    cod_supervisor: document.getElementById('cod_supervisor').value,
+                    
+                    firma_conductor: document.getElementById('firma_conductor').value,
+                    firma_supervisor: document.getElementById('firma_supervisor').value
+                };
+
+                // Enviamos como POST JSON completo hacia Apps Script
+                const respuesta = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Evita problemas de CORS en preflight
+                    body: JSON.stringify(formData)
+                });
+                
+                msgDiv.className = "mt-4 p-3 rounded-lg text-center text-sm font-medium bg-emerald-100 text-emerald-800";
+                msgDiv.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i> ¡Inspección y archivos guardados en Google Drive con éxito!`;
+                msgDiv.classList.remove('hidden');
+                document.getElementById('checklistForm').reset();
+                
+                // Resetear etiquetas de los botones de fotos
+                document.querySelectorAll('label span').forEach(span => {
+                    if(span.id.startsWith('lbl_')) {
+                        if(span.id === 'lbl_foto_soat') span.innerText = "Foto SOAT";
+                        else if(span.id === 'lbl_foto_rtv') span.innerText = "Foto RTV";
+                        else if(span.id === 'lbl_foto_brevete') span.innerText = "Foto Brevete";
+                        else span.innerText = "Foto";
+                    }
+                });
+
+                establecerTiempoSistema(); 
+                capturarCoordenadas();
+
+            } catch (err) {
+                msgDiv.className = "mt-4 p-3 rounded-lg text-center text-sm font-medium bg-red-100 text-red-800";
+                msgDiv.innerText = "Error en el procesamiento o carga de archivos.";
+                msgDiv.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Registrar Inspección";
+            }
+        });
+    </script>
+</body>
+</html>
