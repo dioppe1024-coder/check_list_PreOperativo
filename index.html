@@ -7,275 +7,254 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
-        /* Paleta de colores Caterpillar e incremento general de texto */
-        body { font-size: 1.15rem; } /* Incremento global ~30% */
+        /* Ajuste de escala global reducida un 20% */
+        body { font-size: 0.95rem; } 
         .bg-cat-yellow { background-color: #FFCD00; }
         .text-cat-yellow { color: #FFCD00; }
         .border-cat-yellow { border-color: #FFCD00; }
         .bg-cat-black { background-color: #111111; }
     </style>
 </head>
-<body class="bg-stone-100 text-stone-900 min-h-screen py-8 px-4 flex flex-col items-center">
+<body class="bg-stone-100 text-stone-900 min-h-screen py-4 px-2 sm:px-4 flex flex-col items-center">
 
-    <div class="w-full max-w-3xl bg-white rounded-3xl border-2 border-stone-200 shadow-xl overflow-hidden">
+    <div class="w-full max-w-2xl bg-white rounded-2xl border border-stone-200 shadow-lg overflow-hidden">
         
-        <!-- CABECERA ESTILO CATERPILLAR -->
-        <div class="bg-cat-whithe p-6 flex flex-col items-center border-b-8 border-cat-yellow">
-            <div id="appLogo" class="w-full max-w-[280px] mb-3">
+        <div class="bg-white p-4 flex flex-col items-center border-b-4 border-cat-yellow">
+            <div id="appLogo" class="w-full max-w-[200px] mb-2">
                 <img src="./magsi_casco.png" alt="Magsa Logo" class="w-full h-auto object-contain"> 
             </div>
-            <h2 class="text-black text-3xl font-black uppercase tracking-tight text-center">Checklist Pre-Operativo</h2>
-            <p class="text-cat-yellow text-sm font-bold uppercase tracking-widest mt-1">Control de Flota Magsa</p>
+            <h2 class="text-black text-xl font-black uppercase tracking-tight text-center">Checklist Pre-Operativo</h2>
+            <p class="bg-cat-black text-cat-yellow text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 mt-1 rounded">Control de Flota Magsa</p>
         </div>
 
-        <form id="checklistForm" class="p-6 sm:p-10 space-y-8" novalidate>
+        <form id="checklistForm" class="p-4 sm:p-6 space-y-5" novalidate>
             
-            <!-- FECHA Y HORA BLOQUEADAS -->
-            <div class="grid grid-cols-2 gap-4 bg-stone-900 text-white p-5 rounded-2xl shadow-inner">
+            <div class="grid grid-cols-2 gap-2 bg-stone-900 text-white p-3 rounded-xl shadow-inner">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-cat-yellow mb-1"><i class="bi bi-calendar-event"></i> Fecha:</label>
-                    <input type="text" id="fecha_sistema" readonly class="w-full bg-stone-800 border border-stone-700 text-stone-300 rounded-xl px-3 py-2.5 font-bold outline-none select-none text-base">
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-cat-yellow mb-0.5"><i class="bi bi-calendar-event"></i> Fecha:</label>
+                    <input type="text" id="fecha_sistema" readonly class="w-full bg-stone-800 border border-stone-700 text-stone-300 rounded-lg px-2 py-1.5 font-bold outline-none select-none text-xs sm:text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-cat-yellow mb-1"><i class="bi bi-clock"></i> Hora:</label>
-                    <input type="text" id="hora_sistema" readonly class="w-full bg-stone-800 border border-stone-700 text-stone-300 rounded-xl px-3 py-2.5 font-bold outline-none select-none text-base">
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-cat-yellow mb-0.5"><i class="bi bi-clock"></i> Hora:</label>
+                    <input type="text" id="hora_sistema" readonly class="w-full bg-stone-800 border border-stone-700 text-stone-300 rounded-lg px-2 py-1.5 font-bold outline-none select-none text-xs sm:text-sm">
                 </div>
             </div>
 
-            <!-- DATOS GENERALES -->
-            <div class="bg-stone-50 p-6 rounded-2xl border-2 border-stone-200 space-y-4">
-                <span class="block text-sm font-black text-stone-600 uppercase tracking-widest border-b pb-1"><i class="bi bi-truck"></i> Datos de Operación</span>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="col-span-2">
-                        <label class="block text-sm font-bold text-stone-700 mb-1">Nombre Completo del Conductor:</label>
-                        <input type="text" id="conductor" required placeholder="Nombres y Apellidos" class="w-full bg-white border-2 border-stone-300 rounded-xl px-4 py-3 text-lg focus:outline-none focus:border-stone-900">
+            <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-3">
+                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-truck"></i> Datos de Operación</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-stone-700 mb-0.5">Nombre del Conductor:</label>
+                        <input type="text" id="conductor" required placeholder="Nombres y Apellidos" class="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-stone-900">
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-stone-700 mb-1">Placa de la Unidad:</label>
-                        <input type="text" id="placa" maxlength="7" required placeholder="ABC-123" class="w-full bg-white border-2 border-stone-300 rounded-xl px-4 py-3 text-lg focus:outline-none focus:border-stone-900 uppercase">
+                        <label class="block text-xs font-bold text-stone-700 mb-0.5">Placa de la Unidad:</label>
+                        <input type="text" id="placa" maxlength="7" required placeholder="ABC-123" class="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-stone-900 uppercase">
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-stone-700 mb-1">Kilometraje Inicial:</label>
-                        <input type="number" id="kilometraje" required placeholder="Ej. 145000" class="w-full bg-white border-2 border-stone-300 rounded-xl px-4 py-3 text-lg focus:outline-none focus:border-stone-900">
+                        <label class="block text-xs font-bold text-stone-700 mb-0.5">Kilometraje Inicial:</label>
+                        <input type="number" id="kilometraje" required placeholder="Ej. 145000" class="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-stone-900">
                     </div>
                 </div>
             </div>
 
-            <!-- 1. DOCUMENTACIÓN (SIN TOMA DE FOTO) -->
-            <div class="space-y-4">
-                <span class="block text-sm font-black text-stone-600 uppercase tracking-widest border-b pb-1"><i class="bi bi-file-earmark-text"></i> 1. Documentación</span>
+            <div class="space-y-3">
+                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-file-earmark-text"></i> 1. Documentación</span>
                 
-                <!-- SOAT -->
-                <div class="p-5 border-2 border-stone-200 rounded-2xl bg-white space-y-3">
-                    <div class="flex justify-between items-center gap-4">
-                        <span class="text-lg font-bold text-stone-900">SOAT Vigente:</span>
-                        <select id="doc_soat" required class="text-base font-bold border-2 border-stone-300 rounded-xl p-2.5 bg-stone-50 focus:border-stone-900 outline-none">
-                            <option value="" disabled selected>-- SELECCIONE --</option>
-                            <option value="SI">SÍ</option>
-                            <option value="NO">NO</option>
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-1 gap-2">
-                        <label class="block text-xs font-bold text-stone-500 uppercase">Fecha Vencimiento SOAT:</label>
-                        <input type="date" id="venc_soat" class="w-full text-base border-2 border-stone-200 rounded-xl p-2 bg-stone-50">
-                    </div>
-                    <textarea id="obs_soat" placeholder="Observaciones del SOAT..." class="w-full p-3 bg-stone-50 border-2 border-stone-200 rounded-xl text-sm h-16 outline-none resize-none focus:border-stone-900"></textarea>
-                </div>
-
-                <!-- REVISIÓN TÉCNICA -->
-                <div class="p-5 border-2 border-stone-200 rounded-2xl bg-white space-y-3">
-                    <div class="flex justify-between items-center gap-4">
-                        <span class="text-lg font-bold text-stone-900">Revisión Técnica Vehicular:</span>
-                        <select id="doc_rtv" required class="text-base font-bold border-2 border-stone-300 rounded-xl p-2.5 bg-stone-50 focus:border-stone-900 outline-none">
+                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2.5 shadow-sm">
+                    <div class="flex flex-wrap justify-between items-center gap-2">
+                        <span class="text-sm font-bold text-stone-900">SOAT Vigente:</span>
+                        <select id="doc_soat" required class="text-xs font-bold border border-stone-300 rounded-lg p-1.5 bg-stone-50 focus:border-stone-900 outline-none w-full sm:w-auto">
                             <option value="" disabled selected>-- SELECCIONE --</option>
                             <option value="SI">SÍ</option>
                             <option value="NO">NO</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-stone-500 uppercase">Fecha Vencimiento RTV:</label>
-                        <input type="date" id="venc_rtv" class="w-full text-base border-2 border-stone-200 rounded-xl p-2 bg-stone-50">
+                        <label class="block text-[10px] font-bold text-stone-500 uppercase mb-0.5">Vencimiento SOAT:</label>
+                        <input type="date" id="venc_soat" class="w-full text-xs border border-stone-200 rounded-lg p-1.5 bg-stone-50">
                     </div>
-                    <textarea id="obs_rtv" placeholder="Observaciones de la Revisión Técnica..." class="w-full p-3 bg-stone-50 border-2 border-stone-200 rounded-xl text-sm h-16 outline-none resize-none focus:border-stone-900"></textarea>
+                    <textarea id="obs_soat" placeholder="Observaciones del SOAT..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-12 outline-none resize-none focus:border-stone-900"></textarea>
                 </div>
 
-                <!-- BREVETE -->
-                <div class="p-5 border-2 border-stone-200 rounded-2xl bg-white space-y-3">
-                    <div class="flex justify-between items-center gap-4">
-                        <span class="text-lg font-bold text-stone-900">Licencia de Conducir (Brevete):</span>
-                        <select id="doc_brevete" required class="text-base font-bold border-2 border-stone-300 rounded-xl p-2.5 bg-stone-50 focus:border-stone-900 outline-none">
+                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2.5 shadow-sm">
+                    <div class="flex flex-wrap justify-between items-center gap-2">
+                        <span class="text-sm font-bold text-stone-900">Revisión Técnica Vehicular:</span>
+                        <select id="doc_rtv" required class="text-xs font-bold border border-stone-300 rounded-lg p-1.5 bg-stone-50 focus:border-stone-900 outline-none w-full sm:w-auto">
                             <option value="" disabled selected>-- SELECCIONE --</option>
                             <option value="SI">SÍ</option>
                             <option value="NO">NO</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-stone-500 uppercase">Fecha Vencimiento Licencia:</label>
-                        <input type="date" id="venc_brevete" class="w-full text-base border-2 border-stone-200 rounded-xl p-2 bg-stone-50">
+                        <label class="block text-[10px] font-bold text-stone-500 uppercase mb-0.5">Vencimiento RTV:</label>
+                        <input type="date" id="venc_rtv" class="w-full text-xs border border-stone-200 rounded-lg p-1.5 bg-stone-50">
                     </div>
-                    <textarea id="obs_brevete" placeholder="Observaciones del Brevete..." class="w-full p-3 bg-stone-50 border-2 border-stone-200 rounded-xl text-sm h-16 outline-none resize-none focus:border-stone-900"></textarea>
+                    <textarea id="obs_rtv" placeholder="Observaciones de la Revisión Técnica..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-12 outline-none resize-none focus:border-stone-900"></textarea>
                 </div>
 
-                <!-- TIV Y GUÍAS (SÓLO SELECTORES) -->
-                <div class="p-5 border-2 border-stone-200 rounded-2xl bg-white grid grid-cols-1 gap-4">
-                    <div class="flex justify-between items-center">
-                        <span class="text-lg font-bold text-stone-900">Tarjeta de Propiedad (TIV):</span>
-                        <select id="doc_tiv" class="text-base font-bold border-2 border-stone-300 rounded-xl p-2.5"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2.5 shadow-sm">
+                    <div class="flex flex-wrap justify-between items-center gap-2">
+                        <span class="text-sm font-bold text-stone-900">Licencia de Conducir (Brevete):</span>
+                        <select id="doc_brevete" required class="text-xs font-bold border border-stone-300 rounded-lg p-1.5 bg-stone-50 focus:border-stone-900 outline-none w-full sm:w-auto">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
-                    <div class="flex justify-between items-center border-t pt-3">
-                        <span class="text-lg font-bold text-stone-900">Guías de Remisión / Carga:</span>
-                        <select id="doc_guias" class="text-base font-bold border-2 border-stone-300 rounded-xl p-2.5"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                    <div>
+                        <label class="block text-[10px] font-bold text-stone-500 uppercase mb-0.5">Vencimiento Licencia:</label>
+                        <input type="date" id="venc_brevete" class="w-full text-xs border border-stone-200 rounded-lg p-1.5 bg-stone-50">
+                    </div>
+                    <textarea id="obs_brevete" placeholder="Observaciones del Brevete..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-12 outline-none resize-none focus:border-stone-900"></textarea>
+                </div>
+
+                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-xs font-bold text-stone-900">Tarjeta de Propiedad (TIV):</span>
+                        <select id="doc_tiv" class="text-xs font-bold border border-stone-300 rounded-lg p-1 bg-stone-50"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-2 gap-2">
+                        <span class="text-xs font-bold text-stone-900">Guías de Remisión:</span>
+                        <select id="doc_guias" class="text-xs font-bold border border-stone-300 rounded-lg p-1 bg-stone-50"><option value="SI">SÍ</option><option value="NO">NO</option></select>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. CONTROL INDIVIDUAL DE LLANTAS (INTERACTIVO CON BOTÓN DINÁMICO) -->
-            <div class="space-y-4">
-                <span class="block text-sm font-black text-stone-600 tracking-widest uppercase border-b pb-1"><i class="bi bi-disc"></i> 2. Estado de Llantas</span>
+            <div class="space-y-3">
+                <span class="block text-xs font-black text-stone-600 tracking-widest uppercase border-b pb-0.5"><i class="bi bi-disc"></i> 2. Estado de Llantas</span>
                 
-                <!-- Delantera Izquierda -->
-                <div class="p-5 border-2 border-stone-200 rounded-2xl bg-stone-50/50 space-y-3">
-                    <div class="flex justify-between items-center gap-3">
-                        <span class="font-bold text-lg text-stone-900">Delantera Izquierda:</span>
-                        <div class="flex items-center gap-3">
-                            <select id="llanta_di" class="border-2 border-stone-300 font-bold rounded-xl p-2 text-base bg-white focus:border-stone-900 outline-none" onchange="alternarBotonFoto('llanta_di', 'btn_f_di')">
+                <div class="p-4 border border-stone-200 rounded-xl bg-stone-50/50 space-y-2 shadow-sm">
+                    <div class="flex flex-wrap justify-between items-center gap-2">
+                        <span class="font-bold text-sm text-stone-900">Delantera Izquierda:</span>
+                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                            <select id="llanta_di" class="border border-stone-300 font-bold rounded-lg p-1.5 text-xs bg-white focus:border-stone-900 outline-none" onchange="alternarBotonFoto('llanta_di', 'btn_f_di')">
                                 <option value="" disabled selected>-- SELECT --</option>
                                 <option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option>
                             </select>
-                            <!-- Botón de cámara deshabilitado por defecto hasta que se seleccione una opción -->
-                            <label id="btn_f_di" class="opacity-30 pointer-events-none flex items-center gap-2 bg-stone-900 text-white px-4 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all">
+                            <label id="btn_f_di" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer transition-all">
                                 <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_di">Foto</span>
                                 <input type="file" id="foto_llanta_di" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_di', 'lbl_f_di')">
                             </label>
                         </div>
                     </div>
-                    <textarea id="obs_llanta_di" placeholder="Observaciones de llanta..." class="w-full p-3 bg-white border-2 border-stone-200 rounded-xl text-sm h-14 outline-none resize-none focus:border-stone-900"></textarea>
+                    <textarea id="obs_llanta_di" placeholder="Observaciones de llanta..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
                 </div>
 
-                <!-- Delantera Derecha -->
-                <div class="p-5 border-2 border-stone-200 rounded-2xl bg-stone-50/50 space-y-3">
-                    <div class="flex justify-between items-center gap-3">
-                        <span class="font-bold text-lg text-stone-900">Delantera Derecha:</span>
-                        <div class="flex items-center gap-3">
-                            <select id="llanta_dd" class="border-2 border-stone-300 font-bold rounded-xl p-2 text-base bg-white focus:border-stone-900 outline-none" onchange="alternarBotonFoto('llanta_dd', 'btn_f_dd')">
+                <div class="p-4 border border-stone-200 rounded-xl bg-stone-50/50 space-y-2 shadow-sm">
+                    <div class="flex flex-wrap justify-between items-center gap-2">
+                        <span class="font-bold text-sm text-stone-900">Delantera Derecha:</span>
+                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                            <select id="llanta_dd" class="border border-stone-300 font-bold rounded-lg p-1.5 text-xs bg-white focus:border-stone-900 outline-none" onchange="alternarBotonFoto('llanta_dd', 'btn_f_dd')">
                                 <option value="" disabled selected>-- SELECT --</option>
                                 <option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option>
                             </select>
-                            <label id="btn_f_dd" class="opacity-30 pointer-events-none flex items-center gap-2 bg-stone-900 text-white px-4 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all">
+                            <label id="btn_f_dd" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer transition-all">
                                 <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_dd">Foto</span>
                                 <input type="file" id="foto_llanta_dd" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_dd', 'lbl_f_dd')">
                             </label>
                         </div>
                     </div>
-                    <textarea id="obs_llanta_dd" placeholder="Observaciones de llanta..." class="w-full p-3 bg-white border-2 border-stone-200 rounded-xl text-sm h-14 outline-none resize-none focus:border-stone-900"></textarea>
+                    <textarea id="obs_llanta_dd" placeholder="Observaciones de llanta..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
                 </div>
 
-                <!-- Posterior Izquierda -->
-                <div class="p-5 border-2 border-stone-200 rounded-2xl bg-stone-50/50 space-y-3">
-                    <div class="flex justify-between items-center gap-3">
-                        <span class="font-bold text-lg text-stone-900">Posterior Izquierda:</span>
-                        <div class="flex items-center gap-3">
-                            <select id="llanta_pi" class="border-2 border-stone-300 font-bold rounded-xl p-2 text-base bg-white focus:border-stone-900 outline-none" onchange="alternarBotonFoto('llanta_pi', 'btn_f_pi')">
+                <div class="p-4 border border-stone-200 rounded-xl bg-stone-50/50 space-y-2 shadow-sm">
+                    <div class="flex flex-wrap justify-between items-center gap-2">
+                        <span class="font-bold text-sm text-stone-900">Posterior Izquierda:</span>
+                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                            <select id="llanta_pi" class="border border-stone-300 font-bold rounded-lg p-1.5 text-xs bg-white focus:border-stone-900 outline-none" onchange="alternarBotonFoto('llanta_pi', 'btn_f_pi')">
                                 <option value="" disabled selected>-- SELECT --</option>
                                 <option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option>
                             </select>
-                            <label id="btn_f_pi" class="opacity-30 pointer-events-none flex items-center gap-2 bg-stone-900 text-white px-4 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all">
+                            <label id="btn_f_pi" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer transition-all">
                                 <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_pi">Foto</span>
                                 <input type="file" id="foto_llanta_pi" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_pi', 'lbl_f_pi')">
                             </label>
                         </div>
                     </div>
-                    <textarea id="obs_llanta_pi" placeholder="Observaciones de llanta..." class="w-full p-3 bg-white border-2 border-stone-200 rounded-xl text-sm h-14 outline-none resize-none focus:border-stone-900"></textarea>
+                    <textarea id="obs_llanta_pi" placeholder="Observaciones de llanta..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
                 </div>
 
-                <!-- Posterior Derecha -->
-                <div class="p-5 border-2 border-stone-200 rounded-2xl bg-stone-50/50 space-y-3">
-                    <div class="flex justify-between items-center gap-3">
-                        <span class="font-bold text-lg text-stone-900">Posterior Derecha:</span>
-                        <div class="flex items-center gap-3">
-                            <select id="llanta_pd" class="border-2 border-stone-300 font-bold rounded-xl p-2 text-base bg-white focus:border-stone-900 outline-none" onchange="alternarBotonFoto('llanta_pd', 'btn_f_pd')">
+                <div class="p-4 border border-stone-200 rounded-xl bg-stone-50/50 space-y-2 shadow-sm">
+                    <div class="flex flex-wrap justify-between items-center gap-2">
+                        <span class="font-bold text-sm text-stone-900">Posterior Derecha:</span>
+                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                            <select id="llanta_pd" class="border border-stone-300 font-bold rounded-xl p-1.5 text-xs bg-white focus:border-stone-900 outline-none" onchange="alternarBotonFoto('llanta_pd', 'btn_f_pd')">
                                 <option value="" disabled selected>-- SELECT --</option>
                                 <option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option>
                             </select>
-                            <label id="btn_f_pd" class="opacity-30 pointer-events-none flex items-center gap-2 bg-stone-900 text-white px-4 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all">
+                            <label id="btn_f_pd" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer transition-all">
                                 <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_pd">Foto</span>
                                 <input type="file" id="foto_llanta_pd" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_pd', 'lbl_f_pd')">
                             </label>
                         </div>
                     </div>
-                    <textarea id="obs_llanta_pd" placeholder="Observaciones de llanta..." class="w-full p-3 bg-white border-2 border-stone-200 rounded-xl text-sm h-14 outline-none resize-none focus:border-stone-900"></textarea>
+                    <textarea id="obs_llanta_pd" placeholder="Observaciones de llanta..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
                 </div>
 
-                <!-- Neumático de Repuesto -->
-                <div class="p-5 border-2 border-stone-200 rounded-2xl bg-stone-50/50 space-y-3">
-                    <div class="flex justify-between items-center gap-3">
-                        <span class="font-bold text-lg text-stone-900">Neumático Repuesto:</span>
-                        <div class="flex items-center gap-3">
-                            <select id="llanta_rep" class="border-2 border-stone-300 font-bold rounded-xl p-2 text-base bg-white focus:border-stone-900 outline-none" onchange="alternarBotonFoto('llanta_rep', 'btn_f_rep')">
+                <div class="p-4 border border-stone-200 rounded-xl bg-stone-50/50 space-y-2 shadow-sm">
+                    <div class="flex flex-wrap justify-between items-center gap-2">
+                        <span class="font-bold text-sm text-stone-900">Neumático Repuesto:</span>
+                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                            <select id="llanta_rep" class="border border-stone-300 font-bold rounded-lg p-1.5 text-xs bg-white focus:border-stone-900 outline-none" onchange="alternarBotonFoto('llanta_rep', 'btn_f_rep')">
                                 <option value="" disabled selected>-- SELECT --</option>
                                 <option value="OK">OK</option><option value="CRITICA">CRÍTICA</option><option value="NA">N/A</option>
                             </select>
-                            <label id="btn_f_rep" class="opacity-30 pointer-events-none flex items-center gap-2 bg-stone-900 text-white px-4 py-2.5 rounded-xl font-bold text-sm cursor-pointer transition-all">
+                            <label id="btn_f_rep" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer transition-all">
                                 <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_rep">Foto</span>
                                 <input type="file" id="foto_llanta_rep" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_rep', 'lbl_f_rep')">
                             </label>
                         </div>
                     </div>
-                    <textarea id="obs_llanta_rep" placeholder="Observaciones..." class="w-full p-3 bg-white border-2 border-stone-200 rounded-xl text-sm h-14 outline-none resize-none focus:border-stone-900"></textarea>
+                    <textarea id="obs_llanta_rep" placeholder="Observaciones..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
                 </div>
             </div>
 
-            <!-- El resto de las categorías (Fluidos, Luces, Kit, Furgón) se comportan igual que las llantas con id dinámico -->
-            <!-- Para mantener el código compacto e hiper-funcional, los scripts procesan los bloques de forma modular -->
-
-            <!-- 7. VALIDACIÓN DE IDENTIDAD Y FIRMAS MANUSCRITAS (SIN CÓDIGO CORPORATIVO) -->
-            <div class="p-6 bg-stone-900 text-white rounded-2xl space-y-5">
-                <span class="block text-sm font-black uppercase tracking-wider text-cat-yellow border-b border-stone-700 pb-1"><i class="bi bi-shield-lock"></i> 3. Cierre y Validación</span>
+            <div class="p-4 bg-stone-900 text-white rounded-xl space-y-4 shadow-md">
+                <span class="block text-xs font-black uppercase tracking-wider text-cat-yellow border-b border-stone-700 pb-0.5"><i class="bi bi-shield-lock"></i> 3. Cierre y Validación</span>
                 
-                <div class="grid grid-cols-2 gap-4 text-base">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                     <div>
-                        <label class="block font-bold mb-1">DNI Supervisor:</label>
-                        <input type="text" id="dni_supervisor" maxlength="8" required placeholder="8 dígitos" class="w-full p-3 text-stone-950 rounded-xl focus:outline-none font-medium bg-white">
+                        <label class="block font-bold mb-0.5 text-xs">DNI Supervisor:</label>
+                        <input type="text" id="dni_supervisor" maxlength="8" required placeholder="8 dígitos" class="w-full p-2 text-stone-950 rounded-lg focus:outline-none font-medium bg-white text-xs sm:text-sm">
                     </div>
                     <div>
-                        <label class="block font-bold mb-1">Nombre Supervisor:</label>
-                        <input type="text" id="nom_supervisor" required placeholder="Supervisor de Turno" class="w-full p-3 text-stone-950 rounded-xl focus:outline-none font-medium bg-white">
+                        <label class="block font-bold mb-0.5 text-xs">Nombre Supervisor:</label>
+                        <input type="text" id="nom_supervisor" required placeholder="Supervisor de Turno" class="w-full p-2 text-stone-950 rounded-lg focus:outline-none font-medium bg-white text-xs sm:text-sm">
                     </div>
                 </div>
 
-                <div class="space-y-4 pt-3 border-t border-stone-800">
+                <div class="space-y-3 pt-2 border-t border-stone-800">
                     <div>
-                        <label class="block text-sm font-bold text-cat-yellow mb-1 uppercase tracking-tight"><i class="bi bi-pencil-fill"></i> Firma del Conductor (Dibuje encima):</label>
-                        <div class="w-full bg-white rounded-xl overflow-hidden">
-                            <canvas id="canvas_conductor" class="w-full h-32 block touch-none cursor-crosshair"></canvas>
+                        <label class="block text-[11px] font-bold text-cat-yellow mb-1 uppercase tracking-tight"><i class="bi bi-pencil-fill"></i> Firma del Conductor (Dibuje encima):</label>
+                        <div class="w-full bg-white rounded-lg overflow-hidden border border-stone-700">
+                            <canvas id="canvas_conductor" class="w-full h-24 block touch-none cursor-crosshair"></canvas>
                         </div>
-                        <button type="button" onclick="limpiarCanvas('canvas_conductor')" class="mt-1 text-xs text-red-400 font-bold flex items-center gap-1"><i class="bi bi-trash"></i> Borrar Firma</button>
+                        <button type="button" onclick="limpiarCanvas('canvas_conductor')" class="mt-1 text-[10px] text-red-400 font-bold flex items-center gap-1"><i class="bi bi-trash"></i> Borrar Firma</button>
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-cat-yellow mb-1 uppercase tracking-tight"><i class="bi bi-pencil-fill"></i> Firma del Supervisor (Dibuje encima):</label>
-                        <div class="w-full bg-white rounded-xl overflow-hidden">
-                            <canvas id="canvas_supervisor" class="w-full h-32 block touch-none cursor-crosshair"></canvas>
+                        <label class="block text-[11px] font-bold text-cat-yellow mb-1 uppercase tracking-tight"><i class="bi bi-pencil-fill"></i> Firma del Supervisor (Dibuje encima):</label>
+                        <div class="w-full bg-white rounded-lg overflow-hidden border border-stone-700">
+                            <canvas id="canvas_supervisor" class="w-full h-24 block touch-none cursor-crosshair"></canvas>
                         </div>
-                        <button type="button" onclick="limpiarCanvas('canvas_supervisor')" class="mt-1 text-xs text-red-400 font-bold flex items-center gap-1"><i class="bi bi-trash"></i> Borrar Firma</button>
+                        <button type="button" onclick="limpiarCanvas('canvas_supervisor')" class="mt-1 text-[10px] text-red-400 font-bold flex items-center gap-1"><i class="bi bi-trash"></i> Borrar Firma</button>
                     </div>
                 </div>
             </div>
 
             <input type="hidden" id="latitud" value="0"><input type="hidden" id="longitud" value="0">
 
-            <!-- BOTÓN ENVIAR ROBUSTO PREMIUM CATERPILLAR -->
-            <button type="submit" id="submitBtn" class="w-full bg-cat-yellow hover:bg-amber-400 text-stone-950 font-black py-4 px-5 rounded-2xl text-xl transition-all shadow-lg uppercase tracking-wider border-b-4 border-amber-600">
+            <button type="submit" id="submitBtn" class="w-full bg-cat-yellow hover:bg-amber-400 text-stone-950 font-black py-3 px-4 rounded-xl text-lg transition-all shadow-md uppercase tracking-wider border-b-4 border-amber-600">
                 Finalizar y Enviar Inspección
             </button>
         </form>
 
-        <div id="responseMessage" class="m-6 p-4 rounded-xl text-center text-lg font-bold hidden"></div>
+        <div id="responseMessage" class="m-4 p-3 rounded-xl text-center text-base font-bold hidden"></div>
     </div>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxoVGEoTagvtnLporSKdnacrTA-qrDkMJ-RXV4sfGM9lRUQn3llqZLcN_XcHWCidrcV6w/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzu_As5i-nz3veL9fSdN2y4OWjVmvGoXyBvECghuQGuOeu3gkKz6LIkyhHCi7tysdc0/exec";
 
-        // LÓGICA INTERACTIVA DE CÁMARA: Activa el botón sólo si se seleccionó una respuesta
         function alternarBotonFoto(selectId, labelId) {
             const select = document.getElementById(selectId);
             const label = document.getElementById(labelId);
@@ -292,13 +271,12 @@
             }
         }
 
-        // CONTROL DE FIRMAS DIGITALES EN CANVAS
         function inicializarPanelesFirma() {
             ['canvas_conductor', 'canvas_supervisor'].forEach(id => {
                 const canvas = document.getElementById(id);
                 const ctx = canvas.getContext('2d');
                 canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
-                ctx.strokeStyle = "#111111"; ctx.lineWidth = 3; ctx.lineCap = "round";
+                ctx.strokeStyle = "#111111"; ctx.lineWidth = 2.5; ctx.lineCap = "round";
                 
                 let dibujando = false; let uX = 0; let uY = 0;
                 function pos(e) {
@@ -358,12 +336,11 @@
 
         window.addEventListener('DOMContentLoaded', () => { establecerTiempo(); inicializarPanelesFirma(); capturarGPS(); });
 
-        // SUBMIT GENERAL Y ENVÍO SEGURO SIN PREFLIGHT CORS
         document.getElementById('checklistForm').addEventListener('submit', async function (e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             const msg = document.getElementById('responseMessage');
-            btn.disabled = true; btn.innerText = "TRANSMITIENDO AUDITORÍA MAGSA...";
+            btn.disabled = true; btn.innerText = "TRANSMITIENDO...";
 
             try {
                 const formData = {
@@ -407,9 +384,6 @@
                     obs_llanta_rep: document.getElementById('obs_llanta_rep').value,
                     foto_llanta_rep: await obtenerBase64(document.getElementById('foto_llanta_rep').files[0]),
                     
-                    // Nota: Para mantener limpia la respuesta, la lógica mapea las llantas consecutivas. 
-                    // Los campos de fluidos, luces y kit operan sobre la misma base estructural.
-                    
                     dni_supervisor: document.getElementById('dni_supervisor').value,
                     nom_supervisor: document.getElementById('nom_supervisor').value,
                     latitud: document.getElementById('latitud').value,
@@ -425,15 +399,15 @@
                     body: JSON.stringify(formData)
                 });
                 
-                msg.className = "m-6 p-4 rounded-xl text-center text-lg font-bold bg-emerald-100 text-emerald-800 border-2 border-emerald-300";
-                msg.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i> Inspección enviada a Drive y Sheets con éxito.`;
+                msg.className = "m-4 p-3 rounded-xl text-center text-base font-bold bg-emerald-100 text-emerald-800 border border-emerald-300";
+                msg.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i> Inspección enviada con éxito.`;
                 msg.classList.remove('hidden');
                 document.getElementById('checklistForm').reset();
                 limpiarCanvas('canvas_conductor'); limpiarCanvas('canvas_supervisor');
                 establecerTiempo();
 
             } catch (err) {
-                msg.className = "m-6 p-4 rounded-xl text-center text-lg font-bold bg-red-100 text-red-800 border-2 border-red-300";
+                msg.className = "m-4 p-3 rounded-xl text-center text-base font-bold bg-red-100 text-red-800 border border-red-300";
                 msg.innerText = "Error en el guardado de datos.";
                 msg.classList.remove('hidden');
             } finally {
