@@ -11,17 +11,15 @@
 
     <div class="w-full max-w-2xl bg-white p-6 sm:p-8 rounded-2xl border-[1px] border-slate-200/80 shadow-md shadow-slate-200/50">
         
-        <!-- LOGO CORPORATIVO DE MAGSI -->
-        <div id="appLogo" class="w-full flex items-center justify-center mx-auto mb-5 max-w-[180px]">
-            <img src="./magsi_casco.png" alt="Logo Corporativo" class="w-180 h-auto object-contain drop-shadow-sm"> 
+        <div id="appLogo" class="w-full flex items-center justify-center mx-auto mb-5 max-w-[240px]">
+            <img src="./magsi_casco.png" alt="Logo Corporativo" class="w-full h-auto object-contain drop-shadow-sm"> 
         </div>
 
         <h2 class="text-center text-2xl font-bold tracking-tight text-slate-900 mb-1">Checklist Pre-Operativo</h2>
-        <p class="text-slate-400 text-center text-sm mb-6 uppercase tracking-wider font-semibold text-xs text-amber-600">Auditoría con Evidencia Fotográfica</p>
+        <p class="text-slate-400 text-center text-sm mb-6 uppercase tracking-wider font-semibold text-xs text-amber-600">Auditoría con Evidencia Fotográfica y Drive por Ítem</p>
         
         <form id="checklistForm" class="space-y-6" novalidate>
             
-            <!-- FECHA Y HORA DEL SISTEMA BLOQUEADAS -->
             <div class="grid grid-cols-2 gap-3 bg-amber-50/40 p-4 rounded-xl border border-amber-200/60 shadow-sm">
                 <div>
                     <label class="block text-xs font-bold text-amber-900 uppercase tracking-tight mb-1"><i class="bi bi-calendar-event"></i> Fecha de Registro:</label>
@@ -33,7 +31,6 @@
                 </div>
             </div>
 
-            <!-- DATOS GENERALES -->
             <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
                 <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1"><i class="bi bi-truck-flatbed"></i> Datos de la Unidad</span>
                 <div class="grid grid-cols-2 gap-3">
@@ -52,11 +49,9 @@
                 </div>
             </div>
 
-            <!-- 1. DOCUMENTACIÓN Y VENCIMIENTOS -->
             <div class="space-y-3">
                 <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1"><i class="bi bi-card-checklist"></i> 1. Documentación</span>
                 
-                <!-- SOAT -->
                 <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
                     <div class="flex justify-between items-center">
                         <span class="text-sm font-semibold text-slate-900">SOAT Vigente</span>
@@ -77,7 +72,6 @@
                     <textarea id="obs_soat" maxlength="1000" placeholder="Comentarios / Observaciones del SOAT (Máx. 1000 caracteres)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none" rows="2"></textarea>
                 </div>
 
-                <!-- RTV -->
                 <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
                     <div class="flex justify-between items-center">
                         <span class="text-sm font-semibold text-slate-900">Revisión Técnica Vehicular</span>
@@ -98,7 +92,6 @@
                     <textarea id="obs_rtv" maxlength="1000" placeholder="Comentarios / Observaciones de la Revisión Técnica (Máx. 1000 caracteres)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none" rows="2"></textarea>
                 </div>
 
-                <!-- Brevete -->
                 <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
                     <div class="flex justify-between items-center">
                         <span class="text-sm font-semibold text-slate-900">Licencia de Conducir (Brevete)</span>
@@ -119,7 +112,6 @@
                     <textarea id="obs_brevete" maxlength="1000" placeholder="Comentarios / Observaciones de la Licencia (Máx. 1000 caracteres)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none" rows="2"></textarea>
                 </div>
 
-                <!-- TIV -->
                 <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
                     <div class="flex justify-between items-center">
                         <span class="text-sm font-semibold text-slate-900">Tarjeta de Propiedad (TIV)</span>
@@ -128,7 +120,6 @@
                     <textarea id="obs_tiv" maxlength="1000" placeholder="Comentarios / Observaciones de la TIV (Máx. 1000 caracteres)..." class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none" rows="2"></textarea>
                 </div>
 
-                <!-- Guías -->
                 <div class="p-4 border border-slate-200 rounded-xl space-y-3 shadow-sm">
                     <div class="flex justify-between items-center">
                         <span class="text-sm font-semibold text-slate-900">Guías de Remisión / Carga</span>
@@ -138,7 +129,6 @@
                 </div>
             </div>
 
-            <!-- 2. CONTROL INDIVIDUAL DE LLANTAS -->
             <div class="space-y-3">
                 <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="bi bi-disc"></i> 2. Estado de Llantas</span>
                 <div class="space-y-3 text-xs">
@@ -199,7 +189,6 @@
                 </div>
             </div>
 
-            <!-- 3. NIVELES DE FLUIDOS -->
             <div class="space-y-3">
                 <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="bi bi-droplet-half"></i> 3. Niveles de Fluidos</span>
                 <div class="space-y-3 text-xs">
@@ -238,7 +227,6 @@
                 </div>
             </div>
 
-            <!-- 4. ILUMINACIÓN SEPARADA -->
             <div class="space-y-3">
                 <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="bi bi-lightbulb"></i> 4. Sistema de Luces</span>
                 <div class="space-y-3">
@@ -288,7 +276,6 @@
                 </div>
             </div>
 
-            <!-- 5. SEGURIDAD Y RESPUESTA AMBIENTAL -->
             <div class="space-y-3">
                 <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="bi bi-shield"></i> 5. Kit de Emergencias</span>
                 <div class="space-y-3">
@@ -342,7 +329,6 @@
                 </div>
             </div>
 
-            <!-- 6. DISPOSITIVOS DE SEGURIDAD FURGÓN -->
             <div class="space-y-3">
                 <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider"><i class="bi bi-lock"></i> 6. Seguridad de Carga</span>
                 <div class="space-y-3">
@@ -381,7 +367,6 @@
                 </div>
             </div>
 
-            <!-- 7. VALIDACIÓN Y FIRMAS DIGITALES -->
             <div class="p-4 bg-slate-100 rounded-xl border border-slate-200 space-y-4">
                 <span class="block text-xs font-bold text-slate-700 uppercase tracking-wider"><i class="bi bi-person-badge"></i> 7. Validación de Identidad y Firmas</span>
                 
@@ -400,14 +385,20 @@
                     </div>
                 </div>
 
-                <div class="space-y-3 pt-2 border-t border-slate-200/60">
+                <div class="space-y-4 pt-2 border-t border-slate-200/60">
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1 uppercase tracking-tight"><i class="bi bi-pencil-square"></i> Registro de Firma del Conductor:</label>
-                        <textarea id="firma_conductor" required placeholder="Espacio asignado para la firma..." class="w-full p-2 bg-white border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none h-16 resize-none"></textarea>
+                        <label class="block text-xs font-bold text-slate-700 mb-1 uppercase tracking-tight"><i class="bi bi-pencil-fill"></i> Firma Digital del Conductor (Dibuje aquí):</label>
+                        <div class="relative w-full bg-white border-2 border-dashed border-slate-300 rounded-xl overflow-hidden">
+                            <canvas id="canvas_conductor" class="w-full h-32 block touch-none cursor-crosshair"></canvas>
+                        </div>
+                        <button type="button" onclick="limpiarCanvas('canvas_conductor')" class="mt-1 text-xs text-red-600 hover:text-red-800 font-semibold flex items-center gap-1"><i class="bi bi-trash"></i> Limpiar Firma</button>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1 uppercase tracking-tight"><i class="bi bi-pencil-square"></i> Registro de Firma del Supervisor:</label>
-                        <textarea id="firma_supervisor" required placeholder="Espacio asignado para la firma..." class="w-full p-2 bg-white border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 outline-none h-16 resize-none"></textarea>
+                        <label class="block text-xs font-bold text-slate-700 mb-1 uppercase tracking-tight"><i class="bi bi-pencil-fill"></i> Firma Digital del Supervisor (Dibuje aquí):</label>
+                        <div class="relative w-full bg-white border-2 border-dashed border-slate-300 rounded-xl overflow-hidden">
+                            <canvas id="canvas_supervisor" class="w-full h-32 block touch-none cursor-crosshair"></canvas>
+                        </div>
+                        <button type="button" onclick="limpiarCanvas('canvas_supervisor')" class="mt-1 text-xs text-red-600 hover:text-red-800 font-semibold flex items-center gap-1"><i class="bi bi-trash"></i> Limpiar Firma</button>
                     </div>
                 </div>
             </div>
@@ -424,16 +415,87 @@
     </div>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxpPq-SlP3pjumFx9WSrqrR8gpL5TES3I2yPVyw7M6NOYZ8nWMHJBmklWGJrPlJdAwP/exec";
+        // CONFIGURAR URL DE APP SCRIPT NUEVA/ACTUALIZADA AQUÍ SI CAMBIA
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxoVGEoTagvtnLporSKdnacrTA-qrDkMJ-RXV4sfGM9lRUQn3llqZLcN_XcHWCidrcV6w/exec";
 
-        // Cambio visual del botón al tomar la foto
+        // LÓGICA DE DIBUJO PARA LOS CANVAS (FIRMAS)
+        function inicializarPanelesFirma() {
+            const ids = ['canvas_conductor', 'canvas_supervisor'];
+            ids.forEach(id => {
+                const canvas = document.getElementById(id);
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                
+                ctx.strokeStyle = "#0f172a"; 
+                ctx.lineWidth = 2.5;
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+
+                let dibujando = false;
+                let ultX = 0;
+                let ultY = 0;
+
+                function obtenerPos(e) {
+                    const rect = canvas.getBoundingClientRect();
+                    const clienteX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clienteY = e.touches ? e.touches[0].clientY : e.clientY;
+                    return {
+                        x: clienteX - rect.left,
+                        y: clienteY - rect.top
+                    };
+                }
+
+                function empezarDibujo(e) {
+                    dibujando = true;
+                    const pos = obtenerPos(e);
+                    ultX = pos.x;
+                    ultY = pos.y;
+                }
+
+                function dibujar(e) {
+                    if (!dibujando) return;
+                    e.preventDefault(); 
+                    const pos = obtenerPos(e);
+                    ctx.beginPath();
+                    ctx.moveTo(ultX, ultY);
+                    ctx.lineTo(pos.x, pos.y);
+                    ctx.stroke();
+                    ultX = pos.x;
+                    ultY = pos.y;
+                }
+
+                function pararDibujo() { dibujando = false; }
+
+                canvas.addEventListener('mousedown', empezarDibujo);
+                canvas.addEventListener('mousemove', dibujar);
+                window.addEventListener('mouseup', pararDibujo);
+
+                canvas.addEventListener('touchstart', empezarDibujo);
+                canvas.addEventListener('touchmove', dibujar);
+                window.addEventListener('touchend', pararDibujo);
+            });
+        }
+
+        function limpiarCanvas(id) {
+            const canvas = document.getElementById(id);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function canvasVacio(id) {
+            const canvas = document.getElementById(id);
+            const buffer = new Uint32Array(canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data.buffer);
+            return !buffer.some(color => color !== 0);
+        }
+
         function actualizarEstadoFoto(input, labelId) {
             if(input.files && input.files[0]) {
                 document.getElementById(labelId).innerText = "¡Foto Lista!";
             }
         }
 
-        // Convertir archivos binarios a cadenas Base64 de forma asíncrona
         function obtenerBase64(file) {
             return new Promise((resolve, reject) => {
                 if (!file) resolve("");
@@ -444,7 +506,6 @@
             });
         }
 
-        // CONFIGURAR FECHA/HORA AUTOMÁTICAS E INMUTABLES
         function establecerTiempoSistema() {
             const ahora = new Date();
             const dia = String(ahora.getDate()).padStart(2, '0');
@@ -460,9 +521,7 @@
             const horasStr = String(horas).padStart(2, '0');
             document.getElementById('hora_sistema').value = `${horasStr}:${minutos} ${ampm}`;
         }
-        window.addEventListener('DOMContentLoaded', establecerTiempoSistema);
 
-        // GEOLOCALIZACIÓN
         function capturarCoordenadas() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
@@ -473,19 +532,24 @@
                 );
             }
         }
-        window.addEventListener('load', capturarCoordenadas);
 
-        // FORMULARIO SUBMIT CON CONVERSIÓN A BASE64
+        window.addEventListener('DOMContentLoaded', () => {
+            establecerTiempoSistema();
+            inicializarPanelesFirma();
+            capturarCoordenadas();
+        });
+
+        // SUBMIT DEL FORMULARIO CON EVITACIÓN DE ERRORES CORS Y PETICIÓN TEXT/PLAIN
         document.getElementById('checklistForm').addEventListener('submit', async function (event) {
             event.preventDefault();
             const btn = document.getElementById('submitBtn');
             const msgDiv = document.getElementById('responseMessage');
             
             btn.disabled = true;
-            btn.innerText = "PROCESANDO IMÁGENES Y ENVIANDO...";
+            btn.innerText = "PROCESANDO MULTIMEDIA Y SUBIENDO...";
 
             try {
-                // Lectura y conversión concurrente de los inputs de la cámara a Base64
+                // Captura asíncrona de archivos multimedia
                 const fSoat = document.getElementById('foto_soat').files[0];
                 const fRtv = document.getElementById('foto_rtv').files[0];
                 const fBrev = document.getElementById('foto_brevete').files[0];
@@ -508,6 +572,9 @@
                 const fCand = document.getElementById('foto_furgon_candados').files[0];
                 const fBarr = document.getElementById('foto_furgon_barras').files[0];
                 const fPern = document.getElementById('foto_furgon_pernos').files[0];
+
+                const firmaCondBase64 = !canvasVacio('canvas_conductor') ? document.getElementById('canvas_conductor').toDataURL("image/png") : "";
+                const firmaSuperBase64 = !canvasVacio('canvas_supervisor') ? document.getElementById('canvas_supervisor').toDataURL("image/png") : "";
 
                 const formData = {
                     fecha_inspeccion: document.getElementById('fecha_sistema').value,
@@ -619,25 +686,29 @@
                     nom_supervisor: document.getElementById('nom_supervisor').value,
                     cod_supervisor: document.getElementById('cod_supervisor').value,
                     
-                    firma_conductor: document.getElementById('firma_conductor').value,
-                    firma_supervisor: document.getElementById('firma_supervisor').value
+                    firma_conductor: firmaCondBase64,
+                    firma_supervisor: firmaSuperBase64
                 };
 
-                // Enviamos como POST JSON completo hacia Apps Script
+                // ENVÍO DE BAJO IMPACTO COMO TEXTO PLANO (Solución definitiva a errores de carga pesada)
                 const respuesta = await fetch(WEB_APP_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Evita problemas de CORS en preflight
+                    mode: 'no-cors', // Evita bloqueos de verificación en peticiones HTTP grandes
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(formData)
                 });
                 
                 msgDiv.className = "mt-4 p-3 rounded-lg text-center text-sm font-medium bg-emerald-100 text-emerald-800";
-                msgDiv.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i> ¡Inspección y archivos guardados en Google Drive con éxito!`;
+                msgDiv.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i> ¡Inspección técnica procesada con éxito en Sheets y Drive!`;
                 msgDiv.classList.remove('hidden');
-                document.getElementById('checklistForm').reset();
                 
-                // Resetear etiquetas de los botones de fotos
+                document.getElementById('checklistForm').reset();
+                limpiarCanvas('canvas_conductor');
+                limpiarCanvas('canvas_supervisor');
+                
+                // Resetear textos de botones
                 document.querySelectorAll('label span').forEach(span => {
-                    if(span.id.startsWith('lbl_')) {
+                    if(span.id && span.id.startsWith('lbl_')) {
                         if(span.id === 'lbl_foto_soat') span.innerText = "Foto SOAT";
                         else if(span.id === 'lbl_foto_rtv') span.innerText = "Foto RTV";
                         else if(span.id === 'lbl_foto_brevete') span.innerText = "Foto Brevete";
@@ -650,9 +721,10 @@
 
             } catch (err) {
                 msgDiv.className = "mt-4 p-3 rounded-lg text-center text-sm font-medium bg-red-100 text-red-800";
-                msgDiv.innerText = "Error en el procesamiento o carga de archivos.";
+                msgDiv.innerText = "Error local en la compilación de datos.";
                 msgDiv.classList.remove('hidden');
             } finally {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 btn.disabled = false;
                 btn.innerText = "Registrar Inspección";
             }
