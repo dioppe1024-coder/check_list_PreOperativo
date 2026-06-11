@@ -3,599 +3,645 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magsa - Inspección Pre-Operativa</title>
+    <title>Magsa - Inspección Pre-Operativa Integral</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        /* Ajuste de escala global óptima para pantallas móviles */
-        body { font-size: 0.95rem; } 
+        body { font-size: 0.95rem; }
         .bg-cat-yellow { background-color: #FFCD00; }
         .text-cat-yellow { color: #FFCD00; }
-        .border-cat-yellow { border-color: #FFCD00; }
         .bg-cat-black { background-color: #111111; }
+        .seccion-bloqueada { opacity: 0.3; pointer-events: none; transition: all 0.3s ease; }
+        .seccion-activa { opacity: 1; pointer-events: auto; }
+        .btn-checkbox { border: 2px solid #d6d3d1; padding: 0.5rem; border-radius: 0.75rem; font-weight: bold; font-size: 0.8rem; transition: all 0.2s; background-color: #f5f5f4; width: 100%; text-align: center; }
     </style>
 </head>
 <body class="bg-stone-100 text-stone-900 min-h-screen py-4 px-2 sm:px-4 flex flex-col items-center">
 
-    <!-- Contenedor optimizado para evitar desbordes en smartphones de 6.5" -->
-    <div class="w-full max-w-2xl bg-white rounded-2xl border border-stone-200 shadow-lg overflow-hidden">
+    <div id="contenedor-auditoria" class="w-full max-w-2xl bg-white rounded-2xl border border-stone-200 shadow-xl overflow-hidden">
         
-        <!-- CABECERA PREMIUM CATERPILLAR -->
-        <div class="bg-white p-4 flex flex-col items-center border-b-4 border-cat-yellow">
-            <div id="appLogo" class="w-full max-w-[200px] mb-2">
-                <img src="./magsi_casco.png" alt="Magsa Logo" class="w-full h-auto object-contain"> 
-            </div>
-            <h2 class="text-black text-xl font-black uppercase tracking-tight text-center">Checklist Pre-Operativo</h2>
-            <p class="bg-cat-black text-cat-yellow text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 mt-1 rounded">Control de Flota Magsa</p>
+        <!-- CABECERA -->
+        <div class="bg-white p-4 flex flex-col items-center border-b-4 border-cat-yellow shadow-sm">
+            <img src="./magsi_casco.png" alt="Magsa" class="w-full max-w-[180px] h-auto object-contain mb-1 drop-shadow-md">
+            <h2 class="text-black text-lg font-black uppercase tracking-tight">Checklist Pre-Operativo</h2>
+            <div class="bg-cat-black text-cat-yellow text-[9px] font-bold uppercase px-2 py-0.5 rounded mt-1">Magsa Flota Inteligente</div>
         </div>
 
-        <form id="checklistForm" class="p-4 sm:p-6 space-y-5" novalidate>
+        <form id="checklistForm" class="p-3 sm:p-5 space-y-6" novalidate>
             
-            <!-- FECHA Y HORA DE SISTEMA -->
-            <div class="grid grid-cols-2 gap-2 bg-stone-900 text-white p-3 rounded-xl shadow-inner">
+            <!-- INDICADORES FIJOS DEL SISTEMA -->
+            <div class="grid grid-cols-3 gap-2 bg-stone-900 text-white p-3 rounded-xl shadow-inner text-xs">
                 <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-cat-yellow mb-0.5"><i class="bi bi-calendar-event"></i> Fecha:</label>
-                    <input type="text" id="fecha_sistema" readonly class="w-full bg-stone-800 border border-stone-700 text-stone-300 rounded-lg px-2 py-1.5 font-bold outline-none select-none text-xs sm:text-sm">
+                    <label class="block font-bold text-cat-yellow mb-0.5">ID Auditoría:</label>
+                    <input type="text" id="id_visible" value="AUTO-GENERADO" readonly class="w-full bg-stone-800 text-stone-400 p-1.5 rounded font-black outline-none border border-stone-700">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold uppercase tracking-wider text-cat-yellow mb-0.5"><i class="bi bi-clock"></i> Hora:</label>
-                    <input type="text" id="hora_sistema" readonly class="w-full bg-stone-800 border border-stone-700 text-stone-300 rounded-lg px-2 py-1.5 font-bold outline-none select-none text-xs sm:text-sm">
+                    <label class="block font-bold text-cat-yellow mb-0.5">Fecha:</label>
+                    <input type="text" id="fecha_sistema" readonly class="w-full bg-stone-800 p-1.5 rounded outline-none border border-stone-700">
+                </div>
+                <div>
+                    <label class="block font-bold text-cat-yellow mb-0.5">Hora:</label>
+                    <input type="text" id="hora_sistema" readonly class="w-full bg-stone-800 p-1.5 rounded outline-none border border-stone-700">
                 </div>
             </div>
 
-            <!-- DATOS GENERALES -->
-            <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-3">
-                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-truck"></i> Datos de Operación</span>
+            <!-- SECCIÓN 0: DATOS DE OPERACIÓN -->
+            <div id="sec_0" class="bg-stone-50 p-3 rounded-xl border border-stone-200 space-y-3">
+                <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-truck"></i> Datos Iniciales de Control</span>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 mb-0.5">DNI Conductor:</label>
+                        <input type="text" id="dni_conductor" maxlength="8" placeholder="Ingrese DNI" class="w-full p-2 border border-stone-300 rounded-lg text-sm focus:border-stone-900 focus:outline-none" oninput="consultarDConductor()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 mb-0.5">Nombre Completo:</label>
+                        <input type="text" id="conductor" readonly placeholder="Autocompletado desde Sheets..." class="w-full p-2 bg-stone-100 border border-stone-300 rounded-lg text-sm font-bold text-stone-600 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 mb-0.5">Sede / Sucursal:</label>
+                        <select id="sucursal" class="w-full p-2 border border-stone-300 rounded-lg text-sm bg-white focus:border-stone-900 focus:outline-none" onchange="validarBloque0()"><option value="" disabled selected>-- SELECCIONE --</option><option value="TRUJILLO">TRUJILLO</option><option value="LIMA">LIMA</option><option value="PIURA">PIURA</option><option value="CHICLAYO">CHICLAYO</option></select>
+                    </div>
+                    <div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-0.5">Placa:</label>
+                                <select id="placa" class="w-full p-2 border border-stone-300 rounded-lg text-sm bg-white focus:border-stone-900 focus:outline-none" onchange="consultarFlotaVehiculo()"><option value="" disabled selected>-- PLACA --</option><option value="T1U-814">T1U-814</option><option value="ABC-123">ABC-123</option><option value="P2W-850">P2W-850</option></select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-0.5">Marca:</label>
+                                <input type="text" id="marca" readonly class="w-full p-2 bg-stone-100 border border-stone-300 rounded-lg text-sm font-bold text-stone-600 outline-none">
+                            </div>
+                        </div>
+                    </div>
                     <div class="sm:col-span-2">
-                        <label class="block text-xs font-bold text-stone-700 mb-0.5">Nombre del Conductor:</label>
-                        <input type="text" id="conductor" required placeholder="Nombres y Apellidos" class="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-stone-900">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-stone-700 mb-0.5">Placa de la Unidad:</label>
-                        <input type="text" id="placa" maxlength="7" required placeholder="ABC-123" class="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-stone-900 uppercase">
-                    </div>
-                    <div>
                         <label class="block text-xs font-bold text-stone-700 mb-0.5">Kilometraje Inicial:</label>
-                        <input type="number" id="kilometraje" required placeholder="Ej. 145000" class="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-stone-900">
+                        <input type="number" id="kilometraje" placeholder="Kilometraje actual en tablero" class="w-full p-2 border border-stone-300 rounded-lg text-sm focus:border-stone-900 focus:outline-none" oninput="validarBloque0()">
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 1: DOCUMENTACIÓN -->
-            <div class="space-y-3">
-                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-file-earmark-text"></i> 1. Documentación (Sin Foto)</span>
+            <!-- SECCIÓN 1: IDENTIFICACIÓN, UNIFORME Y EPPS -->
+            <div id="sec_1" class="seccion-bloqueada bg-white p-3 rounded-xl border border-stone-200 space-y-4 shadow-sm">
+                <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-person-badge"></i> Epps e Identificación Corporativa</span>
+                
+                <!-- Uniforme -->
+                <div class="space-y-1.5 p-2 bg-stone-50 rounded-lg border">
+                    <label class="block text-xs font-bold text-stone-800">¿Cuenta con Uniforme Completo?</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('uniforme', 'SI')" class="btn-uniforme btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('uniforme', 'NO')" class="btn-uniforme btn-checkbox">NO</button>
+                    </div>
+                    <input type="hidden" id="uniforme" value="">
+                    <textarea id="obs_uniforme" placeholder="Observaciones..." class="w-full p-1.5 bg-white border rounded-md text-xs h-9 resize-none focus:outline-none"></textarea>
+                </div>
+
+                <!-- EPPS -->
+                <div class="space-y-1.5 p-2 bg-stone-50 rounded-lg border">
+                    <label class="block text-xs font-bold text-stone-800">¿Cuenta con EPPs de Seguridad?</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('epps', 'SI')" class="btn-epps btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('epps', 'NO')" class="btn-epps btn-checkbox">NO</button>
+                    </div>
+                    <input type="hidden" id="epps" value="">
+                    <textarea id="obs_epps" placeholder="Observaciones..." class="w-full p-1.5 bg-white border rounded-md text-xs h-9 resize-none focus:outline-none"></textarea>
+                </div>
+
+                <!-- Fotocheck -->
+                <div class="space-y-1.5 p-2 bg-stone-50 rounded-lg border">
+                    <label class="block text-xs font-bold text-stone-800">¿Porta su Fotocheck Institucional?</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('fotocheck', 'SI')" class="btn-fotocheck btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('fotocheck', 'NO')" class="btn-fotocheck btn-checkbox">NO</button>
+                    </div>
+                    <input type="hidden" id="fotocheck" value="">
+                    <textarea id="obs_fotocheck" placeholder="Observaciones..." class="w-full p-1.5 bg-white border rounded-md text-xs h-9 resize-none focus:outline-none"></textarea>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2: DOCUMENTACIÓN -->
+            <div id="sec_2" class="seccion-bloqueada space-y-3">
+                <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-file-text"></i> 1. Control de Documentación Vigente</span>
                 
                 <!-- SOAT -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">SOAT Vigente:</span>
-                        <select id="doc_soat" required class="text-xs font-bold border border-stone-300 rounded-lg p-1.5 bg-stone-50 w-full sm:w-auto outline-none focus:border-stone-900">
-                            <option value="" disabled selected>-- SELECCIONE --</option>
-                            <option value="SI">SÍ</option>
-                            <option value="NO">NO</option>
-                        </select>
+                <div class="p-3 bg-white border rounded-xl space-y-2 shadow-sm">
+                    <label class="block text-xs font-bold text-stone-900">SOAT:</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('soat_est', 'SI')" class="btn-soat_est btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('soat_est', 'NO')" class="btn-soat_est btn-checkbox">NO</button>
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-500 uppercase mb-0.5">Vencimiento SOAT:</label>
-                        <input type="date" id="venc_soat" class="w-full text-xs border border-stone-200 rounded-lg p-1.5 bg-stone-50">
-                    </div>
-                    <textarea id="obs_soat" placeholder="Observaciones del SOAT..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-12 outline-none resize-none focus:border-stone-900"></textarea>
+                    <input type="hidden" id="soat_est" value="">
+                    <input type="date" id="soat_venc" class="w-full text-xs border rounded-md p-1.5 bg-stone-50 outline-none">
+                    <textarea id="soat_obs" placeholder="Observaciones SOAT..." class="w-full p-1.5 bg-stone-50 border rounded-md text-xs h-9 resize-none focus:outline-none"></textarea>
                 </div>
 
                 <!-- RTV -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Revisión Técnica Vehicular:</span>
-                        <select id="doc_rtv" required class="text-xs font-bold border border-stone-300 rounded-lg p-1.5 bg-stone-50 w-full sm:w-auto outline-none focus:border-stone-900">
-                            <option value="" disabled selected>-- SELECCIONE --</option>
-                            <option value="SI">SÍ</option>
-                            <option value="NO">NO</option>
-                        </select>
+                <div class="p-3 bg-white border rounded-xl space-y-2 shadow-sm">
+                    <label class="block text-xs font-bold text-stone-900">Revisión Técnica Vehicular (RTV):</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('rtv_est', 'SI')" class="btn-rtv_est btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('rtv_est', 'NO')" class="btn-rtv_est btn-checkbox">NO</button>
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-500 uppercase mb-0.5">Vencimiento RTV:</label>
-                        <input type="date" id="venc_rtv" class="w-full text-xs border border-stone-200 rounded-lg p-1.5 bg-stone-50">
-                    </div>
-                    <textarea id="obs_rtv" placeholder="Observaciones de la RTV..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-12 outline-none resize-none focus:border-stone-900"></textarea>
+                    <input type="hidden" id="rtv_est" value="">
+                    <input type="date" id="rtv_venc" class="w-full text-xs border rounded-md p-1.5 bg-stone-50 outline-none">
+                    <textarea id="rtv_obs" placeholder="Observaciones RTV..." class="w-full p-1.5 bg-stone-50 border rounded-md text-xs h-9 resize-none focus:outline-none"></textarea>
                 </div>
 
-                <!-- BREVETE -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Licencia de Conducir (Brevete):</span>
-                        <select id="doc_brevete" required class="text-xs font-bold border border-stone-300 rounded-lg p-1.5 bg-stone-50 w-full sm:w-auto outline-none focus:border-stone-900">
-                            <option value="" disabled selected>-- SELECCIONE --</option>
-                            <option value="SI">SÍ</option>
-                            <option value="NO">NO</option>
-                        </select>
+                <!-- Licencia de Conducir -->
+                <div class="p-3 bg-white border rounded-xl space-y-2 shadow-sm">
+                    <label class="block text-xs font-bold text-stone-900">Licencia de Conducir (Brevete):</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('brevete_est', 'SI')" class="btn-brevete_est btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('brevete_est', 'NO')" class="btn-brevete_est btn-checkbox">NO</button>
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-500 uppercase mb-0.5">Vencimiento Licencia:</label>
-                        <input type="date" id="venc_brevete" class="w-full text-xs border border-stone-200 rounded-lg p-1.5 bg-stone-50">
-                    </div>
-                    <textarea id="obs_brevete" placeholder="Observaciones del Brevete..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-12 outline-none resize-none focus:border-stone-900"></textarea>
+                    <input type="hidden" id="brevete_est" value="">
+                    <input type="date" id="brevete_venc" class="w-full text-xs border rounded-md p-1.5 bg-stone-50 outline-none">
+                    <textarea id="brevete_obs" placeholder="Observaciones Brevete..." class="w-full p-1.5 bg-stone-50 border rounded-md text-xs h-9 resize-none focus:outline-none"></textarea>
                 </div>
 
-                <!-- TIV Y GUÍAS -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex justify-between items-center gap-2">
-                        <span class="text-xs font-bold text-stone-900">Tarjeta de Propiedad (TIV):</span>
-                        <select id="doc_tiv" class="text-xs font-bold border border-stone-300 rounded-lg p-1 bg-stone-50"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                <!-- TIV y Guías -->
+                <div class="p-3 bg-white border rounded-xl space-y-2 shadow-sm text-xs">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold">Tarjeta de Propiedad (TIV):</span>
+                        <select id="tiv_est" class="border p-1 rounded-md" onchange="validarBloque2()"><option value="SI">SÍ</option><option value="NO">NO</option></select>
                     </div>
-                    <div class="flex justify-between items-center border-t pt-2 gap-2">
-                        <span class="text-xs font-bold text-stone-900">Guías de Remisión / Carga:</span>
-                        <select id="doc_guias" class="text-xs font-bold border border-stone-300 rounded-lg p-1 bg-stone-50"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <span class="font-bold">Guías de Remisión / Carga:</span>
+                        <select id="guias_est" class="border p-1 rounded-md" onchange="validarBloque2()"><option value="SI">SÍ</option><option value="NO">NO</option></select>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 2: ESTADO DE LLANTAS -->
-            <div class="space-y-3">
-                <span class="block text-xs font-black text-stone-600 tracking-widest uppercase border-b pb-0.5"><i class="bi bi-disc"></i> 2. Estado de Llantas</span>
+            <!-- SECCIÓN 3: ESTADO DE LLANTAS (CON FOTO INDIVIDUAL COMPRIMIDA) -->
+            <div id="sec_3" class="seccion-bloqueada space-y-3">
+                <span class="block text-xs font-black text-stone-600 tracking-widest uppercase border-b pb-0.5"><i class="bi bi-disc"></i> 2. Estado Técnico de Neumáticos</span>
                 
-                <div class="space-y-3">
-                    <!-- DI -->
-                    <div class="p-4 border border-stone-200 rounded-xl bg-stone-50/50 space-y-2 shadow-sm">
-                        <div class="flex flex-wrap justify-between items-center gap-2">
-                            <span class="font-bold text-sm text-stone-900">Delantera Izquierda:</span>
-                            <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                                <select id="llanta_di" class="border border-stone-300 font-bold rounded-lg p-1.5 text-xs bg-white outline-none focus:border-stone-900" onchange="alternarBotonFoto('llanta_di', 'btn_f_di')">
-                                    <option value="" disabled selected>-- SELECT --</option>
-                                    <option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option>
-                                </select>
-                                <label id="btn_f_di" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer transition-all">
-                                    <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_di">Foto</span>
-                                    <input type="file" id="foto_llanta_di" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_di', 'lbl_f_di')">
-                                </label>
-                            </div>
+                <!-- DI -->
+                <div class="p-3 border rounded-xl bg-white space-y-2 shadow-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-xs">Delantera Izquierda (DI):</span>
+                        <div class="flex items-center gap-1.5">
+                            <button type="button" onclick="marcarTriple('di', 'OK')" class="btn-tr-di border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">OK</button>
+                            <button type="button" onclick="marcarTriple('di', 'REGULAR')" class="btn-tr-di border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">REG</button>
+                            <button type="button" onclick="marcarTriple('di', 'CRITICA')" class="btn-tr-di border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">CRIT</button>
+                            <input type="hidden" id="llanta_di" value="">
+                            <label id="btn_f_di" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_di">Foto</span><input type="file" id="foto_llanta_di" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_di', 'lbl_f_di')"></label>
                         </div>
-                        <textarea id="obs_llanta_di" placeholder="Observaciones..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
                     </div>
+                    <textarea id="obs_llanta_di" placeholder="Comentarios neumático..." class="w-full p-1.5 border rounded-lg text-xs h-9 resize-none focus:outline-none"></textarea>
+                </div>
 
-                    <!-- DD -->
-                    <div class="p-4 border border-stone-200 rounded-xl bg-stone-50/50 space-y-2 shadow-sm">
-                        <div class="flex flex-wrap justify-between items-center gap-2">
-                            <span class="font-bold text-sm text-stone-900">Delantera Derecha:</span>
-                            <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                                <select id="llanta_dd" class="border border-stone-300 font-bold rounded-lg p-1.5 text-xs bg-white outline-none focus:border-stone-900" onchange="alternarBotonFoto('llanta_dd', 'btn_f_dd')">
-                                    <option value="" disabled selected>-- SELECT --</option>
-                                    <option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option>
-                                </select>
-                                <label id="btn_f_dd" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer transition-all">
-                                    <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_dd">Foto</span>
-                                    <input type="file" id="foto_llanta_dd" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_dd', 'lbl_f_dd')">
-                                </label>
-                            </div>
+                <!-- DD -->
+                <div class="p-3 border rounded-xl bg-white space-y-2 shadow-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-xs">Delantera Derecha (DD):</span>
+                        <div class="flex items-center gap-1.5">
+                            <button type="button" onclick="marcarTriple('dd', 'OK')" class="btn-tr-dd border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">OK</button>
+                            <button type="button" onclick="marcarTriple('dd', 'REGULAR')" class="btn-tr-dd border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">REG</button>
+                            <button type="button" onclick="marcarTriple('dd', 'CRITICA')" class="btn-tr-dd border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">CRIT</button>
+                            <input type="hidden" id="llanta_dd" value="">
+                            <label id="btn_f_dd" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_dd">Foto</span><input type="file" id="foto_llanta_dd" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_dd', 'lbl_f_dd')"></label>
                         </div>
-                        <textarea id="obs_llanta_dd" placeholder="Observaciones..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
                     </div>
+                    <textarea id="obs_llanta_dd" placeholder="Comentarios neumático..." class="w-full p-1.5 border rounded-lg text-xs h-9 resize-none focus:outline-none"></textarea>
+                </div>
 
-                    <!-- PI -->
-                    <div class="p-4 border border-stone-200 rounded-xl bg-stone-50/50 space-y-2 shadow-sm">
-                        <div class="flex flex-wrap justify-between items-center gap-2">
-                            <span class="font-bold text-sm text-stone-900">Posterior Izquierda:</span>
-                            <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                                <select id="llanta_pi" class="border border-stone-300 font-bold rounded-lg p-1.5 text-xs bg-white outline-none focus:border-stone-900" onchange="alternarBotonFoto('llanta_pi', 'btn_f_pi')">
-                                    <option value="" disabled selected>-- SELECT --</option>
-                                    <option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option>
-                                </select>
-                                <label id="btn_f_pi" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer transition-all">
-                                    <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_pi">Foto</span>
-                                    <input type="file" id="foto_llanta_pi" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_pi', 'lbl_f_pi')">
-                                </label>
-                            </div>
+                <!-- PI -->
+                <div class="p-3 border rounded-xl bg-white space-y-2 shadow-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-xs">Posterior Izquierda (PI):</span>
+                        <div class="flex items-center gap-1.5">
+                            <button type="button" onclick="marcarTriple('pi', 'OK')" class="btn-tr-pi border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">OK</button>
+                            <button type="button" onclick="marcarTriple('pi', 'REGULAR')" class="btn-tr-pi border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">REG</button>
+                            <button type="button" onclick="marcarTriple('pi', 'CRITICA')" class="btn-tr-pi border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">CRIT</button>
+                            <input type="hidden" id="llanta_pi" value="">
+                            <label id="btn_f_pi" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_pi">Foto</span><input type="file" id="foto_llanta_pi" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_pi', 'lbl_f_pi')"></label>
                         </div>
-                        <textarea id="obs_llanta_pi" placeholder="Observaciones..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
                     </div>
+                    <textarea id="obs_llanta_pi" placeholder="Comentarios neumático..." class="w-full p-1.5 border rounded-lg text-xs h-9 resize-none focus:outline-none"></textarea>
+                </div>
 
-                    <!-- PD -->
-                    <div class="p-4 border border-stone-200 rounded-xl bg-stone-50/50 space-y-2 shadow-sm">
-                        <div class="flex flex-wrap justify-between items-center gap-2">
-                            <span class="font-bold text-sm text-stone-900">Posterior Derecha:</span>
-                            <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                                <select id="llanta_pd" class="border border-stone-300 font-bold rounded-lg p-1.5 text-xs bg-white outline-none focus:border-stone-900" onchange="alternarBotonFoto('llanta_pd', 'btn_f_pd')">
-                                    <option value="" disabled selected>-- SELECT --</option>
-                                    <option value="OK">OK</option><option value="REGULAR">REGULAR</option><option value="CRITICA">CRÍTICA</option>
-                                </select>
-                                <label id="btn_f_pd" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer transition-all">
-                                    <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_pd">Foto</span>
-                                    <input type="file" id="foto_llanta_pd" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_pd', 'lbl_f_pd')">
-                                </label>
-                            </div>
+                <!-- PD -->
+                <div class="p-3 border rounded-xl bg-white space-y-2 shadow-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-xs">Posterior Derecha (PD):</span>
+                        <div class="flex items-center gap-1.5">
+                            <button type="button" onclick="marcarTriple('pd', 'OK')" class="btn-tr-pd border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">OK</button>
+                            <button type="button" onclick="marcarTriple('pd', 'REGULAR')" class="btn-tr-pd border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">REG</button>
+                            <button type="button" onclick="marcarTriple('pd', 'CRITICA')" class="btn-tr-pd border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">CRIT</button>
+                            <input type="hidden" id="llanta_pd" value="">
+                            <label id="btn_f_pd" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_pd">Foto</span><input type="file" id="foto_llanta_pd" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_pd', 'lbl_f_pd')"></label>
                         </div>
-                        <textarea id="obs_llanta_pd" placeholder="Observaciones..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
                     </div>
+                    <textarea id="obs_llanta_pd" placeholder="Comentarios neumático..." class="w-full p-1.5 border rounded-lg text-xs h-9 resize-none focus:outline-none"></textarea>
+                </div>
 
-                    <!-- Neumático de Repuesto -->
-                    <div class="p-4 border border-stone-200 rounded-xl bg-stone-50/50 space-y-2 shadow-sm">
-                        <div class="flex flex-wrap justify-between items-center gap-2">
-                            <span class="font-bold text-sm text-stone-900">Neumático Repuesto:</span>
-                            <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                                <select id="llanta_rep" class="border border-stone-300 font-bold rounded-lg p-1.5 text-xs bg-white outline-none focus:border-stone-900" onchange="alternarBotonFoto('llanta_rep', 'btn_f_rep')">
-                                    <option value="" disabled selected>-- SELECT --</option>
-                                    <option value="OK">OK</option><option value="CRITICA">CRÍTICA</option><option value="NA">N/A</option>
-                                </select>
-                                <label id="btn_f_rep" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer transition-all">
-                                    <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_rep">Foto</span>
-                                    <input type="file" id="foto_llanta_rep" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_rep', 'lbl_f_rep')">
-                                </label>
-                            </div>
+                <!-- Neumático de Repuesto -->
+                <div class="p-3 border rounded-xl bg-stone-50 space-y-2 border-stone-200 shadow-sm">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-bold">¿Cuenta con Llanta de Repuesto?</span>
+                        <select id="llanta_rep_cuenta" class="border p-1 rounded-md bg-white text-xs outline-none" onchange="validarBloque3()"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <span class="text-xs font-bold text-stone-700">Estado de la de Repuesto:</span>
+                        <div class="flex items-center gap-1.5">
+                            <button type="button" onclick="marcarTriple('rep', 'OK')" class="btn-tr-rep border px-2 py-1 rounded text-[10px] font-bold bg-white">OK</button>
+                            <button type="button" onclick="marcarTriple('rep', 'REGULAR')" class="btn-tr-rep border px-2 py-1 rounded text-[10px] font-bold bg-white">REG</button>
+                            <button type="button" onclick="marcarTriple('rep', 'CRITICA')" class="btn-tr-rep border px-2 py-1 rounded text-[10px] font-bold bg-white">CRIT</button>
+                            <input type="hidden" id="llanta_rep_est" value="">
+                            <label id="btn_f_rep" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_rep">Foto</span><input type="file" id="foto_llanta_rep" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_rep', 'lbl_f_rep')"></label>
                         </div>
-                        <textarea id="obs_llanta_rep" placeholder="Observaciones..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
                     </div>
                 </div>
             </div>
 
-            <!-- SECTION 3: FLUIDOS Y MOTOR -->
-            <div class="space-y-3">
-                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-droplet"></i> 3. Niveles de Fluidos</span>
+            <!-- SECCIÓN 4: FLUIDOS Y SISTEMA DE LUCES -->
+            <div id="sec_4" class="seccion-bloqueada space-y-3">
+                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-lightning-charge"></i> 3. Luces y Niveles de Fluidos</span>
                 
-                <!-- Nivel de Aceite (ACTUALIZADO CON SELECTOR INTERACTIVO Y FOTO) -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Nivel de Aceite de Motor:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="fluid_aceite" class="border border-stone-300 rounded-lg p-1 text-xs outline-none focus:border-stone-900" onchange="alternarBotonFoto('fluid_aceite', 'btn_f_ace')">
-                                <option value="" disabled selected>-- SELECT --</option>
-                                <option value="OK">OK</option>
-                                <option value="BAJO">BAJO</option>
-                            </select>
-                            <label id="btn_f_ace" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_ace">Foto</span>
-                                <input type="file" id="foto_aceite" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_aceite', 'lbl_f_ace')">
-                            </label>
+                <!-- Fluidos -->
+                <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm">
+                    <span class="text-xs font-black text-stone-500 block uppercase tracking-tight">Niveles de Fluidos:</span>
+                    <!-- Aceite -->
+                    <div class="flex justify-between items-center text-xs py-1 border-b">
+                        <span class="font-bold">Aceite de Motor:</span>
+                        <div class="flex gap-1 items-center">
+                            <button type="button" onclick="marcarDualFluid('Aceite', 'OK')" class="btn-fl-Aceite border px-2 py-1 rounded text-[10px] font-black bg-stone-50">OK</button>
+                            <button type="button" onclick="marcarDualFluid('Aceite', 'FALTA')" class="btn-fl-Aceite border px-2 py-1 rounded text-[10px] font-black bg-stone-50">NIVEL BAJO</button>
+                            <input type="hidden" id="fluid_aceite" value="">
+                            <label id="btn_f_ace" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i><input type="file" id="foto_aceite" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_aceite', 'lbl_f_ace')"></label>
                         </div>
                     </div>
-                    <textarea id="obs_fluid_aceite" placeholder="Observaciones del nivel de aceite..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
+                    <!-- Refrigerante -->
+                    <div class="flex justify-between items-center text-xs py-1 border-b">
+                        <span>Líquido Refrigerante:</span>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="marcarDualFluid('Refrigerante', 'OK')" class="btn-fl-Refrigerante border px-2 py-0.5 rounded bg-stone-50">OK</button>
+                            <button type="button" onclick="marcarDualFluid('Refrigerante', 'FALTA')" class="btn-fl-Refrigerante border px-2 py-0.5 rounded bg-stone-50">NIVEL BAJO</button>
+                            <input type="hidden" id="fluid_refrigerante" value="">
+                        </div>
+                    </div>
+                    <!-- Frenos -->
+                    <div class="flex justify-between items-center text-xs py-1">
+                        <span>Líquido de Frenos:</span>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="marcarDualFluid('Frenos', 'OK')" class="btn-fl-Frenos border px-2 py-0.5 rounded bg-stone-50">OK</button>
+                            <button type="button" onclick="marcarDualFluid('Frenos', 'FALTA')" class="btn-fl-Frenos border px-2 py-0.5 rounded bg-stone-50">NIVEL BAJO</button>
+                            <input type="hidden" id="fluid_frenos" value="">
+                        </div>
+                    </div>
+                    <textarea id="obs_fluid_aceite" placeholder="Observaciones de fluidos..." class="w-full p-1.5 bg-stone-50 border rounded-md text-xs h-9 resize-none focus:outline-none"></textarea>
                 </div>
 
-                <!-- Refrigerante -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Líquido Refrigerante:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="fluid_refrigerante" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('fluid_refrigerante', 'btn_f_ref')"><option value="" disabled selected>-- SELECT --</option><option value="OK">OK</option><option value="BAJO">BAJO</option></select>
-                            <label id="btn_f_ref" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_ref">Foto</span>
-                                <input type="file" id="foto_refrigerante" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_refrigerante', 'lbl_f_ref')">
-                            </label>
-                        </div>
-                    </div>
-                    <textarea id="obs_fluid_refr" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
-                </div>
-
-                <!-- Frenos -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Líquido de Frenos:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="fluid_frenos" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('fluid_frenos', 'btn_f_fre')"><option value="" disabled selected>-- SELECT --</option><option value="OK">OK</option><option value="BAJO">BAJO</option></select>
-                            <label id="btn_f_fre" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_fre">Foto</span>
-                                <input type="file" id="foto_frenos" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_frenos', 'lbl_f_fre')">
-                            </label>
-                        </div>
-                    </div>
-                    <textarea id="obs_fluid_frenos" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
+                <!-- Luces con un solo bloque y un solo campo de texto -->
+                <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm text-xs">
+                    <span class="text-xs font-black text-stone-500 block uppercase tracking-tight">Sistema de Luces (SI/NO):</span>
+                    
+                    <div class="flex justify-between items-center py-1 border-b"><span>Luces Altas:</span><div class="flex gap-1"><button type="button" onclick="marcarLuces('altas', 'SI')" class="btn-lz-altas border px-2 py-0.5 rounded bg-stone-50">SÍ</button><button type="button" onclick="marcarLuces('altas', 'NO')" class="btn-lz-altas border px-2 py-0.5 rounded bg-stone-50">NO</button><input type="hidden" id="luces_altas" value=""></div></div>
+                    <div class="flex justify-between items-center py-1 border-b"><span>Luces Bajas:</span><div class="flex gap-1"><button type="button" onclick="marcarLuces('bajas', 'SI')" class="btn-lz-bajas border px-2 py-0.5 rounded bg-stone-50">SÍ</button><button type="button" onclick="marcarLuces('bajas', 'NO')" class="btn-lz-bajas border px-2 py-0.5 rounded bg-stone-50">NO</button><input type="hidden" id="luces_bajas" value=""></div></div>
+                    <div class="flex justify-between items-center py-1 border-b"><span>Luces de Freno:</span><div class="flex gap-1"><button type="button" onclick="marcarLuces('freno', 'SI')" class="btn-lz-freno border px-2 py-0.5 rounded bg-stone-50">SÍ</button><button type="button" onclick="marcarLuces('freno', 'NO')" class="btn-lz-freno border px-2 py-0.5 rounded bg-stone-50">NO</button><input type="hidden" id="luces_freno" value=""></div></div>
+                    <div class="flex justify-between items-center py-1 border-b"><span>Luces de Emergencia:</span><div class="flex gap-1"><button type="button" onclick="marcarLuces('emergencia', 'SI')" class="btn-lz-emergencia border px-2 py-0.5 rounded bg-stone-50">SÍ</button><button type="button" onclick="marcarLuces('emergencia', 'NO')" class="btn-lz-emergencia border px-2 py-0.5 rounded bg-stone-50">NO</button><input type="hidden" id="luces_emergencia" value=""></div></div>
+                    <div class="flex justify-between items-center py-1"><span>Luces Direccionales:</span><div class="flex gap-1"><button type="button" onclick="marcarLuces('direccionales', 'SI')" class="btn-lz-direccionales border px-2 py-0.5 rounded bg-stone-50">SÍ</button><button type="button" onclick="marcarLuces('direccionales', 'NO')" class="btn-lz-direccionales border px-2 py-0.5 rounded bg-stone-50">NO</button><input type="hidden" id="luces_direccionales" value=""></div></div>
+                    
+                    <textarea id="obs_luces_general" placeholder="Observaciones generales del sistema de luces..." class="w-full p-1.5 bg-stone-50 border rounded-md text-xs h-10 resize-none focus:outline-none"></textarea>
                 </div>
             </div>
 
-            <!-- SECTION 4: SISTEMA DE LUCES -->
-            <div class="space-y-3">
-                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-lightbulb"></i> 4. Sistema de Luces</span>
-                
-                <!-- Altas -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Luces Altas:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="luz_altas" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('luz_altas', 'btn_f_alt')"><option value="" disabled selected>-- SELECT --</option><option value="OK">OK</option><option value="FALLA">FALLA</option></select>
-                            <label id="btn_f_alt" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_alt">Foto</span>
-                                <input type="file" id="foto_luz_altas" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_luz_altas', 'lbl_f_alt')">
-                            </label>
-                        </div>
-                    </div>
-                    <textarea id="obs_luz_altas" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
-                </div>
-
-                <!-- Bajas -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Luces Bajas:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="luz_bajas" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('luz_bajas', 'btn_f_baj')"><option value="" disabled selected>-- SELECT --</option><option value="OK">OK</option><option value="FALLA">FALLA</option></select>
-                            <label id="btn_f_baj" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_baj">Foto</span>
-                                <input type="file" id="foto_luz_bajas" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_luz_bajas', 'lbl_f_baj')">
-                            </label>
-                        </div>
-                    </div>
-                    <textarea id="obs_luz_bajas" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
-                </div>
-
-                <!-- Freno -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Luces de Freno:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="luz_freno" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('luz_freno', 'btn_f_frn')"><option value="" disabled selected>-- SELECT --</option><option value="OK">OK</option><option value="FALLA">FALLA</option></select>
-                            <label id="btn_f_frn" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_frn">Foto</span>
-                                <input type="file" id="foto_luz_freno" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_luz_freno', 'lbl_f_frn')">
-                            </label>
-                        </div>
-                    </div>
-                    <textarea id="obs_luz_freno" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
-                </div>
-
-                <!-- Intermitentes -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Intermitentes / Direccionales:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="luz_intermitentes" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('luz_intermitentes', 'btn_f_int')"><option value="" disabled selected>-- SELECT --</option><option value="OK">OK</option><option value="FALLA">FALLA</option></select>
-                            <label id="btn_f_int" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_int">Foto</span>
-                                <input type="file" id="foto_luz_intermitentes" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_luz_intermitentes', 'lbl_f_int')">
-                            </label>
-                        </div>
-                    </div>
-                    <textarea id="obs_luz_intermitentes" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
-                </div>
-            </div>
-
-            <!-- SECTION 5: KIT DE EMERGENCIA -->
-            <div class="space-y-3">
-                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-shield"></i> 5. Kit de Emergencias</span>
+            <!-- SECCIÓN 5: KIT DE ENERGENCIAS / HERRAMIENTAS -->
+            <div id="sec_5" class="seccion-bloqueada space-y-3">
+                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-tools"></i> 4. Kit de Emergencias y Herramientas</span>
                 
                 <!-- Extintor -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Extintor PQS Vigente:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="kit_extintor" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('kit_extintor', 'btn_f_ext')"><option value="" disabled selected>-- SELECT --</option><option value="SI">SÍ</option><option value="NO">NO</option></select>
-                            <label id="btn_f_ext" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_ext">Foto</span>
-                                <input type="file" id="foto_kit_extintor" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_kit_extintor', 'lbl_f_ext')">
-                            </label>
+                <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm text-xs">
+                    <div class="flex justify-between items-center font-bold">
+                        <span>Extintor PQS Vigente:</span>
+                        <div class="flex gap-1 items-center">
+                            <button type="button" onclick="marcarExtintor('SI')" class="btn-ext border px-2 py-1 rounded font-bold bg-stone-50">SÍ</button>
+                            <button type="button" onclick="marcarExtintor('NO')" class="btn-ext border px-2 py-1 rounded font-bold bg-stone-50">NO</button>
+                            <input type="hidden" id="extintor_vig" value="">
+                            <label id="btn_f_ext" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i><input type="file" id="foto_extintor" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_extintor', 'lbl_f_ext')"></label>
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-500 uppercase mb-0.5">Vencimiento Extintor:</label>
-                        <input type="date" id="venc_extintor" class="w-full text-xs border border-stone-200 rounded-lg p-1.5 bg-stone-50">
-                    </div>
-                    <textarea id="obs_kit_extintor" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
+                    <input type="date" id="extintor_venc" class="w-full text-xs border rounded-md p-1 bg-stone-50 outline-none">
+                    <textarea id="obs_extintor" placeholder="Observaciones del extintor..." class="w-full p-1.5 bg-stone-50 border rounded-md text-xs h-9 resize-none focus:outline-none"></textarea>
                 </div>
 
-                <!-- Conos -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Conos de Seguridad:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="kit_conos" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('kit_conos', 'btn_f_con')"><option value="" disabled selected>-- SELECT --</option><option value="SI">SÍ</option><option value="NO">NO</option></select>
-                            <label id="btn_f_con" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_con">Foto</span>
-                                <input type="file" id="foto_kit_conos" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_kit_conos', 'lbl_f_con')">
-                            </label>
+                <!-- Conos, Botiquín y Antiderrame -->
+                <div class="p-3 border bg-white rounded-xl space-y-3 shadow-sm text-xs">
+                    <!-- Conos -->
+                    <div class="space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span>¿Cuenta con Conos / Triángulos?</span>
+                            <select id="conos_cuenta" class="border p-1 rounded-md" onchange="validarBloque5()"><option value="SI">SÍ</option><option value="NO">NO</option></select>
                         </div>
+                        <input type="number" id="conos_cant" placeholder="Cantidad de conos" class="w-full p-1.5 border rounded text-xs outline-none">
                     </div>
-                    <textarea id="obs_kit_conos" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
+                    <!-- Botiquin -->
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <span>¿Cuenta con Botiquín equipado?</span>
+                        <select id="botiquin_cuenta" class="border p-1 rounded-md" onchange="validarBloque5()"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                    </div>
+                    <!-- Antiderrame -->
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <span>Kit Antiderrame MATPEL:</span>
+                        <select id="antiderrame_cuenta" class="border p-1 rounded-md" onchange="validarBloque5()"><option value="SI">SÍ</option><option value="NO">NO</option><option value="NA">N/A</option></select>
+                    </div>
                 </div>
 
-                <!-- Botiquín -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Botiquín de Primeros Auxilios:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="kit_botiquin" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('kit_botiquin', 'btn_f_bot')"><option value="" disabled selected>-- SELECT --</option><option value="SI">SÍ</option><option value="NO">NO</option></select>
-                            <label id="btn_f_bot" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_bot">Foto</span>
-                                <input type="file" id="foto_kit_botiquin" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_kit_botiquin', 'lbl_f_bot')">
-                            </label>
-                        </div>
-                    </div>
-                    <textarea id="obs_kit_botiquin" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
-                </div>
-
-                <!-- Antiderrame -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-amber-50/40 border-amber-200 space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-amber-950">Kit Antiderrame MATPEL:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="kit_antiderrame" class="border border-amber-300 rounded-lg p-1 text-xs bg-white" onchange="alternarBotonFoto('kit_antiderrame', 'btn_f_ant')"><option value="" disabled selected>-- SELECT --</option><option value="SI">SÍ</option><option value="NO">NO</option></select>
-                            <label id="btn_f_ant" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_ant">Foto</span>
-                                <input type="file" id="foto_kit_antiderrame" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_kit_antiderrame', 'lbl_f_ant')">
-                            </label>
-                        </div>
-                    </div>
-                    <textarea id="obs_kit_antiderrame" placeholder="Observaciones del kit antiderrame..." class="w-full p-2 bg-white border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
+                <!-- Gata, Llave, Herramientas, Barras -->
+                <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm text-xs">
+                    <span class="text-xs font-black text-stone-500 block uppercase tracking-tight">Herramientas Mecánicas (SI/NO):</span>
+                    <div class="flex justify-between items-center py-1 border-b"><span>Gata Mecánica Operativa:</span><select id="gata_cuenta" class="border p-0.5 rounded"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    <div class="flex justify-between items-center py-1 border-b"><span>Llave de Ruedas:</span><select id="llave_cuenta" class="border p-0.5 rounded"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    <div class="flex justify-between items-center py-1 border-b"><span>Kit Básico de Herramientas:</span><select id="herramientas_cuenta" class="border p-0.5 rounded"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    <div class="flex justify-between items-center py-1"><span>Barra de Seguridad:</span><select id="barras_cuenta" class="border p-0.5 rounded"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
                 </div>
             </div>
 
-            <!-- SECTION 6: DISPOSITIVOS FURGÓN -->
-            <div class="space-y-3">
-                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-lock"></i> 6. Seguridad del Furgón</span>
+            <!-- SECCIÓN 6: ESTADO DE CABINA Y CARROCERÍA (CON CARGA DE FOTO DE RESPALDO) -->
+            <div id="sec_6" class="seccion-bloqueada space-y-3">
+                <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-body-text"></i> 5. Estado de Cabina y Carrocería</span>
                 
-                <!-- Candados -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Candados Operativos:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="furgon_candados" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('furgon_candados', 'btn_f_can')"><option value="" disabled selected>-- SELECT --</option><option value="SI">SÍ</option><option value="NO">NO</option><option value="N/A">N/A</option></select>
-                            <label id="btn_f_can" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_can">Foto</span>
-                                <input type="file" id="foto_furgon_candados" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_furgon_candados', 'lbl_f_can')">
-                            </label>
-                        </div>
+                <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm text-xs">
+                    <div class="flex justify-between items-center py-1 border-b"><span>Cabina limpia y ordenada:</span><select id="cabina_limpia" class="border p-0.5 rounded" onchange="validarBloque6()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    <div class="flex justify-between items-center py-1 border-b"><span>Cinturones de seguridad operativos:</span><select id="cinturones" class="border p-0.5 rounded" onchange="validarBloque6()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    <div class="flex justify-between items-center py-1 border-b"><span>Conexión para carga de celulares:</span><select id="carga_celular" class="border p-0.5 rounded" onchange="validarBloque6()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    <div class="flex justify-between items-center py-1 border-b"><span>Espejos laterales conformes:</span><select id="espejos" class="border p-0.5 rounded" onchange="validarBloque6()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    <div class="flex justify-between items-center py-1"><span>Carrocería limpia externamente:</span><select id="carrocería_limpia" class="border p-0.5 rounded" onchange="validarBloque6()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    
+                    <div class="pt-2 border-t space-y-2">
+                        <label class="block font-bold text-stone-800">Fotografía de Estado de Carrocería / Cabina:</label>
+                        <label id="lbl_f_cabina" class="flex items-center justify-center gap-2 bg-stone-900 hover:bg-stone-800 text-white p-2 rounded-xl font-bold text-xs cursor-pointer text-center w-full shadow"><i class="bi bi-camera-fill text-cat-yellow"></i> Capturar Evidencia de Cabina / Estructura<input type="file" id="foto_cabina" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_cabina', 'lbl_f_cabina')"></label>
                     </div>
-                    <textarea id="obs_furgon_candados" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
-                </div>
-
-                <!-- Barras -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Barras de Seguridad Estables:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="furgon_barras" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('furgon_barras', 'btn_f_bar')"><option value="" disabled selected>-- SELECT --</option><option value="SI">SÍ</option><option value="NO">NO</option><option value="N/A">N/A</option></select>
-                            <label id="btn_f_bar" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_bar">Foto</span>
-                                <input type="file" id="foto_furgon_barras" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_furgon_barras', 'lbl_f_bar')">
-                            </label>
-                        </div>
-                    </div>
-                    <textarea id="obs_furgon_barras" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
-                </div>
-
-                <!-- Pernos -->
-                <div class="p-4 border border-stone-200 rounded-xl bg-white space-y-2 shadow-sm">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <span class="text-sm font-bold text-stone-900">Pernos de Anclaje:</span>
-                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                            <select id="furgon_pernos" class="border border-stone-300 rounded-lg p-1 text-xs" onchange="alternarBotonFoto('furgon_pernos', 'btn_f_per')"><option value="" disabled selected>-- SELECT --</option><option value="SI">SÍ</option><option value="NO">NO</option><option value="N/A">N/A</option></select>
-                            <label id="btn_f_per" class="opacity-30 pointer-events-none flex items-center gap-1.5 bg-stone-900 text-white px-3 py-1.5 rounded-lg font-bold text-xs cursor-pointer">
-                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_per">Foto</span>
-                                <input type="file" id="foto_furgon_pernos" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_furgon_pernos', 'lbl_f_per')">
-                            </label>
-                        </div>
-                    </div>
-                    <textarea id="obs_furgon_pernos" placeholder="Observaciones..." class="w-full p-2 bg-stone-50 border border-stone-200 rounded-lg text-xs h-10 outline-none resize-none focus:border-stone-900"></textarea>
+                    
+                    <textarea id="obs_carroceria_general" placeholder="Observaciones generales de cabina y carrocería estructural..." class="w-full p-1.5 bg-stone-50 border rounded-md text-xs h-12 resize-none focus:outline-none"></textarea>
                 </div>
             </div>
 
-            <!-- SECTION 7: CIERRE Y FIRMAS DIGITALES -->
-            <div class="p-4 bg-stone-900 text-white rounded-xl space-y-4 shadow-md">
-                <span class="block text-xs font-black uppercase tracking-wider text-cat-yellow border-b border-stone-700 pb-0.5"><i class="bi bi-shield-lock"></i> 7. Cierre y Validación</span>
+            <!-- SECCIÓN 7: PANEL DE VALIDACIÓN Y FIRMAS DIGITALES -->
+            <div id="sec_7" class="seccion-bloqueada p-4 bg-stone-900 text-white rounded-xl space-y-4 shadow-md">
+                <span class="block text-xs font-black uppercase text-cat-yellow border-b border-stone-800 pb-0.5"><i class="bi bi-shield-check"></i> 6. Cierre Automático y Firmas Co-Autorizadas</span>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                <div class="grid grid-cols-2 gap-2 text-xs">
                     <div>
-                        <label class="block font-bold mb-0.5 text-xs">DNI Supervisor:</label>
-                        <input type="text" id="dni_supervisor" maxlength="8" required placeholder="8 dígitos" class="w-full p-2 text-stone-950 rounded-lg focus:outline-none font-medium bg-white text-xs sm:text-sm">
+                        <label class="block mb-0.5 text-stone-400">DNI Supervisor:</label>
+                        <input type="text" id="dni_supervisor" maxlength="8" placeholder="8 dígitos" class="w-full p-2 text-stone-950 rounded-lg focus:outline-none font-bold" oninput="consultarDSupervisor()">
                     </div>
                     <div>
-                        <label class="block font-bold mb-0.5 text-xs">Nombre Supervisor:</label>
-                        <input type="text" id="nom_supervisor" required placeholder="Supervisor de Turno" class="w-full p-2 text-stone-950 rounded-lg focus:outline-none font-medium bg-white text-xs sm:text-sm">
+                        <label class="block mb-0.5 text-stone-400">Nombre Supervisor / Rol:</label>
+                        <input type="text" id="nom_supervisor" readonly placeholder="Autocompletado..." class="w-full p-2 bg-stone-800 text-stone-300 rounded-lg outline-none border border-stone-700 font-bold text-xs">
+                        <input type="hidden" id="puesto_supervisor" value="">
                     </div>
                 </div>
 
-                <div class="space-y-3 pt-2 border-t border-stone-800">
+                <div class="space-y-4 pt-2">
                     <div>
-                        <label class="block text-[11px] font-bold text-cat-yellow mb-1 uppercase tracking-tight"><i class="bi bi-pencil-fill"></i> Firma del Conductor (Dibuje encima):</label>
-                        <div class="w-full bg-white rounded-lg overflow-hidden border border-stone-700">
-                            <canvas id="canvas_conductor" class="w-full h-24 block touch-none cursor-crosshair"></canvas>
-                        </div>
-                        <button type="button" onclick="limpiarCanvas('canvas_conductor')" class="mt-1 text-[10px] text-red-400 font-bold flex items-center gap-1"><i class="bi bi-trash"></i> Borrar Firma</button>
+                        <label class="block text-[10px] font-bold text-cat-yellow mb-1 uppercase tracking-wider"><i class="bi bi-pencil-fill"></i> Panel de Firma del Supervisor de Turno:</label>
+                        <div class="w-full bg-white rounded-lg overflow-hidden"><canvas id="canvas_supervisor" class="w-full h-32 block touch-none cursor-crosshair"></canvas></div>
+                        <button type="button" onclick="limpiarCanvas('canvas_supervisor')" class="text-[10px] text-red-400 font-bold mt-0.5"><i class="bi bi-trash"></i> Borrar Firma</button>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold text-cat-yellow mb-1 uppercase tracking-tight"><i class="bi bi-pencil-fill"></i> Firma del Supervisor (Dibuje encima):</label>
-                        <div class="w-full bg-white rounded-lg overflow-hidden border border-stone-700">
-                            <canvas id="canvas_supervisor" class="w-full h-24 block touch-none cursor-crosshair"></canvas>
-                        </div>
-                        <button type="button" onclick="limpiarCanvas('canvas_supervisor')" class="mt-1 text-[10px] text-red-400 font-bold flex items-center gap-1"><i class="bi bi-trash"></i> Borrar Firma</button>
+                        <label class="block text-[10px] font-bold text-cat-yellow mb-1 uppercase tracking-wider"><i class="bi bi-pencil-fill"></i> Panel de Firma del Conductor Evaluado:</label>
+                        <div class="w-full bg-white rounded-lg overflow-hidden"><canvas id="canvas_conductor" class="w-full h-32 block touch-none cursor-crosshair"></canvas></div>
+                        <button type="button" onclick="limpiarCanvas('canvas_conductor')" class="text-[10px] text-red-400 font-bold mt-0.5"><i class="bi bi-trash"></i> Borrar Firma</button>
                     </div>
                 </div>
             </div>
 
+            <!-- BOTONERA DE COMANDOS -->
             <input type="hidden" id="latitud" value="0"><input type="hidden" id="longitud" value="0">
-
-            <!-- BOTÓN ENVIAR ROBUSTO -->
-            <button type="submit" id="submitBtn" class="w-full bg-cat-yellow hover:bg-amber-400 text-stone-950 font-black py-3 px-4 rounded-xl text-lg transition-all shadow-md uppercase tracking-wider border-b-4 border-amber-600">
-                Finalizar y Enviar Inspección
-            </button>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button type="button" onclick="exportarReportePDF()" class="w-full bg-stone-800 hover:bg-stone-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow border border-stone-600"><i class="bi bi-file-earmark-pdf-fill text-red-500"></i> Exportar PDF</button>
+                <button type="submit" id="submitBtn" class="w-full bg-cat-yellow hover:bg-amber-400 text-stone-950 font-black py-3 px-4 rounded-xl text-sm transition-all shadow-md uppercase tracking-wider border-b-4 border-amber-600">Enviar Registro</button>
+            </div>
         </form>
 
         <div id="responseMessage" class="m-4 p-3 rounded-xl text-center text-base font-bold hidden"></div>
     </div>
 
     <script>
-        // URL Sincronizada de Google Apps Script
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzu_As5i-nz3veL9fSdN2y4OWjVmvGoXyBvECghuQGuOeu3gkKz6LIkyhHCi7tysdc0/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw6BmwqCxXRYDB9r_ayOLHcbxSJJrZpR_bCMgUchqDbDcBieQI8XjirCXIDdtkY0C_-/exec";
 
-        function alternarBotonFoto(selectId, labelId) {
-            const select = document.getElementById(selectId);
-            const label = document.getElementById(labelId);
-            if(select.value !== "") {
-                label.classList.remove('opacity-30', 'pointer-events-none');
-                label.classList.add('bg-cat-yellow', 'text-stone-950', 'hover:bg-amber-400');
+        // GESTIÓN DE CHECKBOXES TIPO BOTÓN INTERACTIVOS
+        function marcarDual(grupo, valor) {
+            const btns = document.querySelectorAll(`.btn-${grupo}`);
+            btns.forEach(b => {
+                if(b.innerText === valor) b.className = `btn-${grupo} btn-checkbox bg-emerald-600 text-white border-emerald-700`;
+                else b.className = `btn-${grupo} btn-checkbox`;
+            });
+            document.getElementById(grupo).value = valor;
+            evaluarProgresoFormulario();
+        }
+
+        function marcarTriple(grupo, valor) {
+            const btns = document.querySelectorAll(`.btn-tr-${grupo}`);
+            btns.forEach(b => {
+                let match = (b.innerText === valor || (valor==='REGULAR' && b.innerText==='REG') || (valor==='CRITICA' && b.innerText==='CRIT'));
+                if(match) b.className = `btn-tr-${grupo} border px-2 py-1 rounded text-[10px] font-bold text-white ` + (valor==='OK'?'bg-emerald-600':(valor==='REGULAR'?'bg-amber-500':'bg-red-600'));
+                else b.className = `btn-tr-${grupo} border px-2 py-1 rounded text-[10px] font-bold bg-stone-50 border-stone-300 text-stone-700`;
+            });
+            const input = document.getElementById(`llanta_${grupo}`) || document.getElementById(`llanta_rep_est`);
+            if(input) input.value = valor;
+            const cam = document.getElementById(`btn_f_${grupo}`);
+            if(cam) { cam.classList.remove('opacity-30', 'pointer-events-none'); cam.classList.add('bg-cat-yellow', 'text-stone-950'); }
+            evaluarProgresoFormulario();
+        }
+
+        function marcarDualFluid(grupo, valor) {
+            const btns = document.querySelectorAll(`.btn-fl-${grupo}`);
+            btns.forEach(b => {
+                if(b.innerText === valor) b.className = `btn-fl-${grupo} border px-2 py-1 rounded text-[10px] font-bold text-white ` + (valor==='OK'?'bg-emerald-600':'bg-red-600');
+                else b.className = `btn-fl-${grupo} border px-2 py-1 rounded text-[10px] font-bold bg-stone-50 border-stone-300 text-stone-700`;
+            });
+            document.getElementById(`fluid_${grupo.toLowerCase()}`).value = valor;
+            if(grupo === 'Aceite') {
+                const cam = document.getElementById('btn_f_ace');
+                cam.classList.remove('opacity-30', 'pointer-events-none');
+            }
+            evaluarProgresoFormulario();
+        }
+
+        function marcarLuces(grupo, valor) {
+            const btns = document.querySelectorAll(`.btn-lz-${grupo}`);
+            btns.forEach(b => {
+                if(b.innerText === valor) b.className = `btn-lz-${grupo} border px-2 py-0.5 rounded text-[10px] font-bold text-white ` + (valor==='SÍ'||valor==='SI'?'bg-emerald-600':'bg-red-600');
+                else b.className = `btn-lz-${grupo} border px-2 py-0.5 rounded text-[10px] font-bold bg-stone-50`;
+            });
+            document.getElementById(`luces_${grupo}`).value = valor;
+            evaluarProgresoFormulario();
+        }
+
+        function marcarExtintor(valor) {
+            const btns = document.querySelectorAll('.btn-ext');
+            btns.forEach(b => {
+                if(b.innerText === valor) b.className = 'btn-ext border px-2 py-1 rounded font-bold text-white ' + (valor==='SÍ'||valor==='SI'?'bg-emerald-600':'bg-red-600');
+                else b.className = 'btn-ext border px-2 py-1 rounded font-bold bg-stone-50';
+            });
+            document.getElementById('extintor_vig').value = valor;
+            const cam = document.getElementById('btn_f_ext');
+            cam.classList.remove('opacity-30', 'pointer-events-none');
+            evaluarProgresoFormulario();
+        }
+
+        // PETICIONES DE AUTOCOMPLETADO DESDE EL BACKEND
+        async function consultarDConductor() {
+            const dni = document.getElementById('dni_conductor').value;
+            if(dni.length === 8) {
+                try {
+                    const r = await fetch(`${WEB_APP_URL}?action=buscarDNI&dni=${dni}`);
+                    const d = await r.json();
+                    if(d.encontrado) { document.getElementById('conductor').value = d.nombre; validarBloque0(); }
+                } catch(e){}
             }
         }
 
-        function marcarFotoLista(inputId, spanId) {
+        async function consultarFlotaVehiculo() {
+            const plc = document.getElementById('placa').value;
+            if(plc) {
+                try {
+                    const r = await fetch(`${WEB_APP_URL}?action=buscarPlaca&placa=${plc}`);
+                    const d = await r.json();
+                    document.getElementById('marca').value = d.marca || "Magsa";
+                    validarBloque0();
+                } catch(e){}
+            }
+        }
+
+        async function consultarDSupervisor() {
+            const dni = document.getElementById('dni_supervisor').value;
+            if(dni.length === 8) {
+                try {
+                    const r = await fetch(`${WEB_APP_URL}?action=buscarDNI&dni=${dni}`);
+                    const d = await r.json();
+                    if(d.encontrado) {
+                        document.getElementById('nom_supervisor').value = `${d.nombre} (${d.puesto})`;
+                        document.getElementById('puesto_supervisor').value = d.puesto;
+                        evaluarProgresoFormulario();
+                    }
+                } catch(e){}
+            }
+        }
+
+        // VALIDACIÓN SECUENCIAL STRICT FLOW
+        function validarBloque0() {
+            const c = document.getElementById('conductor').value;
+            const s = document.getElementById('sucursal').value;
+            const p = document.getElementById('placa').value;
+            const k = document.getElementById('kilometraje').value;
+            if(c && s && p && k) document.getElementById('sec_1').className = "bg-white p-3 rounded-xl border border-stone-200 space-y-4 shadow-sm seccion-activa";
+        }
+
+        function validarBloque2() { evaluarProgresoFormulario(); }
+        function validarBloque3() { evaluarProgresoFormulario(); }
+        function validarBloque5() { evaluarProgresoFormulario(); }
+        function validarBloque6() { evaluarProgresoFormulario(); }
+
+        function evaluarProgresoFormulario() {
+            if(document.getElementById('uniforme').value && document.getElementById('epps').value && document.getElementById('fotocheck').value) {
+                document.getElementById('sec_2').className = "space-y-3 seccion-activa";
+            }
+            if(document.getElementById('doc_soat').value && document.getElementById('doc_rtv').value && document.getElementById('doc_brevete').value) {
+                document.getElementById('sec_3').className = "space-y-3 seccion-activa";
+            }
+            if(document.getElementById('llanta_di').value && document.getElementById('llanta_dd').value && document.getElementById('llanta_rep_cuenta').value) {
+                document.getElementById('sec_4').className = "space-y-3 seccion-activa";
+            }
+            if(document.getElementById('fluid_aceite').value && document.getElementById('luces_altas').value && document.getElementById('luces_bajas').value) {
+                document.getElementById('sec_5').className = "space-y-3 seccion-activa";
+            }
+            if(document.getElementById('extintor_vig').value && document.getElementById('conos_cuenta').value && document.getElementById('botiquin_cuenta').value) {
+                document.getElementById('sec_6').className = "space-y-3 seccion-activa";
+            }
+            if(document.getElementById('cabina_limpia').value && document.getElementById('cinturones').value && document.getElementById('espejos').value) {
+                document.getElementById('sec_7').className = "p-4 bg-stone-900 text-white rounded-xl space-y-4 shadow-md seccion-activa";
+            }
+        }
+
+        function marcarFotoLista(inputId, labelId) {
             const input = document.getElementById(inputId);
             if(input.files && input.files[0]) {
-                document.getElementById(spanId).innerHTML = '<i class="bi bi-check-circle-fill"></i> ¡Listo!';
+                document.getElementById(labelId).innerHTML = '<i class="bi bi-check-circle-fill text-emerald-400"></i> Evidencia Lista';
             }
         }
 
+        // CAPTURA Y LIENZO DE TRAZOS MANUSCRITOS
         function inicializarPanelesFirma() {
             ['canvas_conductor', 'canvas_supervisor'].forEach(id => {
                 const canvas = document.getElementById(id);
                 const ctx = canvas.getContext('2d');
                 canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
                 ctx.strokeStyle = "#111111"; ctx.lineWidth = 2.5; ctx.lineCap = "round";
-                
-                let dibujando = false; let uX = 0; let uY = 0;
+                let dib = false; let uX = 0; let uY = 0;
                 function pos(e) {
                     const r = canvas.getBoundingClientRect();
                     return { x: (e.touches ? e.touches[0].clientX : e.clientX) - r.left, y: (e.touches ? e.touches[0].clientY : e.clientY) - r.top };
                 }
-                canvas.addEventListener('mousedown', (e) => { dibujando = true; const p = pos(e); uX = p.x; uY = p.y; });
-                canvas.addEventListener('mousemove', (e) => {
-                    if (!dibujando) return; e.preventDefault(); const p = pos(e);
-                    ctx.beginPath(); ctx.moveTo(uX, uY); ctx.lineTo(p.x, p.y); ctx.stroke(); uX = p.x; uY = p.y;
-                });
-                window.addEventListener('mouseup', () => dibujando = false);
-                canvas.addEventListener('touchstart', (e) => { dibujando = true; const p = pos(e); uX = p.x; uY = p.y; });
-                canvas.addEventListener('touchmove', (e) => {
-                    if (!dibujando) return; e.preventDefault(); const p = pos(e);
-                    ctx.beginPath(); ctx.moveTo(uX, uY); ctx.lineTo(p.x, p.y); ctx.stroke(); uX = p.x; uY = p.y;
-                });
-                window.addEventListener('touchend', () => dibujando = false);
+                canvas.addEventListener('mousedown', (e) => { dib = true; const p = pos(e); uX = p.x; uY = p.y; });
+                canvas.addEventListener('mousemove', (e) => { if (!dib) return; e.preventDefault(); const p = pos(e); ctx.beginPath(); ctx.moveTo(uX, uY); ctx.lineTo(p.x, p.y); ctx.stroke(); uX = p.x; uY = p.y; });
+                window.addEventListener('mouseup', () => dib = false);
+                canvas.addEventListener('touchstart', (e) => { dib = true; const p = pos(e); uX = p.x; uY = p.y; });
+                canvas.addEventListener('touchmove', (e) => { if (!dib) return; e.preventDefault(); const p = pos(e); ctx.beginPath(); ctx.moveTo(uX, uY); ctx.lineTo(p.x, p.y); ctx.stroke(); uX = p.x; uY = p.y; });
+                window.addEventListener('touchend', () => dib = false);
             });
         }
 
-        function limpiarCanvas(id) {
-            const canvas = document.getElementById(id);
-            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-        }
+        function limpiarCanvas(id) { const canvas = document.getElementById(id); canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); }
+        function canvasVacio(id) { const canvas = document.getElementById(id); const buffer = new Uint32Array(canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data.buffer); return !buffer.some(color => color !== 0); }
 
-        function canvasVacio(id) {
-            const canvas = document.getElementById(id);
-            const buffer = new Uint32Array(canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data.buffer);
-            return !buffer.some(color => color !== 0);
-        }
-
+        // EXTREMA OPTIMIZACIÓN COMPRESIÓN DE IMÁGENES NATIVA
         function obtenerBase64(file) {
-            return new Promise((res) => {
-                if (!file) res("");
-                const r = new FileReader(); r.readAsDataURL(file);
-                r.onload = () => res(r.result); r.onerror = () => res("");
+            return new Promise((resolve) => {
+                if (!file) { resolve(""); return; }
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function () {
+                        const MAX = 1024; let w = img.width; let h = img.height;
+                        if (w > h) { if (w > MAX) { h *= MAX / w; w = MAX; } }
+                        else { if (h > MAX) { w *= MAX / h; h = MAX; } }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', 0.6));
+                    };
+                };
             });
         }
 
         function establecerTiempo() {
             const ahora = new Date();
             document.getElementById('fecha_sistema').value = `${String(ahora.getDate()).padStart(2,'0')}/${String(ahora.getMonth()+1).padStart(2,'0')}/${ahora.getFullYear()}`;
-            let h = electromagnetic = ahora.getHours(); const m = String(ahora.getMinutes()).padStart(2,'0');
+            let h = ahora.getHours(); const m = String(ahora.getMinutes()).padStart(2,'0');
             const ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12; h = h ? h : 12;
             document.getElementById('hora_sistema').value = `${String(h).padStart(2,'0')}:${m} ${ampm}`;
         }
 
-        function capturarGPS() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((p) => {
-                    document.getElementById('latitud').value = p.coords.latitude;
-                    document.getElementById('longitud').value = p.coords.longitude;
-                }, null, { enableHighAccuracy: true });
-            }
-        }
-
+        function capturarGPS() { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((p) => { document.getElementById('latitud').value = p.coords.latitude; document.getElementById('longitud').value = p.coords.longitude; }, null, { enableHighAccuracy: true }); } }
         window.addEventListener('DOMContentLoaded', () => { establecerTiempo(); inicializarPanelesFirma(); capturarGPS(); });
 
+        // MOTOR EXPORTADOR NATIVO PDF CON ESTÉNCILES LIMPIOS
+        function exportarReportePDF() {
+            const elemento = document.getElementById('contenedor-auditoria');
+            const opciones = {
+                margin: 0.4,
+                filename: `Reporte_PreOperativo_Magsa_${document.getElementById('placa').value || 'Unidad'}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().from(elemento).set(opciones).save();
+        }
+
+        // ENVÍO DE DATOS DE INSPECCIÓN CONSOLIDADO
         document.getElementById('checklistForm').addEventListener('submit', async function (e) {
             e.preventDefault();
+            if(document.getElementById('nom_supervisor').value === "" || canvasVacio('canvas_conductor') || canvasVacio('canvas_supervisor')) {
+                alert("Flujo de seguridad bloqueado. Es obligatorio completar todas las secciones y estampar ambas firmas antes de enviar el registro.");
+                return;
+            }
+
             const btn = document.getElementById('submitBtn');
             const msg = document.getElementById('responseMessage');
             btn.disabled = true; btn.innerText = "TRANSMITIENDO...";
@@ -604,126 +650,63 @@
                 const formData = {
                     fecha_inspeccion: document.getElementById('fecha_sistema').value,
                     hora_inspeccion: document.getElementById('hora_sistema').value,
-                    placa: document.getElementById('placa').value,
-                    kilometraje: document.getElementById('kilometraje').value,
+                    sucursal: document.getElementById('sucursal').value,
                     conductor: document.getElementById('conductor').value,
+                    placa: document.getElementById('placa').value,
+                    marca: document.getElementById('marca').value,
+                    kilometraje: document.getElementById('kilometraje').value,
                     
-                    doc_soat: document.getElementById('doc_soat').value,
-                    venc_soat: document.getElementById('venc_soat').value,
-                    obs_soat: document.getElementById('obs_soat').value,
-                    doc_rtv: document.getElementById('doc_rtv').value,
-                    venc_rtv: document.getElementById('venc_rtv').value,
-                    obs_rtv: document.getElementById('obs_rtv').value,
-                    doc_brevete: document.getElementById('doc_brevete').value,
-                    venc_brevete: document.getElementById('venc_brevete').value,
-                    obs_brevete: document.getElementById('obs_brevete').value,
-                    doc_tiv: document.getElementById('doc_tiv').value,
-                    obs_tiv: "Revisado",
-                    doc_guias: document.getElementById('doc_guias').value,
-                    obs_guias: "Conforme",
+                    uniforme: document.getElementById('uniforme').value, obs_uniforme: document.getElementById('obs_uniforme').value,
+                    epps: document.getElementById('epps').value, obs_epps: document.getElementById('obs_epps').value,
+                    fotocheck: document.getElementById('fotocheck').value, obs_fotocheck: document.getElementById('obs_fotocheck').value,
                     
-                    llanta_di: document.getElementById('llanta_di').value,
-                    obs_llanta_di: document.getElementById('obs_llanta_di').value,
-                    foto_llanta_di: await obtenerBase64(document.getElementById('foto_llanta_di').files[0]),
+                    soat_est: document.getElementById('soat_est').value, soat_venc: document.getElementById('soat_venc').value, soat_obs: document.getElementById('soat_obs').value,
+                    rtv_est: document.getElementById('rtv_est').value, rtv_venc: document.getElementById('venc_rtv').value, rtv_obs: document.getElementById('rtv_obs').value,
+                    brevete_est: document.getElementById('brevete_est').value, brevete_venc: document.getElementById('venc_brevete').value, brevete_obs: document.getElementById('obs_brevete').value,
+                    tiv_est: document.getElementById('tiv_est').value, guias_est: document.getElementById('guias_est').value,
                     
-                    llanta_dd: document.getElementById('llanta_dd').value,
-                    obs_llanta_dd: document.getElementById('obs_llanta_dd').value,
-                    foto_llanta_dd: await obtenerBase64(document.getElementById('foto_llanta_dd').files[0]),
+                    llanta_di: document.getElementById('llanta_di').value, obs_llanta_di: document.getElementById('obs_llanta_di').value, foto_llanta_di: await obtenerBase64(document.getElementById('foto_llanta_di').files[0]),
+                    llanta_dd: document.getElementById('llanta_dd').value, obs_llanta_dd: document.getElementById('obs_llanta_dd').value, foto_llanta_dd: await obtenerBase64(document.getElementById('foto_llanta_dd').files[0]),
+                    llanta_pi: document.getElementById('llanta_pi').value, obs_llanta_pi: document.getElementById('obs_llanta_pi').value, foto_llanta_pi: await obtenerBase64(document.getElementById('foto_llanta_pi').files[0]),
+                    llanta_pd: document.getElementById('llanta_pd').value, obs_llanta_pd: document.getElementById('obs_llanta_pd').value, foto_llanta_pd: await obtenerBase64(document.getElementById('foto_llanta_pd').files[0]),
+                    llanta_rep_cuenta: document.getElementById('llanta_rep_cuenta').value, llanta_rep_est: document.getElementById('llanta_rep_est').value, foto_llanta_rep: await obtenerBase64(document.getElementById('foto_llanta_rep').files[0]),
                     
-                    llanta_pi: document.getElementById('llanta_pi').value,
-                    obs_llanta_pi: document.getElementById('obs_llanta_pi').value,
-                    foto_llanta_pi: await obtenerBase64(document.getElementById('foto_llanta_pi').files[0]),
+                    fluid_aceite: document.getElementById('fluid_aceite').value, obs_fluid_aceite: document.getElementById('obs_fluid_aceite').value, foto_aceite: await obtenerBase64(document.getElementById('foto_aceite').files[0]),
+                    fluid_refrigerante: document.getElementById('fluid_refrigerante').value, fluid_frenos: document.getElementById('fluid_frenos').value,
                     
-                    llanta_pd: document.getElementById('llanta_pd').value,
-                    obs_llanta_pd: document.getElementById('obs_llanta_pd').value,
-                    foto_llanta_pd: await obtenerBase64(document.getElementById('foto_llanta_pd').files[0]),
+                    luces_altas: document.getElementById('luces_altas').value, luces_bajas: document.getElementById('luces_bajas').value, luces_freno: document.getElementById('luces_freno').value, luces_emergencia: document.getElementById('luces_emergencia').value, luces_direccionales: document.getElementById('luces_direccionales').value, obs_luces_general: document.getElementById('obs_luces_general').value,
                     
-                    llanta_rep: document.getElementById('llanta_rep').value,
-                    obs_llanta_rep: document.getElementById('obs_llanta_rep').value,
-                    foto_llanta_rep: await obtenerBase64(document.getElementById('foto_llanta_rep').files[0]),
+                    extintor_vig: document.getElementById('extintor_vig').value, extintor_venc: document.getElementById('extintor_venc').value, obs_extintor: document.getElementById('obs_extintor').value, foto_extintor: await obtenerBase64(document.getElementById('foto_extintor').files[0]),
+                    conos_cuenta: document.getElementById('conos_cuenta').value, conos_cant: document.getElementById('conos_cant').value, botiquin_cuenta: document.getElementById('botiquin_cuenta').value, antiderrame_cuenta: document.getElementById('antiderrame_cuenta').value,
+                    gata_cuenta: document.getElementById('gata_cuenta').value, llave_cuenta: document.getElementById('llave_cuenta').value, herramientas_cuenta: document.getElementById('herramientas_cuenta').value, barras_cuenta: document.getElementById('barras_cuenta').value,
                     
-                    fluid_aceite: document.getElementById('fluid_aceite').value,
-                    obs_fluid_aceite: document.getElementById('obs_fluid_aceite').value,
-                    foto_aceite: await obtenerBase64(document.getElementById('foto_aceite').files[0]),
+                    cabina_limpia: document.getElementById('cabina_limpia').value, cinturones: document.getElementById('cinturones').value, carga_celular: document.getElementById('carga_celular').value, espejos: document.getElementById('espejos').value, carroceria_limpia: document.getElementById('carrocería_limpia').value, obs_carroceria_general: document.getElementById('obs_carroceria_general').value, foto_cabina: await obtenerBase64(document.getElementById('foto_cabina').files[0]),
                     
-                    fluid_refrigerante: document.getElementById('fluid_refrigerante').value,
-                    obs_fluid_refr: document.getElementById('obs_fluid_refr').value,
-                    foto_refrigerante: await obtenerBase64(document.getElementById('foto_refrigerante').files[0]),
-                    
-                    fluid_frenos: document.getElementById('fluid_frenos').value,
-                    obs_fluid_frenos: document.getElementById('obs_fluid_frenos').value,
-                    foto_frenos: await obtenerBase64(document.getElementById('foto_frenos').files[0]),
-                    
-                    luz_altas: document.getElementById('luz_altas').value,
-                    obs_luz_altas: document.getElementById('obs_luz_altas').value,
-                    foto_luz_altas: await obtenerBase64(document.getElementById('foto_luz_altas').files[0]),
-                    
-                    luz_bajas: document.getElementById('luz_bajas').value,
-                    obs_luz_bajas: document.getElementById('obs_luz_bajas').value,
-                    foto_luz_bajas: await obtenerBase64(document.getElementById('foto_luz_bajas').files[0]),
-                    
-                    luz_freno: document.getElementById('luz_freno').value,
-                    obs_luz_freno: document.getElementById('obs_luz_freno').value,
-                    foto_luz_freno: await obtenerBase64(document.getElementById('foto_luz_freno').files[0]),
-                    
-                    luz_intermitentes: document.getElementById('luz_intermitentes').value,
-                    obs_luz_intermitentes: document.getElementById('obs_luz_intermitentes').value,
-                    foto_luz_intermitentes: await obtenerBase64(document.getElementById('foto_luz_intermitentes').files[0]),
-                    
-                    kit_extintor: document.getElementById('kit_extintor').value,
-                    venc_extintor: document.getElementById('venc_extintor').value,
-                    obs_kit_extintor: document.getElementById('obs_kit_extintor').value,
-                    foto_kit_extintor: await obtenerBase64(document.getElementById('foto_kit_extintor').files[0]),
-                    
-                    kit_conos: document.getElementById('kit_conos').value,
-                    obs_kit_conos: document.getElementById('obs_kit_conos').value,
-                    foto_kit_conos: await obtenerBase64(document.getElementById('foto_kit_conos').files[0]),
-                    
-                    kit_botiquin: document.getElementById('kit_botiquin').value,
-                    obs_kit_botiquin: document.getElementById('obs_kit_botiquin').value,
-                    foto_kit_botiquin: await obtenerBase64(document.getElementById('foto_kit_botiquin').files[0]),
-                    
-                    kit_antiderrame: document.getElementById('kit_antiderrame').value,
-                    obs_kit_antiderrame: document.getElementById('obs_kit_antiderrame').value,
-                    foto_kit_antiderrame: await obtenerBase64(document.getElementById('foto_kit_antiderrame').files[0]),
-                    
-                    furgon_candados: document.getElementById('furgon_candados').value,
-                    obs_furgon_candados: document.getElementById('obs_furgon_candados').value,
-                    foto_furgon_candados: await obtenerBase64(document.getElementById('foto_furgon_candados').files[0]),
-                    
-                    furgon_barras: document.getElementById('furgon_barras').value,
-                    obs_furgon_barras: document.getElementById('obs_furgon_barras').value,
-                    foto_furgon_barras: await obtenerBase64(document.getElementById('foto_furgon_barras').files[0]),
-                    
-                    furgon_pernos: document.getElementById('furgon_pernos').value,
-                    obs_furgon_pernos: document.getElementById('obs_furgon_pernos').value,
-                    foto_furgon_pernos: await obtenerBase64(document.getElementById('foto_furgon_pernos').files[0]),
-                    
-                    dni_supervisor: document.getElementById('dni_supervisor').value,
-                    nom_supervisor: document.getElementById('nom_supervisor').value,
-                    latitud: document.getElementById('latitud').value,
-                    longitud: document.getElementById('longitud').value,
-                    
+                    dni_supervisor: document.getElementById('dni_supervisor').value, nom_supervisor: document.getElementById('nom_supervisor').value, puesto_supervisor: document.getElementById('puesto_supervisor').value,
+                    latitud: document.getElementById('latitud').value, longitud: document.getElementById('longitud').value,
                     firma_conductor: !canvasVacio('canvas_conductor') ? document.getElementById('canvas_conductor').toDataURL("image/png") : "",
                     firma_supervisor: !canvasVacio('canvas_supervisor') ? document.getElementById('canvas_supervisor').toDataURL("image/png") : ""
                 };
 
-                await fetch(WEB_APP_URL, {
+                const res = await fetch(WEB_APP_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(formData)
                 });
+                const rData = await res.json();
                 
-                msg.className = "m-4 p-3 rounded-xl text-center text-base font-bold bg-emerald-100 text-emerald-800 border border-emerald-300";
-                msg.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i> Inspección técnica transmitida con éxito.`;
-                msg.classList.remove('hidden');
-                document.getElementById('checklistForm').reset();
-                limpiarCanvas('canvas_conductor'); limpiarCanvas('canvas_supervisor');
-                establecerTiempo();
-
+                if(rData.status === "success") {
+                    document.getElementById('id_visible').value = rData.id;
+                    msg.className = "m-4 p-3 rounded-xl text-center text-base font-bold bg-emerald-100 text-emerald-800 border border-emerald-300";
+                    msg.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i> Reporte guardado y transmitido con éxito. ID Asignado: ${rData.id}`;
+                    msg.classList.remove('hidden');
+                    document.getElementById('checklistForm').reset();
+                    limpiarCanvas('canvas_conductor'); limpiarCanvas('canvas_supervisor');
+                    establecerTiempo();
+                }
             } catch (err) {
                 msg.className = "m-4 p-3 rounded-xl text-center text-base font-bold bg-red-100 text-red-800 border border-red-300";
-                msg.innerText = "Error en el guardado de datos.";
+                msg.innerText = "Error en el guardado remoto del registro.";
                 msg.classList.remove('hidden');
             } finally {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
