@@ -44,6 +44,7 @@
                 </div>
             </div>
 
+            <!-- SEC 0 -->
             <div id="sec_0" class="bg-stone-50 p-3 rounded-xl border border-stone-200 space-y-3">
                 <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-truck"></i> Datos de Operación</span>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -57,7 +58,13 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-stone-700 mb-0.5">Sede / Sucursal:</label>
-                        <select id="sucursal" class="w-full p-2 border border-stone-300 rounded-lg text-sm bg-white focus:outline-none" onchange="validarBloque0()"><option value="" disabled selected>-- SELECCIONE --</option><option value="TRUJILLO">TRUJILLO</option><option value="LIMA">LIMA</option><option value="PIURA">PIURA</option><option value="CHICLAYO">CHICLAYO</option></select>
+                        <select id="sucursal" class="w-full p-2 border border-stone-300 rounded-lg text-sm bg-white focus:outline-none" onchange="validarBloque0()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="TRUJILLO">TRUJILLO</option>
+                            <option value="LIMA">LIMA</option>
+                            <option value="PIURA">PIURA</option>
+                            <option value="CHICLAYO">CHICLAYO</option>
+                        </select>
                     </div>
                     <div>
                         <div class="grid grid-cols-2 gap-2">
@@ -78,6 +85,7 @@
                 </div>
             </div>
 
+            <!-- SEC 1 -->
             <div id="sec_1" class="seccion-bloqueada bg-white p-3 rounded-xl border space-y-3 shadow-sm">
                 <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-person-badge"></i> Presencia de Fotocheck y EPPS</span>
                 
@@ -87,26 +95,32 @@
                         <button type="button" onclick="marcarDual('uniforme', 'SI')" class="btn-uniforme btn-checkbox">SÍ</button>
                         <button type="button" onclick="marcarDual('uniforme', 'NO')" class="btn-uniforme btn-checkbox">NO</button>
                     </div>
-                    <input type="hidden" id="uniforme" value=""><textarea id="obs_uniforme" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none bg-white"></textarea>
+                    <input type="hidden" id="uniforme" value="">
+                    <textarea id="obs_uniforme" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none bg-white"></textarea>
                 </div>
+
                 <div class="p-2 bg-stone-50 rounded-lg border space-y-1">
                     <label class="block text-xs font-bold">¿Cuenta con EPPs de Seguridad?</label>
                     <div class="grid grid-cols-2 gap-2">
                         <button type="button" onclick="marcarDual('epps', 'SI')" class="btn-epps btn-checkbox">SÍ</button>
                         <button type="button" onclick="marcarDual('epps', 'NO')" class="btn-epps btn-checkbox">NO</button>
                     </div>
-                    <input type="hidden" id="epps" value=""><textarea id="obs_epps" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none bg-white"></textarea>
+                    <input type="hidden" id="epps" value="">
+                    <textarea id="obs_epps" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none bg-white"></textarea>
                 </div>
+
                 <div class="p-2 bg-stone-50 rounded-lg border space-y-1">
-                    <label class="block text-xs font-bold">¿Porta su Fotocheck?</label>
+                    <label class="block text-xs font-bold">¿Cuenta con Fotocheck?</label>
                     <div class="grid grid-cols-2 gap-2">
                         <button type="button" onclick="marcarDual('fotocheck', 'SI')" class="btn-fotocheck btn-checkbox">SÍ</button>
                         <button type="button" onclick="marcarDual('fotocheck', 'NO')" class="btn-fotocheck btn-checkbox">NO</button>
                     </div>
-                    <input type="hidden" id="fotocheck" value=""><textarea id="obs_fotocheck" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none bg-white"></textarea>
+                    <input type="hidden" id="fotocheck" value="">
+                    <textarea id="obs_fotocheck" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none bg-white"></textarea>
                 </div>
             </div>
 
+            <!-- SEC 2 -->
             <div id="sec_2" class="seccion-bloqueada space-y-3">
                 <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-file-text"></i> 1. Documentación Obligatoria</span>
                 
@@ -116,31 +130,54 @@
                         <button type="button" onclick="marcarDual('soat_est', 'SI')" class="btn-soat_est btn-checkbox">SÍ</button>
                         <button type="button" onclick="marcarDual('soat_est', 'NO')" class="btn-soat_est btn-checkbox">NO</button>
                     </div>
-                    <input type="hidden" id="soat_est" value=""><input type="date" id="soat_venc" class="w-full text-xs border rounded p-1 bg-stone-50"><textarea id="soat_obs" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
+                    <input type="hidden" id="soat_est" value="">
+                    <input type="date" id="soat_venc" class="w-full text-xs border rounded p-1 bg-stone-50">
+                    <textarea id="soat_obs" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
+
                 <div class="p-3 bg-white border rounded-xl space-y-1.5 shadow-sm">
                     <label class="block text-xs font-bold">Revisión Técnica (RTV):</label>
                     <div class="grid grid-cols-2 gap-2">
                         <button type="button" onclick="marcarDual('rtv_est', 'SI')" class="btn-rtv_est btn-checkbox">SÍ</button>
                         <button type="button" onclick="marcarDual('rtv_est', 'NO')" class="btn-rtv_est btn-checkbox">NO</button>
                     </div>
-                    <input type="hidden" id="rtv_est" value=""><input type="date" id="rtv_venc" class="w-full text-xs border rounded p-1 bg-stone-50"><textarea id="rtv_obs" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
+                    <input type="hidden" id="rtv_est" value="">
+                    <input type="date" id="rtv_venc" class="w-full text-xs border rounded p-1 bg-stone-50">
+                    <textarea id="rtv_obs" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
+
                 <div class="p-3 bg-white border rounded-xl space-y-1.5 shadow-sm">
                     <label class="block text-xs font-bold">Brevete Conductor:</label>
                     <div class="grid grid-cols-2 gap-2">
                         <button type="button" onclick="marcarDual('brevete_est', 'SI')" class="btn-brevete_est btn-checkbox">SÍ</button>
                         <button type="button" onclick="marcarDual('brevete_est', 'NO')" class="btn-brevete_est btn-checkbox">NO</button>
                     </div>
-                    <input type="hidden" id="brevete_est" value=""><input type="date" id="brevete_venc" class="w-full text-xs border rounded p-1 bg-stone-50"><textarea id="brevete_obs" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
+                    <input type="hidden" id="brevete_est" value="">
+                    <input type="date" id="brevete_venc" class="w-full text-xs border rounded p-1 bg-stone-50">
+                    <textarea id="brevete_obs" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
 
                 <div class="p-3 bg-white border rounded-xl space-y-2 shadow-sm text-xs">
-                    <div class="flex justify-between items-center"><span>Tarjeta Propiedad (TIV):</span><select id="tiv_est" class="border p-1 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()"><option value="" disabled selected>-- SELECCIONE --</option><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-2"><span>Guías de Carga:</span><select id="guias_est" class="border p-1 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()"><option value="" disabled selected>-- SELECCIONE --</option><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    <div class="flex justify-between items-center">
+                        <span>Tarjeta Propiedad (TIV):</span>
+                        <select id="tiv_est" class="border p-1 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <span>Guías de Carga:</span>
+                        <select id="guias_est" class="border p-1 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
+            <!-- SEC 3 -->
             <div id="sec_3" class="seccion-bloqueada space-y-3">
                 <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-disc"></i> 2. Estado de Neumáticos</span>
                 
@@ -152,7 +189,10 @@
                             <button type="button" onclick="marcarTriple('di', 'REGULAR')" class="btn-tr-di border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">REG</button>
                             <button type="button" onclick="marcarTriple('di', 'CRITICA')" class="btn-tr-di border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">CRIT</button>
                             <input type="hidden" id="llanta_di" value="">
-                            <label id="btn_f_di" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_di">Foto</span><input type="file" id="foto_llanta_di" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_di', 'lbl_f_di')"></label>
+                            <label id="btn_f_di" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">
+                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_di">Foto</span>
+                                <input type="file" id="foto_llanta_di" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_di', 'lbl_f_di')">
+                            </label>
                         </div>
                     </div>
                     <textarea id="obs_llanta_di" placeholder="Comentarios..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
@@ -166,7 +206,10 @@
                             <button type="button" onclick="marcarTriple('dd', 'REGULAR')" class="btn-tr-dd border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">REG</button>
                             <button type="button" onclick="marcarTriple('dd', 'CRITICA')" class="btn-tr-dd border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">CRIT</button>
                             <input type="hidden" id="llanta_dd" value="">
-                            <label id="btn_f_dd" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_dd">Foto</span><input type="file" id="foto_llanta_dd" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_dd', 'lbl_f_dd')"></label>
+                            <label id="btn_f_dd" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">
+                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_dd">Foto</span>
+                                <input type="file" id="foto_llanta_dd" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_dd', 'lbl_f_dd')">
+                            </label>
                         </div>
                     </div>
                     <textarea id="obs_llanta_dd" placeholder="Comentarios..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
@@ -180,7 +223,10 @@
                             <button type="button" onclick="marcarTriple('pi', 'REGULAR')" class="btn-tr-pi border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">REG</button>
                             <button type="button" onclick="marcarTriple('pi', 'CRITICA')" class="btn-tr-pi border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">CRIT</button>
                             <input type="hidden" id="llanta_pi" value="">
-                            <label id="btn_f_pi" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_pi">Foto</span><input type="file" id="foto_llanta_pi" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_pi', 'lbl_f_pi')"></label>
+                            <label id="btn_f_pi" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">
+                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_pi">Foto</span>
+                                <input type="file" id="foto_llanta_pi" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_pi', 'lbl_f_pi')">
+                            </label>
                         </div>
                     </div>
                     <textarea id="obs_llanta_pi" placeholder="Comentarios..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
@@ -194,7 +240,10 @@
                             <button type="button" onclick="marcarTriple('pd', 'REGULAR')" class="btn-tr-pd border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">REG</button>
                             <button type="button" onclick="marcarTriple('pd', 'CRITICA')" class="btn-tr-pd border px-2 py-1 rounded text-[10px] font-bold bg-stone-50">CRIT</button>
                             <input type="hidden" id="llanta_pd" value="">
-                            <label id="btn_f_pd" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_pd">Foto</span><input type="file" id="foto_llanta_pd" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_pd', 'lbl_f_pd')"></label>
+                            <label id="btn_f_pd" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">
+                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_pd">Foto</span>
+                                <input type="file" id="foto_llanta_pd" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_pd', 'lbl_f_pd')">
+                            </label>
                         </div>
                     </div>
                     <textarea id="obs_llanta_pd" placeholder="Comentarios..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
@@ -203,7 +252,11 @@
                 <div class="p-3 border rounded-xl bg-stone-50 space-y-2">
                     <div class="flex justify-between items-center text-xs">
                         <span class="font-bold">¿Cuenta con Neumático de Repuesto?</span>
-                        <select id="llanta_rep_cuenta" class="border p-1 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()"><option value="" disabled selected>-- SELECCIONE --</option><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                        <select id="llanta_rep_cuenta" class="border p-1 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
                     <div class="flex justify-between items-center border-t pt-2">
                         <span class="text-xs font-bold text-stone-700">Estado Neumático Repuesto:</span>
@@ -212,12 +265,16 @@
                             <button type="button" onclick="marcarTriple('rep', 'REGULAR')" class="btn-tr-rep border px-2 py-1 rounded text-[10px] font-bold bg-white">REG</button>
                             <button type="button" onclick="marcarTriple('rep', 'CRITICA')" class="btn-tr-rep border px-2 py-1 rounded text-[10px] font-bold bg-white">CRIT</button>
                             <input type="hidden" id="llanta_rep_est" value="">
-                            <label id="btn_f_rep" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_rep">Foto</span><input type="file" id="foto_llanta_rep" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_rep', 'lbl_f_rep')"></label>
+                            <label id="btn_f_rep" class="opacity-30 pointer-events-none flex items-center gap-0.5 bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">
+                                <i class="bi bi-camera-fill text-cat-yellow"></i> <span id="lbl_f_rep">Foto</span>
+                                <input type="file" id="foto_llanta_rep" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_llanta_rep', 'lbl_f_rep')">
+                            </label>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- SEC 4 -->
             <div id="sec_4" class="seccion-bloqueada space-y-3">
                 <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-lightning"></i> 3. Luces y Niveles de Fluidos</span>
                 <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm text-xs">
@@ -228,28 +285,81 @@
                             <button type="button" onclick="marcarDualFluid('Aceite', 'OK')" class="btn-fl-Aceite border px-2 py-0.5 rounded font-bold bg-stone-50">OK</button>
                             <button type="button" onclick="marcarDualFluid('Aceite', 'FALTA')" class="btn-fl-Aceite border px-2 py-0.5 rounded font-bold bg-stone-50">FALTA</button>
                             <input type="hidden" id="fluid_aceite" value="">
-                            <label id="btn_f_ace" class="opacity-30 pointer-events-none flex items-center bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i><input type="file" id="foto_aceite" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_aceite', 'lbl_f_ace')"></label>
+                            <label id="btn_f_ace" class="opacity-30 pointer-events-none flex items-center bg-stone-900 text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer">
+                                <i class="bi bi-camera-fill text-cat-yellow"></i>
+                                <span id="lbl_f_ace"></span>
+                                <input type="file" id="foto_aceite" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_aceite', 'lbl_f_ace')">
+                            </label>
                         </div>
                     </div>
-                    <div class="flex justify-between items-center py-1 border-b"><span>Líquido Refrigerante:</span><div class="flex gap-1"><button type="button" onclick="marcarDualFluid('Refrigerante', 'OK')" class="btn-fl-Refrigerante border px-2 py-0.5 rounded bg-stone-50">OK</button><button type="button" onclick="marcarDualFluid('Refrigerante', 'FALTA')" class="btn-fl-Refrigerante border px-2 py-0.5 rounded bg-stone-50">FALTA</button><input type="hidden" id="fluid_refrigerante" value=""></div></div>
-                    <div class="flex justify-between items-center py-1"><span>Líquido de Frenos:</span><div class="flex gap-1"><button type="button" onclick="marcarDualFluid('Frenos', 'OK')" class="btn-fl-Frenos border px-2 py-0.5 rounded bg-stone-50">OK</button><button type="button" onclick="marcarDualFluid('Frenos', 'FALTA')" class="btn-fl-Frenos border px-2 py-0.5 rounded bg-stone-50">FALTA</button><input type="hidden" id="fluid_frenos" value=""></div></div>
+                    <div class="flex justify-between items-center py-1 border-b">
+                        <span>Líquido Refrigerante:</span>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="marcarDualFluid('Refrigerante', 'OK')" class="btn-fl-Refrigerante border px-2 py-0.5 rounded bg-stone-50">OK</button>
+                            <button type="button" onclick="marcarDualFluid('Refrigerante', 'FALTA')" class="btn-fl-Refrigerante border px-2 py-0.5 rounded bg-stone-50">FALTA</button>
+                            <input type="hidden" id="fluid_refrigerante" value="">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center py-1">
+                        <span>Líquido de Frenos:</span>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="marcarDualFluid('Frenos', 'OK')" class="btn-fl-Frenos border px-2 py-0.5 rounded bg-stone-50">OK</button>
+                            <button type="button" onclick="marcarDualFluid('Frenos', 'FALTA')" class="btn-fl-Frenos border px-2 py-0.5 rounded bg-stone-50">FALTA</button>
+                            <input type="hidden" id="fluid_frenos" value="">
+                        </div>
+                    </div>
                     <textarea id="obs_fluid_aceite" placeholder="Observaciones fluidos..." class="w-full p-1.5 bg-stone-50 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
 
                 <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm text-xs">
                     <span class="font-black text-stone-500 block uppercase">Sistema de Luces (SI/NO):</span>
-                    <div class="flex justify-between items-center py-1 border-b"><span>Luces Altas:</span><div class="flex gap-1"><button type="button" onclick="marcarLuces('altas', 'SI')" class="btn-lz-altas border px-2 py-0.5 rounded bg-stone-50">SÍ</button><button type="button" onclick="marcarLuces('altas', 'NO')" class="btn-lz-altas border px-2 py-0.5 rounded bg-stone-50">NO</button><input type="hidden" id="luces_altas" value=""></div></div>
-                    <div class="flex justify-between items-center py-1 border-b"><span>Luces Bajas:</span><div class="flex gap-1"><button type="button" onclick="marcarLuces('bajas', 'SI')" class="btn-lz-bajas border px-2 py-0.5 rounded bg-stone-50">SÍ</button><button type="button" onclick="marcarLuces('bajas', 'NO')" class="btn-lz-bajas border px-2 py-0.5 rounded bg-stone-50">NO</button><input type="hidden" id="luces_bajas" value=""></div></div>
-                    <div class="flex justify-between items-center py-1 border-b"><span>Luces de Freno:</span><div class="flex gap-1"><button type="button" onclick="marcarLuces('freno', 'SI')" class="btn-lz-freno border px-2 py-0.5 rounded bg-stone-50">SÍ</button><button type="button" onclick="marcarLuces('freno', 'NO')" class="btn-lz-freno border px-2 py-0.5 rounded bg-stone-50">NO</button><input type="hidden" id="luces_freno" value=""></div></div>
-                    <div class="flex justify-between items-center py-1 border-b"><span>Luces de Emergencia:</span><div class="flex gap-1"><button type="button" onclick="marcarLuces('emergencia', 'SI')" class="btn-lz-emergencia border px-2 py-0.5 rounded bg-stone-50">SÍ</button><button type="button" onclick="marcarLuces('emergencia', 'NO')" class="btn-lz-emergencia border px-2 py-0.5 rounded bg-stone-50">NO</button><input type="hidden" id="luces_emergencia" value=""></div></div>
-                    <div class="flex justify-between items-center py-1"><span>Luces Direccionales:</span><div class="flex gap-1"><button type="button" onclick="marcarLuces('direccionales', 'SI')" class="btn-lz-direccionales border px-2 py-0.5 rounded bg-stone-50">SÍ</button><button type="button" onclick="marcarLuces('direccionales', 'NO')" class="btn-lz-direccionales border px-2 py-0.5 rounded bg-stone-50">NO</button><input type="hidden" id="luces_direccionales" value=""></div></div>
+                    <div class="flex justify-between items-center py-1 border-b">
+                        <span>Luces Altas:</span>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="marcarLuces('altas', 'SI')" class="btn-lz-altas border px-2 py-0.5 rounded bg-stone-50">SÍ</button>
+                            <button type="button" onclick="marcarLuces('altas', 'NO')" class="btn-lz-altas border px-2 py-0.5 rounded bg-stone-50">NO</button>
+                            <input type="hidden" id="luces_altas" value="">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b">
+                        <span>Luces Bajas:</span>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="marcarLuces('bajas', 'SI')" class="btn-lz-bajas border px-2 py-0.5 rounded bg-stone-50">SÍ</button>
+                            <button type="button" onclick="marcarLuces('bajas', 'NO')" class="btn-lz-bajas border px-2 py-0.5 rounded bg-stone-50">NO</button>
+                            <input type="hidden" id="luces_bajas" value="">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b">
+                        <span>Luces de Freno:</span>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="marcarLuces('freno', 'SI')" class="btn-lz-freno border px-2 py-0.5 rounded bg-stone-50">SÍ</button>
+                            <button type="button" onclick="marcarLuces('freno', 'NO')" class="btn-lz-freno border px-2 py-0.5 rounded bg-stone-50">NO</button>
+                            <input type="hidden" id="luces_freno" value="">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b">
+                        <span>Luces de Emergencia:</span>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="marcarLuces('emergencia', 'SI')" class="btn-lz-emergencia border px-2 py-0.5 rounded bg-stone-50">SÍ</button>
+                            <button type="button" onclick="marcarLuces('emergencia', 'NO')" class="btn-lz-emergencia border px-2 py-0.5 rounded bg-stone-50">NO</button>
+                            <input type="hidden" id="luces_emergencia" value="">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center py-1">
+                        <span>Luces Direccionales:</span>
+                        <div class="flex gap-1">
+                            <button type="button" onclick="marcarLuces('direccionales', 'SI')" class="btn-lz-direccionales border px-2 py-0.5 rounded bg-stone-50">SÍ</button>
+                            <button type="button" onclick="marcarLuces('direccionales', 'NO')" class="btn-lz-direccionales border px-2 py-0.5 rounded bg-stone-50">NO</button>
+                            <input type="hidden" id="luces_direccionales" value="">
+                        </div>
+                    </div>
                     <textarea id="obs_luces_general" placeholder="Observaciones luces..." class="w-full p-1.5 bg-stone-50 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
             </div>
 
+            <!-- SEC 5 -->
             <div id="sec_5" class="seccion-bloqueada space-y-3">
                 <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-tools"></i> 4. Kit de Emergencias y Herramientas</span>
-                
                 <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm text-xs">
                     <div class="flex justify-between items-center font-bold">
                         <span>Extintor PQS Vigente:</span>
@@ -257,176 +367,166 @@
                             <button type="button" onclick="marcarExtintor('SI')" class="btn-ext border px-2 py-0.5 rounded bg-stone-50">SÍ</button>
                             <button type="button" onclick="marcarExtintor('NO')" class="btn-ext border px-2 py-0.5 rounded bg-stone-50">NO</button>
                             <input type="hidden" id="extintor_vig" value="">
-                            <label id="btn_f_ext" class="opacity-30 pointer-events-none flex items-center bg-stone-900 text-white px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer"><i class="bi bi-camera-fill text-cat-yellow"></i><input type="file" id="foto_extintor" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_extintor', 'lbl_f_ext')"></label>
+                            <label id="btn_f_ext" class="opacity-30 pointer-events-none flex items-center bg-stone-900 text-white px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">
+                                <i class="bi bi-camera-fill text-cat-yellow"></i>
+                                <span id="lbl_f_ext"></span>
+                                <input type="file" id="foto_extintor" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_extintor', 'lbl_f_ext')">
+                            </label>
                         </div>
                     </div>
                     <input type="date" id="extintor_venc" class="w-full text-xs border rounded p-1 bg-stone-50" onchange="evaluarProgresoFormulario()">
                     <textarea id="obs_extintor" placeholder="Observaciones extintor..." class="w-full p-1.5 bg-stone-50 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
 
-                <div class="p-3 border bg-white rounded-xl space-y-3 shadow-sm text-xs">
-                    <div class="bg-stone-50 p-2 rounded-lg border space-y-1">
-                        <div class="flex justify-between items-center font-bold">
-                            <span>¿Cuenta con Conos / Triángulos?</span>
-                            <div class="flex gap-1 w-32">
-                                <button type="button" onclick="marcarDual('conos_cuenta', 'SI')" class="btn-conos_cuenta btn-checkbox">SÍ</button>
-                                <button type="button" onclick="marcarDual('conos_cuenta', 'NO')" class="btn-conos_cuenta btn-checkbox">NO</button>
-                            </div>
-                            <input type="hidden" id="conos_cuenta" value="">
-                        </div>
-                        <input type="number" id="conos_cant" placeholder="Cantidad de conos" class="w-full p-1.5 border rounded text-xs outline-none bg-white font-medium" oninput="evaluarProgresoFormulario()">
+                <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm text-xs">
+                    <div class="flex justify-between items-center">
+                        <span>¿Cuenta con Conos / Triángulos?</span>
+                        <select id="conos_cuenta" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
-
-                    <div class="bg-stone-50 p-2 rounded-lg border space-y-1">
-                        <div class="flex justify-between items-center font-bold">
-                            <span>¿Cuenta con Botiquín equipado?</span>
-                            <div class="flex gap-1 w-32">
-                                <button type="button" onclick="marcarDual('botiquin_cuenta', 'SI')" class="btn-botiquin_cuenta btn-checkbox">SÍ</button>
-                                <button type="button" onclick="marcarDual('botiquin_cuenta', 'NO')" class="btn-botiquin_cuenta btn-checkbox">NO</button>
-                            </div>
-                            <input type="hidden" id="botiquin_cuenta" value="">
-                        </div>
-                        <input type="text" id="botiquin_obs" placeholder="Observaciones botiquín" class="w-full p-1.5 border rounded text-xs outline-none bg-white">
+                    <input type="number" id="conos_cant" placeholder="Cantidad de conos" class="w-full p-1.5 border rounded text-xs outline-none" oninput="evaluarProgresoFormulario()">
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <span>¿Cuenta con Botiquín equipado?</span>
+                        <select id="botiquin_cuenta" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
-
-                    <div class="bg-stone-50 p-2 rounded-lg border space-y-1">
-                        <div class="flex justify-between items-center font-bold">
-                            <span>Kit Antiderrame MATPEL:</span>
-                            <div class="flex gap-1 w-44">
-                                <button type="button" onclick="marcarTripleOpcion('antiderrame_cuenta', 'SI')" class="btn-antiderrame_cuenta btn-checkbox">SÍ</button>
-                                <button type="button" onclick="marcarTripleOpcion('antiderrame_cuenta', 'NO')" class="btn-antiderrame_cuenta btn-checkbox">NO</button>
-                                <button type="button" onclick="marcarTripleOpcion('antiderrame_cuenta', 'NA')" class="btn-antiderrame_cuenta btn-checkbox">N/A</button>
-                            </div>
-                            <input type="hidden" id="antiderrame_cuenta" value="">
-                        </div>
-                        <input type="text" id="antiderrame_obs" placeholder="Observaciones kit" class="w-full p-1.5 border rounded text-xs outline-none bg-white">
+                    <input type="text" id="botiquin_obs" placeholder="Observaciones botiquín" class="w-full p-1.5 border rounded text-xs outline-none">
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <span>Kit Antiderrame MATPEL:</span>
+                        <select id="antiderrame_cuenta" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                            <option value="NA">N/A</option>
+                        </select>
                     </div>
+                    <input type="text" id="antiderrame_obs" placeholder="Observaciones kit" class="w-full p-1.5 border rounded text-xs outline-none">
                 </div>
 
-                <div class="p-3 border bg-white rounded-xl space-y-2.5 shadow-sm text-xs">
-                    <div class="flex justify-between items-center font-bold">
+                <div class="p-3 border bg-white rounded-xl space-y-1.5 shadow-sm text-xs">
+                    <div class="flex justify-between items-center">
                         <span>Gata Mecánica:</span>
-                        <div class="flex gap-1 w-32">
-                            <button type="button" onclick="marcarDual('gata_cuenta', 'SI')" class="btn-gata_cuenta btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarDual('gata_cuenta', 'NO')" class="btn-gata_cuenta btn-checkbox">NO</button>
-                        </div>
-                        <input type="hidden" id="gata_cuenta" value="">
+                        <select id="gata_cuenta" class="border p-0.5 rounded bg-white font-bold">
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
-                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                    <div class="flex justify-between items-center border-t pt-1">
                         <span>Llave de Ruedas:</span>
-                        <div class="flex gap-1 w-32">
-                            <button type="button" onclick="marcarDual('llave_cuenta', 'SI')" class="btn-llave_cuenta btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarDual('llave_cuenta', 'NO')" class="btn-llave_cuenta btn-checkbox">NO</button>
-                        </div>
-                        <input type="hidden" id="llave_cuenta" value="">
+                        <select id="llave_cuenta" class="border p-0.5 rounded bg-white font-bold">
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
-                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                    <div class="flex justify-between items-center border-t pt-1">
                         <span>Kit Herramientas:</span>
-                        <div class="flex gap-1 w-32">
-                            <button type="button" onclick="marcarDual('herramientas_cuenta', 'SI')" class="btn-herramientas_cuenta btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarDual('herramientas_cuenta', 'NO')" class="btn-herramientas_cuenta btn-checkbox">NO</button>
-                        </div>
-                        <input type="hidden" id="herramientas_cuenta" value="">
+                        <select id="herramientas_cuenta" class="border p-0.5 rounded bg-white font-bold">
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
-                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                    <div class="flex justify-between items-center border-t pt-1">
                         <span>Barra de Seguridad:</span>
-                        <div class="flex gap-1 w-32">
-                            <button type="button" onclick="marcarDual('barras_cuenta', 'SI')" class="btn-barras_cuenta btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarDual('barras_cuenta', 'NO')" class="btn-barras_cuenta btn-checkbox">NO</button>
-                        </div>
-                        <input type="hidden" id="barras_cuenta" value="">
+                        <select id="barras_cuenta" class="border p-0.5 rounded bg-white font-bold">
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
+            <!-- SEC 6 -->
             <div id="sec_6" class="seccion-bloqueada space-y-3">
                 <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-lock"></i> 5. Estado de Cabina y Furgón Cerrado</span>
-                <div class="p-3 border bg-white rounded-xl space-y-3 shadow-sm text-xs">
-                    
-                    <div class="flex justify-between items-center font-bold">
+                <div class="p-3 border bg-white rounded-xl space-y-1.5 shadow-sm text-xs">
+                    <div class="flex justify-between items-center">
                         <span>Cabina limpia y ordenada:</span>
-                        <div class="flex gap-1 w-32">
-                            <button type="button" onclick="marcarDual('cabina_limpia', 'SI')" class="btn-cabina_limpia btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarDual('cabina_limpia', 'NO')" class="btn-cabina_limpia btn-checkbox">NO</button>
-                        </div>
-                        <input type="hidden" id="cabina_limpia" value="">
+                        <select id="cabina_limpia" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
-                    
-                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                    <div class="flex justify-between items-center border-t pt-1">
                         <span>Cinturones operativos:</span>
-                        <div class="flex gap-1 w-32">
-                            <button type="button" onclick="marcarDual('cinturones', 'SI')" class="btn-cinturones btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarDual('cinturones', 'NO')" class="btn-cinturones btn-checkbox">NO</button>
-                        </div>
-                        <input type="hidden" id="cinturones" value="">
+                        <select id="cinturones" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
-                    
-                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                    <div class="flex justify-between items-center border-t pt-1">
                         <span>Conexión de carga móvil:</span>
-                        <div class="flex gap-1 w-32">
-                            <button type="button" onclick="marcarDual('carga_celular', 'SI')" class="btn-carga_celular btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarDual('carga_celular', 'NO')" class="btn-carga_celular btn-checkbox">NO</button>
-                        </div>
-                        <input type="hidden" id="carga_celular" value="">
+                        <select id="carga_celular" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
-                    
-                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                    <div class="flex justify-between items-center border-t pt-1">
                         <span>Espejos laterales conformes:</span>
-                        <div class="flex gap-1 w-32">
-                            <button type="button" onclick="marcarDual('espejos', 'SI')" class="btn-espejos btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarDual('espejos', 'NO')" class="btn-espejos btn-checkbox">NO</button>
-                        </div>
-                        <input type="hidden" id="espejos" value="">
+                        <select id="espejos" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
-                    
-                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                    <div class="flex justify-between items-center border-t pt-1">
                         <span>Carrocería limpia externamente:</span>
-                        <div class="flex gap-1 w-32">
-                            <button type="button" onclick="marcarDual('carroceria_limpia', 'SI')" class="btn-carroceria_limpia btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarDual('carroceria_limpia', 'NO')" class="btn-carroceria_limpia btn-checkbox">NO</button>
-                        </div>
-                        <input type="hidden" id="carroceria_limpia" value="">
+                        <select id="carroceria_limpia" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
                     </div>
                     
-                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                    <div class="flex justify-between items-center border-t pt-2">
                         <span>Candados Operativos furgón:</span>
-                        <div class="flex gap-1 w-44">
-                            <button type="button" onclick="marcarTripleOpcion('furgon_candados', 'SI')" class="btn-furgon_candados btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarTripleOpcion('furgon_candados', 'NO')" class="btn-furgon_candados btn-checkbox">NO</button>
-                            <button type="button" onclick="marcarTripleOpcion('furgon_candados', 'NA')" class="btn-furgon_candados btn-checkbox">N/A</button>
-                        </div>
-                        <input type="hidden" id="furgon_candados" value="">
+                        <select id="furgon_candados" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                            <option value="NA">N/A</option>
+                        </select>
                     </div>
-                    
-                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                    <div class="flex justify-between items-center border-t pt-1">
                         <span>Barras de seguridad furgón:</span>
-                        <div class="flex gap-1 w-44">
-                            <button type="button" onclick="marcarTripleOpcion('furgon_barras', 'SI')" class="btn-furgon_barras btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarTripleOpcion('furgon_barras', 'NO')" class="btn-furgon_barras btn-checkbox">NO</button>
-                            <button type="button" onclick="marcarTripleOpcion('furgon_barras', 'NA')" class="btn-furgon_barras btn-checkbox">N/A</button>
-                        </div>
-                        <input type="hidden" id="furgon_barras" value="">
+                        <select id="furgon_barras" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                            <option value="NA">N/A</option>
+                        </select>
                     </div>
-                    
-                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                    <div class="flex justify-between items-center border-t pt-1">
                         <span>Pernos de anclaje estables:</span>
-                        <div class="flex gap-1 w-44">
-                            <button type="button" onclick="marcarTripleOpcion('furgon_pernos', 'SI')" class="btn-furgon_pernos btn-checkbox">SÍ</button>
-                            <button type="button" onclick="marcarTripleOpcion('furgon_pernos', 'NO')" class="btn-furgon_pernos btn-checkbox">NO</button>
-                            <button type="button" onclick="marcarTripleOpcion('furgon_pernos', 'NA')" class="btn-furgon_pernos btn-checkbox">N/A</button>
-                        </div>
-                        <input type="hidden" id="furgon_pernos" value="">
+                        <select id="furgon_pernos" class="border p-0.5 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()">
+                            <option value="" disabled selected>-- SELECCIONE --</option>
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                            <option value="NA">N/A</option>
+                        </select>
                     </div>
 
                     <div class="pt-2 border-t space-y-1.5">
                         <label class="block font-bold">Fotografía Cabina / Carrocería:</label>
-                        <label id="lbl_f_cabina" class="flex items-center justify-center gap-2 bg-stone-900 text-white p-2 rounded-xl font-bold text-xs cursor-pointer w-full shadow"><i class="bi bi-camera-fill text-cat-yellow"></i> Capturar Evidencia Estructural<input type="file" id="foto_cabina" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_cabina', 'lbl_f_cabina')"></label>
+                        <label id="lbl_f_cabina" class="flex items-center justify-center gap-2 bg-stone-900 text-white p-2 rounded-xl font-bold text-xs cursor-pointer w-full shadow">
+                            <i class="bi bi-camera-fill text-cat-yellow"></i> Capturar Evidencia Estructural
+                            <input type="file" id="foto_cabina" accept="image/*" capture="environment" class="hidden" onchange="marcarFotoLista('foto_cabina', 'lbl_f_cabina')">
+                        </label>
                     </div>
                     <textarea id="obs_carroceria_general" placeholder="Observaciones generales de estructura..." class="w-full p-1.5 bg-stone-50 border rounded text-xs h-10 resize-none outline-none"></textarea>
                 </div>
                 <input type="text" id="obs_general" placeholder="Comentarios generales finales del checklist..." class="w-full p-2 border rounded-lg text-xs bg-white outline-none">
             </div>
 
+            <!-- SEC 7 -->
             <div id="sec_7" class="seccion-bloqueada p-3 bg-stone-900 text-white rounded-xl space-y-3 shadow-md">
                 <span class="block text-xs font-black uppercase text-cat-yellow border-b border-stone-800 pb-0.5"><i class="bi bi-shield-check"></i> 6. Validación Co-Autorizada</span>
                 <div class="grid grid-cols-2 gap-2 text-xs">
@@ -444,21 +544,31 @@
                 <div class="space-y-4 pt-1">
                     <div>
                         <label class="block text-[10px] font-bold text-cat-yellow mb-0.5 uppercase">Firma Conductor:</label>
-                        <div class="w-full bg-white rounded-lg overflow-hidden"><canvas id="canvas_conductor" class="w-full h-32 block touch-none cursor-crosshair"></canvas></div>
+                        <div class="w-full bg-white rounded-lg overflow-hidden">
+                            <canvas id="canvas_conductor" class="w-full h-32 block touch-none cursor-crosshair"></canvas>
+                        </div>
                         <button type="button" onclick="limpiarCanvas('canvas_conductor')" class="text-[10px] text-red-400 font-bold mt-0.5">Borrar</button>
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-cat-yellow mb-0.5 uppercase">Firma Supervisor:</label>
-                        <div class="w-full bg-white rounded-lg overflow-hidden"><canvas id="canvas_supervisor" class="w-full h-32 block touch-none cursor-crosshair"></canvas></div>
+                        <div class="w-full bg-white rounded-lg overflow-hidden">
+                            <canvas id="canvas_supervisor" class="w-full h-32 block touch-none cursor-crosshair"></canvas>
+                        </div>
                         <button type="button" onclick="limpiarCanvas('canvas_supervisor')" class="text-[10px] text-red-400 font-bold mt-0.5">Borrar</button>
                     </div>
                 </div>
             </div>
 
-            <input type="hidden" id="latitud" value="0"><input type="hidden" id="longitud" value="0">
+            <input type="hidden" id="latitud" value="0">
+            <input type="hidden" id="longitud" value="0">
+
             <div class="grid grid-cols-2 gap-3 pt-1">
-                <button type="button" onclick="exportarReportePDF()" class="w-full bg-stone-800 text-white font-bold py-2.5 px-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow border border-stone-600"><i class="bi bi-file-earmark-pdf-fill text-red-500"></i> Exportar PDF</button>
-                <button type="submit" id="submitBtn" class="w-full bg-cat-yellow text-stone-950 font-black py-2.5 px-3 rounded-xl text-sm shadow uppercase border-b-4 border-amber-600">Enviar Registro</button>
+                <button type="button" onclick="exportarReportePDF()" class="w-full bg-stone-800 text-white font-bold py-2.5 px-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow border border-stone-600">
+                    <i class="bi bi-file-earmark-pdf-fill text-red-500"></i> Exportar PDF
+                </button>
+                <button type="submit" id="submitBtn" class="w-full bg-cat-yellow text-stone-950 font-black py-2.5 px-3 rounded-xl text-sm shadow uppercase border-b-4 border-amber-600">
+                    Enviar Registro
+                </button>
             </div>
         </form>
 
@@ -466,39 +576,18 @@
     </div>
 
     <script>
-        // =========================================================================
-        // ⚠️ PEGA AQUÍ TU VÍNCULO O URL DE GOOGLE APPS SCRIPT DE PRODUCCIÓN
-        // =========================================================================
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzu_As5i-nz3veL9fSdN2y4OWjVmvGoXyBvECghuQGuOeu3gkKz6LIkyhHCi7tysdc0/exec";
-        // =========================================================================
+        // URL del Web App de Apps Script
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwff5DsVERJUUyIBTNxbn2F0ROOgCJ9eawPolOhPdJfcqbCk7S96CCRn9ay3_sGWIG2/exec";
+
+        // ------------------ UI helpers ------------------
 
         function marcarDual(grupo, valor) {
             const btns = document.querySelectorAll(`.btn-${grupo}`);
             btns.forEach(b => { 
                 if (b.innerText.trim() === valor.trim()) {
-                    if (valor === 'SI') {
-                        b.className = `btn-${grupo} btn-checkbox bg-emerald-600 text-white border-emerald-700`; 
-                    } else {
-                        b.className = `btn-${grupo} btn-checkbox bg-red-600 text-white border-red-700`; 
-                    }
+                    b.className = `btn-${grupo} btn-checkbox bg-emerald-600 text-white border-emerald-700`; 
                 } else {
                     b.className = `btn-${grupo} btn-checkbox bg-stone-50 border-stone-300 text-stone-700`; 
-                }
-            });
-            document.getElementById(grupo).value = valor;
-            evaluarProgresoFormulario();
-        }
-
-        function marcarTripleOpcion(grupo, valor) {
-            const btns = document.querySelectorAll(`.btn-${grupo}`);
-            btns.forEach(b => {
-                let text = b.innerText.trim();
-                if ((text === 'SÍ' && valor === 'SI') || (text === 'NO' && valor === 'NO') || (text === 'N/A' && valor === 'NA')) {
-                    if (valor === 'SI') b.className = `btn-${grupo} btn-checkbox bg-emerald-600 text-white border-emerald-700`;
-                    else if (valor === 'NO') b.className = `btn-${grupo} btn-checkbox bg-red-600 text-white border-red-700`;
-                    else b.className = `btn-${grupo} btn-checkbox bg-slate-700 text-white border-slate-800`;
-                } else {
-                    b.className = `btn-${grupo} btn-checkbox bg-stone-50 border-stone-300 text-stone-700`;
                 }
             });
             document.getElementById(grupo).value = valor;
@@ -508,51 +597,86 @@
         function marcarTriple(grupo, valor) {
             const btns = document.querySelectorAll(`.btn-tr-${grupo}`);
             btns.forEach(b => {
-                let match = (b.innerText === valor || (valor==='REGULAR' && b.innerText==='REG') || (valor==='CRITICA' && b.innerText==='CRIT'));
-                if(match) b.className = `btn-tr-${grupo} border px-2 py-1 rounded text-[10px] font-bold text-white ` + (valor==='OK'?'bg-emerald-600':(valor==='REGULAR'?'bg-amber-500':'bg-red-600'));
-                else b.className = `btn-tr-${grupo} border px-2 py-1 rounded text-[10px] font-bold bg-stone-50 border-stone-300 text-stone-700`;
+                let match = (b.innerText === valor || (valor === 'REGULAR' && b.innerText === 'REG') || (valor === 'CRITICA' && b.innerText === 'CRIT'));
+                if (match) {
+                    b.className = `btn-tr-${grupo} border px-2 py-1 rounded text-[10px] font-bold text-white ` +
+                        (valor === 'OK' ? 'bg-emerald-600' : (valor === 'REGULAR' ? 'bg-amber-500' : 'bg-red-600'));
+                } else {
+                    b.className = `btn-tr-${grupo} border px-2 py-1 rounded text-[10px] font-bold bg-stone-50 border-stone-300 text-stone-700`;
+                }
             });
             const inp = document.getElementById(`llanta_${grupo}`) || document.getElementById(`llanta_rep_est`);
-            if(inp) inp.value = valor;
+            if (inp) inp.value = valor;
             const cam = document.getElementById(`btn_f_${grupo}`);
-            if(cam) { cam.classList.remove('opacity-30', 'pointer-events-none'); cam.classList.add('bg-cat-yellow', 'text-stone-950'); }
+            if (cam) {
+                cam.classList.remove('opacity-30', 'pointer-events-none');
+                cam.classList.add('bg-cat-yellow', 'text-stone-950');
+            }
             evaluarProgresoFormulario();
         }
 
         function marcarDualFluid(grupo, valor) {
             const btns = document.querySelectorAll(`.btn-fl-${grupo}`);
-            btns.forEach(b => { if(b.innerText === valor) b.className = `btn-fl-${grupo} border px-2 py-1 rounded text-[10px] font-bold text-white ` + (valor==='OK'?'bg-emerald-600':'bg-red-600'); else b.className = `btn-fl-${grupo} border px-2 py-1 rounded text-[10px] font-bold bg-stone-50`; });
+            btns.forEach(b => {
+                if (b.innerText === valor) {
+                    b.className = `btn-fl-${grupo} border px-2 py-1 rounded text-[10px] font-bold text-white ` +
+                        (valor === 'OK' ? 'bg-emerald-600' : 'bg-red-600');
+                } else {
+                    b.className = `btn-fl-${grupo} border px-2 py-1 rounded text-[10px] font-bold bg-stone-50`;
+                }
+            });
             document.getElementById(`fluid_${grupo.toLowerCase()}`).value = valor;
-            if(grupo === 'Aceite') document.getElementById('btn_f_ace').className = "flex items-center bg-cat-yellow text-stone-950 px-2 py-1 rounded text-[10px] font-bold cursor-pointer";
+            if (grupo === 'Aceite') {
+                document.getElementById('btn_f_ace').className =
+                    "flex items-center bg-cat-yellow text-stone-950 px-2 py-1 rounded text-[10px] font-bold cursor-pointer";
+            }
             evaluarProgresoFormulario();
         }
 
         function marcarLuces(grupo, valor) {
             const btns = document.querySelectorAll(`.btn-lz-${grupo}`);
-            btns.forEach(b => { if(b.innerText === valor) b.className = `btn-lz-${grupo} border px-2 py-0.5 rounded text-[10px] font-bold text-white ` + (valor==='SI'?'bg-emerald-600':'bg-red-600'); else b.className = `btn-lz-${grupo} border px-2 py-0.5 rounded text-[10px] font-bold bg-stone-50`; });
+            btns.forEach(b => {
+                if (b.innerText === valor) {
+                    b.className = `btn-lz-${grupo} border px-2 py-0.5 rounded text-[10px] font-bold text-white ` +
+                        (valor === 'SI' ? 'bg-emerald-600' : 'bg-red-600');
+                } else {
+                    b.className = `btn-lz-${grupo} border px-2 py-0.5 rounded text-[10px] font-bold bg-stone-50`;
+                }
+            });
             document.getElementById(`luces_${grupo}`).value = valor;
             evaluarProgresoFormulario();
         }
 
         function marcarExtintor(valor) {
-            document.querySelectorAll('.btn-ext').forEach(b => { if(b.innerText === valor) b.className = 'btn-ext border px-2 py-0.5 rounded font-bold text-white ' + (valor==='SI'?'bg-emerald-600':'bg-red-600'); else b.className = 'btn-ext border px-2 py-0.5 rounded font-bold bg-stone-50'; });
+            document.querySelectorAll('.btn-ext').forEach(b => {
+                if (b.innerText === valor) {
+                    b.className = 'btn-ext border px-2 py-0.5 rounded font-bold text-white ' +
+                        (valor === 'SI' ? 'bg-emerald-600' : 'bg-red-600');
+                } else {
+                    b.className = 'btn-ext border px-2 py-0.5 rounded font-bold bg-stone-50';
+                }
+            });
             document.getElementById('extintor_vig').value = valor;
-            document.getElementById('btn_f_ext').className = "flex items-center bg-cat-yellow text-stone-950 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer";
+            document.getElementById('btn_f_ext').className =
+                "flex items-center bg-cat-yellow text-stone-950 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer";
             evaluarProgresoFormulario();
         }
 
         async function consultarDConductor() {
             const dni = document.getElementById('dni_conductor').value;
-            if(dni.length === 8) {
+            if (dni.length === 8) {
                 const r = await fetch(`${WEB_APP_URL}?action=buscarDNI&dni=${dni}`);
                 const d = await r.json();
-                if(d.encontrado) { document.getElementById('conductor').value = d.nombre; validarBloque0(); }
+                if (d.encontrado) {
+                    document.getElementById('conductor').value = d.nombre;
+                    validarBloque0();
+                }
             }
         }
 
         async function consultarFlotaVehiculo() {
             const plc = document.getElementById('placa').value.trim();
-            if(plc.length >= 6) { 
+            if (plc.length >= 6) {
                 const r = await fetch(`${WEB_APP_URL}?action=buscarPlaca&placa=${plc}`);
                 const d = await r.json();
                 document.getElementById('marca').value = d.marca || "Magsa Unidad";
@@ -562,71 +686,175 @@
 
         async function consultarDSupervisor() {
             const dni = document.getElementById('dni_supervisor').value;
-            if(dni.length === 8) {
+            if (dni.length === 8) {
                 const r = await fetch(`${WEB_APP_URL}?action=buscarDNI&dni=${dni}`);
                 const d = await r.json();
-                if(d.encontrado) { document.getElementById('nom_supervisor').value = d.nombre; document.getElementById('puesto_supervisor').value = d.puesto; evaluarProgresoFormulario(); }
+                if (d.encontrado) {
+                    document.getElementById('nom_supervisor').value = d.nombre;
+                    document.getElementById('puesto_supervisor').value = d.puesto;
+                    evaluarProgresoFormulario();
+                }
             }
         }
 
         function validarBloque0() {
-            if(document.getElementById('conductor').value && document.getElementById('sucursal').value && document.getElementById('placa').value && document.getElementById('kilometraje').value) {
-                document.getElementById('sec_1').className = "bg-white p-3 rounded-xl border space-y-3 shadow-sm seccion-activa";
+            if (
+                document.getElementById('conductor').value &&
+                document.getElementById('sucursal').value &&
+                document.getElementById('placa').value &&
+                document.getElementById('kilometraje').value
+            ) {
+                document.getElementById('sec_1').className =
+                    "bg-white p-3 rounded-xl border space-y-3 shadow-sm seccion-activa";
             }
         }
 
         function evaluarProgresoFormulario() {
-            if(document.getElementById('uniforme').value && document.getElementById('epps').value && document.getElementById('fotocheck').value) {
-                document.getElementById('sec_2').className = "space-y-3 seccion-activa";
+            const req = (id) => document.getElementById(id).value;
+
+            if (req("uniforme") && req("epps") && req("fotocheck")) {
+                document.getElementById("sec_2").className = "space-y-3 seccion-activa";
             }
-            if(document.getElementById('soat_est').value && document.getElementById('rtv_est').value && document.getElementById('brevete_est').value) {
-                document.getElementById('sec_3').className = "space-y-3 seccion-activa";
+            if (req("soat_est") && req("rtv_est") && req("brevete_est")) {
+                document.getElementById("sec_3").className = "space-y-3 seccion-activa";
             }
-            if(document.getElementById('llanta_di').value && document.getElementById('llanta_dd').value && document.getElementById('llanta_rep_cuenta').value) {
-                document.getElementById('sec_4').className = "space-y-3 seccion-activa";
+            if (req("llanta_di") && req("llanta_dd") && req("llanta_rep_cuenta")) {
+                document.getElementById("sec_4").className = "space-y-3 seccion-activa";
             }
-            if(document.getElementById('fluid_aceite').value && document.getElementById('luces_altas').value && document.getElementById('luces_bajas').value) {
-                document.getElementById('sec_5').className = "space-y-3 seccion-activa";
+            if (req("fluid_aceite") && req("luces_altas") && req("luces_bajas")) {
+                document.getElementById("sec_5").className = "space-y-3 seccion-activa";
             }
-            if(document.getElementById('extintor_vig').value && document.getElementById('conos_cuenta').value && document.getElementById('botiquin_cuenta').value) {
-                document.getElementById('sec_6').className = "space-y-3 seccion-activa";
+            if (req("extintor_vig") && req("conos_cuenta") && req("botiquin_cuenta")) {
+                document.getElementById("sec_6").className = "space-y-3 seccion-activa";
             }
-            if(document.getElementById('cabina_limpia').value && document.getElementById('cinturones').value && document.getElementById('furgon_candados').value) {
-                document.getElementById('sec_7').className = "p-3 bg-stone-900 text-white rounded-xl space-y-3 shadow-md seccion-activa";
+            if (req("cabina_limpia") && req("cinturones") && req("furgon_candados")) {
+                document.getElementById("sec_7").className =
+                    "p-3 bg-stone-900 text-white rounded-xl space-y-3 shadow-md seccion-activa";
             }
         }
 
-        function marcarFotoLista(inputId, labelId) { if(document.getElementById(inputId).files[0]) document.getElementById(labelId).innerHTML = '<i class="bi bi-check-circle-fill text-emerald-400"></i> Cargada'; }
+        function marcarFotoLista(inputId, labelId) {
+            const input = document.getElementById(inputId);
+            const label = document.getElementById(labelId);
+
+            if (input && input.files && input.files[0] && label) {
+                label.innerHTML =
+                    '<i class="bi bi-check-circle-fill text-emerald-400"></i> Cargada';
+            }
+        }
+
+        // ------------------ Firmas ------------------
 
         function inicializarPanelesFirma() {
-            ['canvas_conductor', 'canvas_supervisor'].forEach(id => {
-                const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
-                canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
-                ctx.strokeStyle = "#111111"; ctx.lineWidth = 2.5; ctx.lineCap = "round";
-                let dib = false; let uX = 0; let uY = 0;
-                function pos(e) { const r = canvas.getBoundingClientRect(); return { x: (e.touches ? e.touches[0].clientX : e.clientX) - r.left, y: (e.touches ? e.touches[0].clientY : e.clientY) - r.top }; }
-                canvas.addEventListener('mousedown', (e) => { dib = true; const p = pos(e); uX = p.x; uY = p.y; });
-                canvas.addEventListener('mousemove', (e) => { if (!dib) return; e.preventDefault(); const p = pos(e); ctx.beginPath(); ctx.moveTo(uX, uY); ctx.lineTo(p.x, p.y); ctx.stroke(); uX = p.x; uY = p.y; });
-                window.addEventListener('mouseup', () => dib = false);
-                canvas.addEventListener('touchstart', (e) => { dib = true; const p = pos(e); uX = p.x; uY = p.y; });
-                canvas.addEventListener('touchmove', (e) => { if (!dib) return; e.preventDefault(); const p = pos(e); ctx.beginPath(); ctx.moveTo(uX, uY); ctx.lineTo(p.x, p.y); ctx.stroke(); uX = p.x; uY = p.y; });
-                window.addEventListener('touchend', () => dib = false);
+            ["canvas_conductor", "canvas_supervisor"].forEach((id) => {
+                const canvas = document.getElementById(id);
+                if (!canvas) return;
+
+                const ctx = canvas.getContext("2d");
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+
+                ctx.strokeStyle = "#111111";
+                ctx.lineWidth = 2.5;
+                ctx.lineCap = "round";
+
+                let dibujando = false;
+                let ultimoX = 0;
+                let ultimoY = 0;
+
+                const getPos = (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    const punto = e.touches ? e.touches[0] : e;
+                    return {
+                        x: punto.clientX - rect.left,
+                        y: punto.clientY - rect.top
+                    };
+                };
+
+                const iniciarTrazo = (e) => {
+                    dibujando = true;
+                    const p = getPos(e);
+                    ultimoX = p.x;
+                    ultimoY = p.y;
+                };
+
+                const dibujar = (e) => {
+                    if (!dibujando) return;
+                    e.preventDefault();
+                    const p = getPos(e);
+                    ctx.beginPath();
+                    ctx.moveTo(ultimoX, ultimoY);
+                    ctx.lineTo(p.x, p.y);
+                    ctx.stroke();
+                    ultimoX = p.x;
+                    ultimoY = p.y;
+                };
+
+                const terminarTrazo = () => {
+                    dibujando = false;
+                };
+
+                canvas.addEventListener("mousedown", iniciarTrazo);
+                canvas.addEventListener("mousemove", dibujar);
+                window.addEventListener("mouseup", terminarTrazo);
+
+                canvas.addEventListener("touchstart", iniciarTrazo, { passive: false });
+                canvas.addEventListener("touchmove", dibujar, { passive: false });
+                window.addEventListener("touchend", terminarTrazo);
             });
         }
 
-        function limpiarCanvas(id) { document.getElementById(id).getContext('2d').clearRect(0, 0, document.getElementById(id).width, document.getElementById(id).height); }
-        function canvasVacio(id) { const canvas = document.getElementById(id); const buffer = new Uint32Array(canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data.buffer); return !buffer.some(color => color !== 0); }
+        function limpiarCanvas(id) {
+            const canvas = document.getElementById(id);
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function canvasVacio(id) {
+            const canvas = document.getElementById(id);
+            if (!canvas) return true;
+
+            const ctx = canvas.getContext("2d");
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const buffer = new Uint32Array(imgData.data.buffer);
+
+            return !buffer.some((color) => color !== 0);
+        }
+
+        // ------------------ Utilidades ------------------
 
         function obtenerBase64(file) {
             return new Promise((resolve) => {
-                if (!file) { resolve(""); return; }
-                const reader = new FileReader(); reader.readAsDataURL(file);
+                if (!file) {
+                    resolve("");
+                    return;
+                }
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
                 reader.onload = function (e) {
-                    const img = new Image(); img.src = e.target.result;
+                    const img = new Image();
+                    img.src = e.target.result;
                     img.onload = function () {
-                        const MAX = 1024; let w = img.width; let h = img.height;
-                        if (w > h) { if (w > MAX) { h *= MAX / w; w = MAX; } } else { if (h > MAX) { w *= MAX / h; h = MAX; } }
-                        const canvas = document.createElement('canvas'); canvas.width = w; canvas.height = h;
+                        const MAX = 1024;
+                        let w = img.width;
+                        let h = img.height;
+
+                        if (w > h) {
+                            if (w > MAX) {
+                                h *= MAX / w;
+                                w = MAX;
+                            }
+                        } else {
+                            if (h > MAX) {
+                                w *= MAX / h;
+                                h = MAX;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w;
+                        canvas.height = h;
                         canvas.getContext('2d').drawImage(img, 0, 0, w, h);
                         resolve(canvas.toDataURL('image/jpeg', 0.6));
                     };
@@ -635,68 +863,218 @@
         }
 
         function establecerTiempo() {
-            const ahora = new Date(); document.getElementById('fecha_sistema').value = `${String(ahora.getDate()).padStart(2,'0')}/${String(ahora.getMonth()+1).padStart(2,'0')}/${ahora.getFullYear()}`;
-            let h = ahora.getHours(); const m = String(ahora.getMinutes()).padStart(2,'0'); const ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12; h = h ? h : 12;
-            document.getElementById('hora_sistema').value = `${String(h).padStart(2,'0')}:${m} ${ampm}`;
+            const ahora = new Date();
+            const dia = String(ahora.getDate()).padStart(2, '0');
+            const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+            const anio = ahora.getFullYear();
+            document.getElementById('fecha_sistema').value = `${dia}/${mes}/${anio}`;
+
+            let h = ahora.getHours();
+            const m = String(ahora.getMinutes()).padStart(2, '0');
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12;
+            h = h ? h : 12;
+            document.getElementById('hora_sistema').value = `${String(h).padStart(2, '0')}:${m} ${ampm}`;
         }
 
-        function capturarGPS() { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((p) => { document.getElementById('latitud').value = p.coords.latitude; document.getElementById('longitud').value = p.coords.longitude; }, null, { enableHighAccuracy: true }); } }
-        window.addEventListener('DOMContentLoaded', () => { establecerTiempo(); inicializarPanelesFirma(); capturarGPS(); });
+        function capturarGPS() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (p) => {
+                        document.getElementById('latitud').value = p.coords.latitude;
+                        document.getElementById('longitud').value = p.coords.longitude;
+                    },
+                    null,
+                    { enableHighAccuracy: true }
+                );
+            }
+        }
 
-        // SOLUCIÓN COMPLETA PARA RENDERIZADO DE PDF SIN PÁGINAS EN BLANCO
+        window.addEventListener('DOMContentLoaded', () => {
+            establecerTiempo();
+            inicializarPanelesFirma();
+            capturarGPS();
+        });
+
         function exportarReportePDF() {
-            const elemento = document.getElementById('contenedor-auditoria');
-            const opciones = {
-                margin: 0.3,
-                filename: `Inspeccion_Magsa_${document.getElementById('placa').value || 'Unidad'}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { 
-                    scale: 2, 
-                    useCORS: true, 
-                    scrollY: 0,
-                    logging: false
-                },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-            html2pdf().from(elemento).set(opciones).save();
+            const placa = document.getElementById('placa').value || 'Unidad';
+            html2pdf()
+                .from(document.getElementById('contenedor-auditoria'))
+                .set({
+                    margin: 0.4,
+                    filename: `Inspeccion_Magsa_${placa}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                })
+                .save();
         }
+
+        // ------------------ Envío al Web App ------------------
 
         document.getElementById('checklistForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-            if(canvasVacio('canvas_conductor') || canvasVacio('canvas_supervisor')) { alert("Es obligatorio estampar ambas firmas digitales."); return; }
-            
-            const btn = document.getElementById('submitBtn'); const msg = document.getElementById('responseMessage');
-            btn.disabled = true; btn.innerText = "TRANSMITIENDO...";
+
+            if (canvasVacio('canvas_conductor') || canvasVacio('canvas_supervisor')) {
+                alert("Es obligatorio estampar ambas firmas digitales.");
+                return;
+            }
+
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('responseMessage');
+
+            btn.disabled = true;
+            btn.innerText = "TRANSMITIENDO...";
+
+            const val = (id) => document.getElementById(id).value;
 
             try {
                 const formData = {
-                    fecha_inspeccion: document.getElementById('fecha_sistema').value, hora_inspeccion: document.getElementById('hora_sistema').value,
-                    sucursal: document.getElementById('sucursal').value, conductor: document.getElementById('conductor').value, placa: document.getElementById('placa').value, marca: document.getElementById('marca').value, kilometraje: document.getElementById('kilometraje').value,
-                    uniforme: document.getElementById('uniforme').value, obs_uniforme: document.getElementById('obs_uniforme').value, epps: document.getElementById('epps').value, obs_epps: document.getElementById('obs_epps').value, fotocheck: document.getElementById('fotocheck').value, obs_fotocheck: document.getElementById('obs_fotocheck').value,
-                    soat_est: document.getElementById('soat_est').value, soat_venc: document.getElementById('soat_venc').value, soat_obs: document.getElementById('soat_obs').value, rtv_est: document.getElementById('rtv_est').value, rtv_venc: document.getElementById('rtv_venc').value, rtv_obs: document.getElementById('rtv_obs').value,
-                    brevete_est: document.getElementById('brevete_est').value, brevete_venc: document.getElementById('brevete_venc').value, brevete_obs: document.getElementById('brevete_obs').value, tiv_est: document.getElementById('tiv_est').value, guias_est: document.getElementById('guias_est').value,
-                    llanta_di: document.getElementById('llanta_di').value, obs_llanta_di: document.getElementById('obs_llanta_di').value, foto_llanta_di: await obtenerBase64(document.getElementById('foto_llanta_di').files[0]),
-                    llanta_dd: document.getElementById('llanta_dd').value, obs_llanta_dd: document.getElementById('obs_llanta_dd').value, foto_llanta_dd: await obtenerBase64(document.getElementById('foto_llanta_dd').files[0]),
-                    llanta_pi: document.getElementById('llanta_pi').value, obs_llanta_pi: document.getElementById('obs_llanta_pi').value, foto_llanta_pi: await obtenerBase64(document.getElementById('foto_llanta_pi').files[0]),
-                    llanta_pd: document.getElementById('llanta_pd').value, obs_llanta_pd: document.getElementById('obs_llanta_pd').value, foto_llanta_pd: await obtenerBase64(document.getElementById('foto_llanta_pd').files[0]),
-                    llanta_rep_cuenta: document.getElementById('llanta_rep_cuenta').value, llanta_rep_est: document.getElementById('llanta_rep_est').value, foto_llanta_rep: await obtenerBase64(document.getElementById('foto_llanta_rep').files[0]),
-                    fluid_aceite: document.getElementById('fluid_aceite').value, obs_fluid_aceite: document.getElementById('obs_fluid_aceite').value, foto_aceite: await obtenerBase64(document.getElementById('foto_aceite').files[0]),
-                    fluid_refrigerante: document.getElementById('fluid_refrigerante').value, fluid_frenos: document.getElementById('fluid_frenos').value,
-                    luces_altas: document.getElementById('luces_altas').value, luces_bajas: document.getElementById('luces_bajas').value, luces_freno: document.getElementById('luces_freno').value, luces_emergencia: document.getElementById('luces_emergencia').value, luces_direccionales: document.getElementById('luces_direccionales').value, obs_luces_general: document.getElementById('obs_luces_general').value,
-                    extintor_vig: document.getElementById('extintor_vig').value, extintor_venc: document.getElementById('extintor_venc').value, obs_extintor: document.getElementById('obs_extintor').value, foto_extintor: await obtenerBase64(document.getElementById('foto_extintor').files[0]),
-                    conos_cuenta: document.getElementById('conos_cuenta').value, cones_cant: document.getElementById('conos_cant').value, botiquin_cuenta: document.getElementById('botiquin_cuenta').value, botiquin_obs: document.getElementById('botiquin_obs').value, antiderrame_cuenta: document.getElementById('antiderrame_cuenta').value, antiderrame_obs: document.getElementById('antiderrame_obs').value,
-                    gata_cuenta: document.getElementById('gata_cuenta').value, llave_cuenta: document.getElementById('llave_cuenta').value, herramientas_cuenta: document.getElementById('herramientas_cuenta').value, barras_cuenta: document.getElementById('barras_cuenta').value,
-                    cabina_limpia: document.getElementById('cabina_limpia').value, cinturones: document.getElementById('cinturones').value, carga_celular: document.getElementById('carga_celular').value, espejos: document.getElementById('espejos').value, carroceria_limpia: document.getElementById('carroceria_limpia').value, obs_carroceria_general: document.getElementById('obs_carroceria_general').value, furgon_candados: document.getElementById('furgon_candados').value, furgon_barras: document.getElementById('furgon_barras').value, furgon_pernos: document.getElementById('furgon_pernos').value, foto_cabina: await obtenerBase64(document.getElementById('foto_cabina').files[0]), obs_general: document.getElementById('obs_general').value,
-                    dni_supervisor: document.getElementById('dni_supervisor').value, nom_supervisor: document.getElementById('nom_supervisor').value, puesto_supervisor: document.getElementById('puesto_supervisor').value,
-                    latitud: document.getElementById('latitud').value, longitud: document.getElementById('longitud').value,
-                    firma_conductor: !canvasVacio('canvas_conductor') ? document.getElementById('canvas_conductor').toDataURL("image/png") : "",
-                    firma_supervisor: !canvasVacio('canvas_supervisor') ? document.getElementById('canvas_supervisor').toDataURL("image/png") : ""
+                    fecha_inspeccion: val('fecha_sistema'),
+                    hora_inspeccion: val('hora_sistema'),
+                    sucursal: val('sucursal'),
+                    conductor: val('conductor'),
+                    placa: val('placa'),
+                    marca: val('marca'),
+                    kilometraje: val('kilometraje'),
+
+                    uniforme: val('uniforme'),
+                    obs_uniforme: val('obs_uniforme'),
+                    epps: val('epps'),
+                    obs_epps: val('obs_epps'),
+                    fotocheck: val('fotocheck'),
+                    obs_fotocheck: val('obs_fotocheck'),
+
+                    soat_est: val('soat_est'),
+                    soat_venc: val('soat_venc'),
+                    soat_obs: val('soat_obs'),
+                    rtv_est: val('rtv_est'),
+                    rtv_venc: val('rtv_venc'),
+                    rtv_obs: val('rtv_obs'),
+                    brevete_est: val('brevete_est'),
+                    brevete_venc: val('brevete_venc'),
+                    brevete_obs: val('brevete_obs'),
+                    tiv_est: val('tiv_est'),
+                    guias_est: val('guias_est'),
+
+                    llanta_di: val('llanta_di'),
+                    obs_llanta_di: val('obs_llanta_di'),
+                    foto_llanta_di: await obtenerBase64(document.getElementById('foto_llanta_di').files[0]),
+
+                    llanta_dd: val('llanta_dd'),
+                    obs_llanta_dd: val('obs_llanta_dd'),
+                    foto_llanta_dd: await obtenerBase64(document.getElementById('foto_llanta_dd').files[0]),
+
+                    llanta_pi: val('llanta_pi'),
+                    obs_llanta_pi: val('obs_llanta_pi'),
+                    foto_llanta_pi: await obtenerBase64(document.getElementById('foto_llanta_pi').files[0]),
+
+                    llanta_pd: val('llanta_pd'),
+                    obs_llanta_pd: val('obs_llanta_pd'),
+                    foto_llanta_pd: await obtenerBase64(document.getElementById('foto_llanta_pd').files[0]),
+
+                    llanta_rep_cuenta: val('llanta_rep_cuenta'),
+                    llanta_rep_est: val('llanta_rep_est'),
+                    foto_llanta_rep: await obtenerBase64(document.getElementById('foto_llanta_rep').files[0]),
+
+                    fluid_aceite: val('fluid_aceite'),
+                    obs_fluid_aceite: val('obs_fluid_aceite'),
+                    foto_aceite: await obtenerBase64(document.getElementById('foto_aceite').files[0]),
+                    fluid_refrigerante: val('fluid_refrigerante'),
+                    fluid_frenos: val('fluid_frenos'),
+
+                    luces_altas: val('luces_altas'),
+                    luces_bajas: val('luces_bajas'),
+                    luces_freno: val('luces_freno'),
+                    luces_emergencia: val('luces_emergencia'),
+                    luces_direccionales: val('luces_direccionales'),
+                    obs_luces_general: val('obs_luces_general'),
+
+                    extintor_vig: val('extintor_vig'),
+                    extintor_venc: val('extintor_venc'),
+                    obs_extintor: val('obs_extintor'),
+                    foto_extintor: await obtenerBase64(document.getElementById('foto_extintor').files[0]),
+
+                    conos_cuenta: val('conos_cuenta'),
+                    conos_cant: val('conos_cant'),
+                    botiquin_cuenta: val('botiquin_cuenta'),
+                    botiquin_obs: val('botiquin_obs'),
+                    antiderrame_cuenta: val('antiderrame_cuenta'),
+                    antiderrame_obs: val('antiderrame_obs'),
+
+                    gata_cuenta: val('gata_cuenta'),
+                    llave_cuenta: val('llave_cuenta'),
+                    herramientas_cuenta: val('herramientas_cuenta'),
+                    barras_cuenta: val('barras_cuenta'),
+
+                    cabina_limpia: val('cabina_limpia'),
+                    cinturones: val('cinturones'),
+                    carga_celular: val('carga_celular'),
+                    espejos: val('espejos'),
+                    carroceria_limpia: val('carroceria_limpia'),
+                    obs_carroceria_general: val('obs_carroceria_general'),
+                    furgon_candados: val('furgon_candados'),
+                    furgon_barras: val('furgon_barras'),
+                    furgon_pernos: val('furgon_pernos'),
+                    foto_cabina: await obtenerBase64(document.getElementById('foto_cabina').files[0]),
+                    obs_general: val('obs_general'),
+
+                    dni_supervisor: val('dni_supervisor'),
+                    nom_supervisor: val('nom_supervisor'),
+                    puesto_supervisor: val('puesto_supervisor'),
+
+                    latitud: val('latitud'),
+                    longitud: val('longitud'),
+
+                    firma_conductor: !canvasVacio('canvas_conductor')
+                        ? document.getElementById('canvas_conductor').toDataURL("image/png")
+                        : "",
+                    firma_supervisor: !canvasVacio('canvas_supervisor')
+                        ? document.getElementById('canvas_supervisor').toDataURL("image/png")
+                        : ""
                 };
 
-                const res = await fetch(WEB_APP_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(formData) });
+                const res = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!res.ok) {
+                    throw new Error("Error de red o servidor");
+                }
+
                 const rData = await res.json();
-                if(rData.status === "success") { document.getElementById('id_visible').value = rData.id; msg.className = "m-4 p-3 rounded-xl text-center text-sm font-bold bg-emerald-100 text-emerald-800 border"; msg.innerHTML = `Transmitido con éxito. ID: ${rData.id}`; msg.classList.remove('hidden'); document.getElementById('checklistForm').reset(); limpiarCanvas('canvas_conductor'); limpiarCanvas('canvas_supervisor'); establecerTiempo(); }
-            } catch (err) { msg.className = "m-4 p-3 rounded-xl text-center text-sm font-bold bg-red-100 text-red-800"; msg.innerText = "Error de enlace."; msg.classList.remove('hidden'); } finally { window.scrollTo({ top: 0, behavior: 'smooth' }); btn.disabled = false; btn.innerText = "Enviar Registro"; }
+
+                if (rData.status === "success") {
+                    document.getElementById('id_visible').value = rData.id;
+                    msg.className =
+                        "m-4 p-3 rounded-xl text-center text-sm font-bold bg-emerald-100 text-emerald-800 border";
+                    msg.innerHTML = `Transmitido con éxito. ID: ${rData.id}`;
+                    msg.classList.remove('hidden');
+
+                    document.getElementById('checklistForm').reset();
+                    limpiarCanvas('canvas_conductor');
+                    limpiarCanvas('canvas_supervisor');
+                    establecerTiempo();
+                } else {
+                    msg.className =
+                        "m-4 p-3 rounded-xl text-center text-sm font-bold bg-red-100 text-red-800";
+                    msg.innerText = rData.message || "Error en el registro.";
+                    msg.classList.remove('hidden');
+                }
+            } catch (err) {
+                msg.className =
+                    "m-4 p-3 rounded-xl text-center text-sm font-bold bg-red-100 text-red-800";
+                msg.innerText = "Error de enlace.";
+                msg.classList.remove('hidden');
+            } finally {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                btn.disabled = false;
+                btn.innerText = "Enviar Registro";
+            }
         });
     </script>
 </body>
