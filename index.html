@@ -49,7 +49,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold text-stone-700 mb-0.5">DNI Conductor:</label>
-                        <input type="text" id="dni_conductor" maxlength="8" placeholder="Ingrese DNI" class="w-full p-2 border border-stone-300 rounded-lg text-sm focus:border-stone-900 focus:outline-none" oninput="consultarDConductor()">
+                        <input type="text" id="dni_conductor" maxlength="8" placeholder="Ingrese DNI" class="w-full p-2 border border-stone-300 rounded-lg text-sm focus:border-stone-900 focus:outline-none font-bold" oninput="consultarDConductor()">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-stone-700 mb-0.5">Nombre Conductor:</label>
@@ -62,12 +62,12 @@
                     <div>
                         <div class="grid grid-cols-2 gap-2">
                             <div>
-                                <label class="block text-xs font-bold text-stone-700 mb-0.5">Placa:</label>
-                                <select id="placa" class="w-full p-2 border border-stone-300 rounded-lg text-sm bg-white focus:outline-none" onchange="consultarFlotaVehiculo()"><option value="" disabled selected>-- PLACA --</option><option value="T1U-814">T1U-814</option><option value="ABC-123">ABC-123</option><option value="P2W-850">P2W-850</option></select>
+                                <label class="block text-xs font-bold text-stone-700 mb-0.5">Placa Unidad:</label>
+                                <input type="text" id="placa" maxlength="7" placeholder="ABC-123" class="w-full p-2 border border-stone-300 rounded-lg text-sm focus:border-stone-900 focus:outline-none uppercase font-bold" oninput="consultarFlotaVehiculo()">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-stone-700 mb-0.5">Marca:</label>
-                                <input type="text" id="marca" readonly class="w-full p-2 bg-stone-100 border border-stone-300 rounded-lg text-sm font-bold outline-none">
+                                <label class="block text-xs font-bold text-stone-700 mb-0.5">Marca Vehículo:</label>
+                                <input type="text" id="marca" readonly placeholder="Buscando..." class="w-full p-2 bg-stone-100 border border-stone-300 rounded-lg text-sm font-bold text-stone-600 outline-none">
                             </div>
                         </div>
                     </div>
@@ -80,48 +80,70 @@
 
             <div id="sec_1" class="seccion-bloqueada bg-white p-3 rounded-xl border space-y-3 shadow-sm">
                 <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-person-badge"></i> Presencia de Fotocheck y EPPS</span>
+                
                 <div class="p-2 bg-stone-50 rounded-lg border space-y-1">
                     <label class="block text-xs font-bold">¿Cuenta con Uniforme Completo?</label>
-                    <div class="grid grid-cols-2 gap-2"><button type="button" onclick="marcarDual('uniforme', 'SI')" class="btn-uniforme btn-checkbox">SÍ</button><button type="button" onclick="marcarDual('uniforme', 'NO')" class="btn-uniforme btn-checkbox">NO</button></div>
-                    <input type="hidden" id="uniforme" value=""><textarea id="obs_uniforme" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('uniforme', 'SI')" class="btn-uniforme btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('uniforme', 'NO')" class="btn-uniforme btn-checkbox">NO</button>
+                    </div>
+                    <input type="hidden" id="uniforme" value=""><textarea id="obs_uniforme" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none bg-white"></textarea>
                 </div>
                 <div class="p-2 bg-stone-50 rounded-lg border space-y-1">
                     <label class="block text-xs font-bold">¿Cuenta con EPPs de Seguridad?</label>
-                    <div class="grid grid-cols-2 gap-2"><button type="button" onclick="marcarDual('epps', 'SI')" class="btn-epps btn-checkbox">SÍ</button><button type="button" onclick="marcarDual('epps', 'NO')" class="btn-epps btn-checkbox">NO</button></div>
-                    <input type="hidden" id="epps" value=""><textarea id="obs_epps" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('epps', 'SI')" class="btn-epps btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('epps', 'NO')" class="btn-epps btn-checkbox">NO</button>
+                    </div>
+                    <input type="hidden" id="epps" value=""><textarea id="obs_epps" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none bg-white"></textarea>
                 </div>
                 <div class="p-2 bg-stone-50 rounded-lg border space-y-1">
                     <label class="block text-xs font-bold">¿Porta su Fotocheck?</label>
-                    <div class="grid grid-cols-2 gap-2"><button type="button" onclick="marcarDual('fotocheck', 'SI')" class="btn-fotocheck btn-checkbox">SÍ</button><button type="button" onclick="marcarDual('fotocheck', 'NO')" class="btn-fotocheck btn-checkbox">NO</button></div>
-                    <input type="hidden" id="fotocheck" value=""><textarea id="obs_fotocheck" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('fotocheck', 'SI')" class="btn-fotocheck btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('fotocheck', 'NO')" class="btn-fotocheck btn-checkbox">NO</button>
+                    </div>
+                    <input type="hidden" id="fotocheck" value=""><textarea id="obs_fotocheck" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none bg-white"></textarea>
                 </div>
             </div>
 
             <div id="sec_2" class="seccion-bloqueada space-y-3">
                 <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-file-text"></i> 1. Documentación Obligatoria</span>
+                
                 <div class="p-3 bg-white border rounded-xl space-y-1.5 shadow-sm">
                     <label class="block text-xs font-bold">SOAT Vigente:</label>
-                    <div class="grid grid-cols-2 gap-2"><button type="button" onclick="marcarDual('soat_est', 'SI')" class="btn-soat_est btn-checkbox">SÍ</button><button type="button" onclick="marcarDual('soat_est', 'NO')" class="btn-soat_est btn-checkbox">NO</button></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('soat_est', 'SI')" class="btn-soat_est btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('soat_est', 'NO')" class="btn-soat_est btn-checkbox">NO</button>
+                    </div>
                     <input type="hidden" id="soat_est" value=""><input type="date" id="soat_venc" class="w-full text-xs border rounded p-1 bg-stone-50"><textarea id="soat_obs" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
                 <div class="p-3 bg-white border rounded-xl space-y-1.5 shadow-sm">
                     <label class="block text-xs font-bold">Revisión Técnica (RTV):</label>
-                    <div class="grid grid-cols-2 gap-2"><button type="button" onclick="marcarDual('rtv_est', 'SI')" class="btn-rtv_est btn-checkbox">SÍ</button><button type="button" onclick="marcarDual('rtv_est', 'NO')" class="btn-rtv_est btn-checkbox">NO</button></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('rtv_est', 'SI')" class="btn-rtv_est btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('rtv_est', 'NO')" class="btn-rtv_est btn-checkbox">NO</button>
+                    </div>
                     <input type="hidden" id="rtv_est" value=""><input type="date" id="rtv_venc" class="w-full text-xs border rounded p-1 bg-stone-50"><textarea id="rtv_obs" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
                 <div class="p-3 bg-white border rounded-xl space-y-1.5 shadow-sm">
                     <label class="block text-xs font-bold">Brevete Conductor:</label>
-                    <div class="grid grid-cols-2 gap-2"><button type="button" onclick="marcarDual('brevete_est', 'SI')" class="btn-brevete_est btn-checkbox">SÍ</button><button type="button" onclick="marcarDual('brevete_est', 'NO')" class="btn-brevete_est btn-checkbox">NO</button></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="marcarDual('brevete_est', 'SI')" class="btn-brevete_est btn-checkbox">SÍ</button>
+                        <button type="button" onclick="marcarDual('brevete_est', 'NO')" class="btn-brevete_est btn-checkbox">NO</button>
+                    </div>
                     <input type="hidden" id="brevete_est" value=""><input type="date" id="brevete_venc" class="w-full text-xs border rounded p-1 bg-stone-50"><textarea id="brevete_obs" placeholder="Observaciones..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
+
                 <div class="p-3 bg-white border rounded-xl space-y-2 shadow-sm text-xs">
-                    <div class="flex justify-between items-center"><span>Tarjeta Propiedad (TIV):</span><select id="tiv_est" class="border p-1 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-2"><span>Guías de Carga:</span><select id="guias_est" class="border p-1 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    <div class="flex justify-between items-center"><span>Tarjeta Propiedad (TIV):</span><select id="tiv_est" class="border p-1 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()"><option value="" disabled selected>-- SELECCIONE --</option><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                    <div class="flex justify-between items-center border-t pt-2"><span>Guías de Carga:</span><select id="guias_est" class="border p-1 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()"><option value="" disabled selected>-- SELECCIONE --</option><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
                 </div>
             </div>
 
             <div id="sec_3" class="seccion-bloqueada space-y-3">
                 <span class="block text-xs font-black text-stone-600 uppercase border-b pb-0.5"><i class="bi bi-disc"></i> 2. Estado de Neumáticos</span>
+                
                 <div class="p-3 border rounded-xl bg-white space-y-2">
                     <div class="flex justify-between items-center">
                         <span class="font-bold text-xs">Delantera Izquierda (DI):</span>
@@ -135,6 +157,7 @@
                     </div>
                     <textarea id="obs_llanta_di" placeholder="Comentarios..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
+                
                 <div class="p-3 border rounded-xl bg-white space-y-2">
                     <div class="flex justify-between items-center">
                         <span class="font-bold text-xs">Delantera Derecha (DD):</span>
@@ -148,6 +171,7 @@
                     </div>
                     <textarea id="obs_llanta_dd" placeholder="Comentarios..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
+
                 <div class="p-3 border rounded-xl bg-white space-y-2">
                     <div class="flex justify-between items-center">
                         <span class="font-bold text-xs">Posterior Izquierda (PI):</span>
@@ -161,6 +185,7 @@
                     </div>
                     <textarea id="obs_llanta_pi" placeholder="Comentarios..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
+
                 <div class="p-3 border rounded-xl bg-white space-y-2">
                     <div class="flex justify-between items-center">
                         <span class="font-bold text-xs">Posterior Derecha (PD):</span>
@@ -174,10 +199,11 @@
                     </div>
                     <textarea id="obs_llanta_pd" placeholder="Comentarios..." class="w-full p-1 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
+
                 <div class="p-3 border rounded-xl bg-stone-50 space-y-2">
                     <div class="flex justify-between items-center text-xs">
                         <span class="font-bold">¿Cuenta con Neumático de Repuesto?</span>
-                        <select id="llanta_rep_cuenta" class="border p-1 rounded bg-white" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option></select>
+                        <select id="llanta_rep_cuenta" class="border p-1 rounded bg-white font-bold" onchange="evaluarProgresoFormulario()"><option value="" disabled selected>-- SELECCIONE --</option><option value="SI">SÍ</option><option value="NO">NO</option></select>
                     </div>
                     <div class="flex justify-between items-center border-t pt-2">
                         <span class="text-xs font-bold text-stone-700">Estado Neumático Repuesto:</span>
@@ -223,6 +249,7 @@
 
             <div id="sec_5" class="seccion-bloqueada space-y-3">
                 <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-tools"></i> 4. Kit de Emergencias y Herramientas</span>
+                
                 <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm text-xs">
                     <div class="flex justify-between items-center font-bold">
                         <span>Extintor PQS Vigente:</span>
@@ -237,35 +264,159 @@
                     <textarea id="obs_extintor" placeholder="Observaciones extintor..." class="w-full p-1.5 bg-stone-50 border rounded text-xs h-8 resize-none outline-none"></textarea>
                 </div>
 
-                <div class="p-3 border bg-white rounded-xl space-y-2 shadow-sm text-xs">
-                    <div class="flex justify-between items-center"><span>¿Cuenta con Conos / Triángulos?</span><select id="conos_cuenta" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <input type="number" id="conos_cant" placeholder="Cantidad de conos" class="w-full p-1.5 border rounded text-xs outline-none" oninput="evaluarProgresoFormulario()">
-                    <div class="flex justify-between items-center border-t pt-2"><span>¿Cuenta con Botiquín equipado?</span><select id="botiquin_cuenta" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <input type="text" id="botiquin_obs" placeholder="Observaciones botiquín" class="w-full p-1.5 border rounded text-xs outline-none">
-                    <div class="flex justify-between items-center border-t pt-2"><span>Kit Antiderrame MATPEL:</span><select id="antiderrame_cuenta" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option><option value="NA">N/A</option></select></div>
-                    <input type="text" id="antiderrame_obs" placeholder="Observaciones kit" class="w-full p-1.5 border rounded text-xs outline-none">
+                <div class="p-3 border bg-white rounded-xl space-y-3 shadow-sm text-xs">
+                    <div class="bg-stone-50 p-2 rounded-lg border space-y-1">
+                        <div class="flex justify-between items-center font-bold">
+                            <span>¿Cuenta con Conos / Triángulos?</span>
+                            <div class="flex gap-1 w-32">
+                                <button type="button" onclick="marcarDual('conos_cuenta', 'SI')" class="btn-conos_cuenta btn-checkbox">SÍ</button>
+                                <button type="button" onclick="marcarDual('conos_cuenta', 'NO')" class="btn-conos_cuenta btn-checkbox">NO</button>
+                            </div>
+                            <input type="hidden" id="conos_cuenta" value="">
+                        </div>
+                        <input type="number" id="conos_cant" placeholder="Cantidad de conos" class="w-full p-1.5 border rounded text-xs outline-none bg-white font-medium" oninput="evaluarProgresoFormulario()">
+                    </div>
+
+                    <div class="bg-stone-50 p-2 rounded-lg border space-y-1">
+                        <div class="flex justify-between items-center font-bold">
+                            <span>¿Cuenta con Botiquín equipado?</span>
+                            <div class="flex gap-1 w-32">
+                                <button type="button" onclick="marcarDual('botiquin_cuenta', 'SI')" class="btn-botiquin_cuenta btn-checkbox">SÍ</button>
+                                <button type="button" onclick="marcarDual('botiquin_cuenta', 'NO')" class="btn-botiquin_cuenta btn-checkbox">NO</button>
+                            </div>
+                            <input type="hidden" id="botiquin_cuenta" value="">
+                        </div>
+                        <input type="text" id="botiquin_obs" placeholder="Observaciones botiquín" class="w-full p-1.5 border rounded text-xs outline-none bg-white">
+                    </div>
+
+                    <div class="bg-stone-50 p-2 rounded-lg border space-y-1">
+                        <div class="flex justify-between items-center font-bold">
+                            <span>Kit Antiderrame MATPEL:</span>
+                            <div class="flex gap-1 w-44">
+                                <button type="button" onclick="marcarTripleOpcion('antiderrame_cuenta', 'SI')" class="btn-antiderrame_cuenta btn-checkbox">SÍ</button>
+                                <button type="button" onclick="marcarTripleOpcion('antiderrame_cuenta', 'NO')" class="btn-antiderrame_cuenta btn-checkbox">NO</button>
+                                <button type="button" onclick="marcarTripleOpcion('antiderrame_cuenta', 'NA')" class="btn-antiderrame_cuenta btn-checkbox">N/A</button>
+                            </div>
+                            <input type="hidden" id="antiderrame_cuenta" value="">
+                        </div>
+                        <input type="text" id="antiderrame_obs" placeholder="Observaciones kit" class="w-full p-1.5 border rounded text-xs outline-none bg-white">
+                    </div>
                 </div>
 
-                <div class="p-3 border bg-white rounded-xl space-y-1.5 shadow-sm text-xs">
-                    <div class="flex justify-between items-center"><span>Gata Mecánica:</span><select id="gata_cuenta" class="border p-0.5 rounded"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-1"><span>Llave de Ruedas:</span><select id="llave_cuenta" class="border p-0.5 rounded"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-1"><span>Kit Herramientas:</span><select id="herramientas_cuenta" class="border p-0.5 rounded"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-1"><span>Barra de Seguridad:</span><select id="barras_cuenta" class="border p-0.5 rounded"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                <div class="p-3 border bg-white rounded-xl space-y-2.5 shadow-sm text-xs">
+                    <div class="flex justify-between items-center font-bold">
+                        <span>Gata Mecánica:</span>
+                        <div class="flex gap-1 w-32">
+                            <button type="button" onclick="marcarDual('gata_cuenta', 'SI')" class="btn-gata_cuenta btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarDual('gata_cuenta', 'NO')" class="btn-gata_cuenta btn-checkbox">NO</button>
+                        </div>
+                        <input type="hidden" id="gata_cuenta" value="">
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                        <span>Llave de Ruedas:</span>
+                        <div class="flex gap-1 w-32">
+                            <button type="button" onclick="marcarDual('llave_cuenta', 'SI')" class="btn-llave_cuenta btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarDual('llave_cuenta', 'NO')" class="btn-llave_cuenta btn-checkbox">NO</button>
+                        </div>
+                        <input type="hidden" id="llave_cuenta" value="">
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                        <span>Kit Herramientas:</span>
+                        <div class="flex gap-1 w-32">
+                            <button type="button" onclick="marcarDual('herramientas_cuenta', 'SI')" class="btn-herramientas_cuenta btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarDual('herramientas_cuenta', 'NO')" class="btn-herramientas_cuenta btn-checkbox">NO</button>
+                        </div>
+                        <input type="hidden" id="herramientas_cuenta" value="">
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                        <span>Barra de Seguridad:</span>
+                        <div class="flex gap-1 w-32">
+                            <button type="button" onclick="marcarDual('barras_cuenta', 'SI')" class="btn-barras_cuenta btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarDual('barras_cuenta', 'NO')" class="btn-barras_cuenta btn-checkbox">NO</button>
+                        </div>
+                        <input type="hidden" id="barras_cuenta" value="">
+                    </div>
                 </div>
             </div>
 
             <div id="sec_6" class="seccion-bloqueada space-y-3">
                 <span class="block text-xs font-black text-stone-600 uppercase tracking-widest border-b pb-0.5"><i class="bi bi-lock"></i> 5. Estado de Cabina y Furgón Cerrado</span>
-                <div class="p-3 border bg-white rounded-xl space-y-1.5 shadow-sm text-xs">
-                    <div class="flex justify-between items-center"><span>Cabina limpia y ordenada:</span><select id="cabina_limpia" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-1"><span>Cinturones operativos:</span><select id="cinturones" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-1"><span>Conexión de carga móvil:</span><select id="carga_celular" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-1"><span>Espejos laterales conformes:</span><select id="espejos" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-1"><span>Carrocería limpia externamente:</span><select id="carroceria_limpia" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option></select></div>
+                <div class="p-3 border bg-white rounded-xl space-y-3 shadow-sm text-xs">
                     
-                    <div class="flex justify-between items-center border-t pt-2"><span>Candados Operativos furgón:</span><select id="furgon_candados" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option><option value="NA">N/A</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-1"><span>Barras de seguridad furgón:</span><select id="furgon_barras" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option><option value="NA">N/A</option></select></div>
-                    <div class="flex justify-between items-center border-t pt-1"><span>Pernos de anclaje estables:</span><select id="furgon_pernos" class="border p-0.5 rounded" onchange="evaluarProgresoFormulario()"><option value="SI">SÍ</option><option value="NO">NO</option><option value="NA">N/A</option></select></div>
+                    <div class="flex justify-between items-center font-bold">
+                        <span>Cabina limpia y ordenada:</span>
+                        <div class="flex gap-1 w-32">
+                            <button type="button" onclick="marcarDual('cabina_limpia', 'SI')" class="btn-cabina_limpia btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarDual('cabina_limpia', 'NO')" class="btn-cabina_limpia btn-checkbox">NO</button>
+                        </div>
+                        <input type="hidden" id="cabina_limpia" value="">
+                    </div>
+                    
+                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                        <span>Cinturones operativos:</span>
+                        <div class="flex gap-1 w-32">
+                            <button type="button" onclick="marcarDual('cinturones', 'SI')" class="btn-cinturones btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarDual('cinturones', 'NO')" class="btn-cinturones btn-checkbox">NO</button>
+                        </div>
+                        <input type="hidden" id="cinturones" value="">
+                    </div>
+                    
+                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                        <span>Conexión de carga móvil:</span>
+                        <div class="flex gap-1 w-32">
+                            <button type="button" onclick="marcarDual('carga_celular', 'SI')" class="btn-carga_celular btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarDual('carga_celular', 'NO')" class="btn-carga_celular btn-checkbox">NO</button>
+                        </div>
+                        <input type="hidden" id="carga_celular" value="">
+                    </div>
+                    
+                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                        <span>Espejos laterales conformes:</span>
+                        <div class="flex gap-1 w-32">
+                            <button type="button" onclick="marcarDual('espejos', 'SI')" class="btn-espejos btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarDual('espejos', 'NO')" class="btn-espejos btn-checkbox">NO</button>
+                        </div>
+                        <input type="hidden" id="espejos" value="">
+                    </div>
+                    
+                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                        <span>Carrocería limpia externamente:</span>
+                        <div class="flex gap-1 w-32">
+                            <button type="button" onclick="marcarDual('carroceria_limpia', 'SI')" class="btn-carroceria_limpia btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarDual('carroceria_limpia', 'NO')" class="btn-carroceria_limpia btn-checkbox">NO</button>
+                        </div>
+                        <input type="hidden" id="carroceria_limpia" value="">
+                    </div>
+                    
+                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                        <span>Candados Operativos furgón:</span>
+                        <div class="flex gap-1 w-44">
+                            <button type="button" onclick="marcarTripleOpcion('furgon_candados', 'SI')" class="btn-furgon_candados btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarTripleOpcion('furgon_candados', 'NO')" class="btn-furgon_candados btn-checkbox">NO</button>
+                            <button type="button" onclick="marcarTripleOpcion('furgon_candados', 'NA')" class="btn-furgon_candados btn-checkbox">N/A</button>
+                        </div>
+                        <input type="hidden" id="furgon_candados" value="">
+                    </div>
+                    
+                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                        <span>Barras de seguridad furgón:</span>
+                        <div class="flex gap-1 w-44">
+                            <button type="button" onclick="marcarTripleOpcion('furgon_barras', 'SI')" class="btn-furgon_barras btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarTripleOpcion('furgon_barras', 'NO')" class="btn-furgon_barras btn-checkbox">NO</button>
+                            <button type="button" onclick="marcarTripleOpcion('furgon_barras', 'NA')" class="btn-furgon_barras btn-checkbox">N/A</button>
+                        </div>
+                        <input type="hidden" id="furgon_barras" value="">
+                    </div>
+                    
+                    <div class="flex justify-between items-center border-t pt-2 font-bold">
+                        <span>Pernos de anclaje estables:</span>
+                        <div class="flex gap-1 w-44">
+                            <button type="button" onclick="marcarTripleOpcion('furgon_pernos', 'SI')" class="btn-furgon_pernos btn-checkbox">SÍ</button>
+                            <button type="button" onclick="marcarTripleOpcion('furgon_pernos', 'NO')" class="btn-furgon_pernos btn-checkbox">NO</button>
+                            <button type="button" onclick="marcarTripleOpcion('furgon_pernos', 'NA')" class="btn-furgon_pernos btn-checkbox">N/A</button>
+                        </div>
+                        <input type="hidden" id="furgon_pernos" value="">
+                    </div>
 
                     <div class="pt-2 border-t space-y-1.5">
                         <label class="block font-bold">Fotografía Cabina / Carrocería:</label>
@@ -316,14 +467,40 @@
 
     <script>
         // =========================================================================
-        // ⚠️ ENLACE DE CONEXIÓN CON GOOGLE APPS SCRIPT DE PRODUCCIÓN
+        // ⚠️ PEGA AQUÍ TU VÍNCULO O URL DE GOOGLE APPS SCRIPT DE PRODUCCIÓN
         // =========================================================================
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw6BmwqCxXRYDB9r_ayOLHcbxSJJrZpR_bCMgUchqDbDcBieQI8XjirCXIDdtkY0C_-/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzu_As5i-nz3veL9fSdN2y4OWjVmvGoXyBvECghuQGuOeu3gkKz6LIkyhHCi7tysdc0/exec";
         // =========================================================================
 
         function marcarDual(grupo, valor) {
             const btns = document.querySelectorAll(`.btn-${grupo}`);
-            btns.forEach(b => { if(b.innerText === valor) b.className = `btn-${grupo} btn-checkbox bg-emerald-600 text-white border-emerald-700`; else b.className = `btn-${grupo} btn-checkbox`; });
+            btns.forEach(b => { 
+                if (b.innerText.trim() === valor.trim()) {
+                    if (valor === 'SI') {
+                        b.className = `btn-${grupo} btn-checkbox bg-emerald-600 text-white border-emerald-700`; 
+                    } else {
+                        b.className = `btn-${grupo} btn-checkbox bg-red-600 text-white border-red-700`; 
+                    }
+                } else {
+                    b.className = `btn-${grupo} btn-checkbox bg-stone-50 border-stone-300 text-stone-700`; 
+                }
+            });
+            document.getElementById(grupo).value = valor;
+            evaluarProgresoFormulario();
+        }
+
+        function marcarTripleOpcion(grupo, valor) {
+            const btns = document.querySelectorAll(`.btn-${grupo}`);
+            btns.forEach(b => {
+                let text = b.innerText.trim();
+                if ((text === 'SÍ' && valor === 'SI') || (text === 'NO' && valor === 'NO') || (text === 'N/A' && valor === 'NA')) {
+                    if (valor === 'SI') b.className = `btn-${grupo} btn-checkbox bg-emerald-600 text-white border-emerald-700`;
+                    else if (valor === 'NO') b.className = `btn-${grupo} btn-checkbox bg-red-600 text-white border-red-700`;
+                    else b.className = `btn-${grupo} btn-checkbox bg-slate-700 text-white border-slate-800`;
+                } else {
+                    b.className = `btn-${grupo} btn-checkbox bg-stone-50 border-stone-300 text-stone-700`;
+                }
+            });
             document.getElementById(grupo).value = valor;
             evaluarProgresoFormulario();
         }
@@ -374,11 +551,11 @@
         }
 
         async function consultarFlotaVehiculo() {
-            const plc = document.getElementById('placa').value;
-            if(plc) {
+            const plc = document.getElementById('placa').value.trim();
+            if(plc.length >= 6) { 
                 const r = await fetch(`${WEB_APP_URL}?action=buscarPlaca&placa=${plc}`);
                 const d = await r.json();
-                document.getElementById('marca').value = d.marca || "Magsa";
+                document.getElementById('marca').value = d.marca || "Magsa Unidad";
                 validarBloque0();
             }
         }
@@ -466,8 +643,22 @@
         function capturarGPS() { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((p) => { document.getElementById('latitud').value = p.coords.latitude; document.getElementById('longitud').value = p.coords.longitude; }, null, { enableHighAccuracy: true }); } }
         window.addEventListener('DOMContentLoaded', () => { establecerTiempo(); inicializarPanelesFirma(); capturarGPS(); });
 
+        // SOLUCIÓN COMPLETA PARA RENDERIZADO DE PDF SIN PÁGINAS EN BLANCO
         function exportarReportePDF() {
-            html2pdf().from(document.getElementById('contenedor-auditoria')).set({ margin: 0.4, filename: `Inspeccion_Magsa_${document.getElementById('placa').value || 'Unidad'}.pdf`, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } }).save();
+            const elemento = document.getElementById('contenedor-auditoria');
+            const opciones = {
+                margin: 0.3,
+                filename: `Inspeccion_Magsa_${document.getElementById('placa').value || 'Unidad'}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { 
+                    scale: 2, 
+                    useCORS: true, 
+                    scrollY: 0,
+                    logging: false
+                },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().from(elemento).set(opciones).save();
         }
 
         document.getElementById('checklistForm').addEventListener('submit', async function (e) {
